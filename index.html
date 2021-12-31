@@ -93,7 +93,27 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="初始化环境"><a href="#初始化环境" class="headerlink" title="初始化环境"></a>初始化环境</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/1.png" alt="avatar"></p>
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><ul>
+<li>目的： 将【第三次提交】【第二次提交】【第一次提交】合并到【要合并的位置】并重新提交</li>
+<li>通过<code>git log</code>查看提交的日志</li>
+<li>使用rebase命令设置提交的位置，这里有个需要注意的地方，因为我想把最后的三次提交合到要合并的位置，这里其实是需要合并最后的四次提交，所以需要合并的commit为<code>5865c72e6d8ba0bbd6c53eac6de7a865f0b571cf</code>及【要合并的位置】的上一次提交</li>
+<li>使用命令<code>git rebase -i 5865c7</code>或者<code>git rebase -i HEAD~4</code> 会弹出一个执行命令的编辑界面</li>
+<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/2.png" alt="avatar"></li>
+<li>我们将 最后的三次commit 前方的命令改成 squash 或 s，然后输入:wq以保存并退出<ul>
+<li>pick 的意思是要会执行这个 commit</li>
+<li>squash 的意思是这个 commit 会被合并到前一个commit</li>
+</ul>
+</li>
+<li>保存之后我们会看到 commit message 的编辑界面</li>
+<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/3.png" alt="avatar"></li>
+<li>要做的就是将多个commit信息合并为一个</li>
+<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/4.png" alt="avatar"></li>
+<li>这个时候再使用<code>git log</code>或者可视化工具查看就会发现多次提交已经合并，并且合并后的commit也已经修改</li>
+<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
+<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
