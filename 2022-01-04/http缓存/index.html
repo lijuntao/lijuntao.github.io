@@ -20,28 +20,35 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="先说结论 1、浏览器缓存分为 强缓存和协商缓存 2、第一次请求时，浏览器缓将请求结果和缓存标识存入浏览器 3、再起发起，浏览将在缓存中查找是否有该请求的缓存，如果命中强缓存则使用强缓存，如果没有命中，则使用协议缓存 4、如果协议缓存有效，则使用协议缓存；如果失效则重新向server发起请求  强制缓存强制缓存的字段分别是Expires和Cache-Control，其中Cache-Control优先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http缓存">
+<meta property="og:url" content="http://example.com/2022-01-04/http%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="先说结论 1、浏览器缓存分为 强缓存和协商缓存 2、第一次请求时，浏览器缓将请求结果和缓存标识存入浏览器 3、再起发起，浏览将在缓存中查找是否有该请求的缓存，如果命中强缓存则使用强缓存，如果没有命中，则使用协议缓存 4、如果协议缓存有效，则使用协议缓存；如果失效则重新向server发起请求  强制缓存强制缓存的字段分别是Expires和Cache-Control，其中Cache-Control优先">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/7.png">
+<meta property="og:image" content="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/8.png">
+<meta property="article:published_time" content="2022-01-04T10:20:21.000Z">
+<meta property="article:modified_time" content="2022-01-04T10:20:50.051Z">
 <meta property="article:author" content="ljt">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/7.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2022-01-04/http%E7%BC%93%E5%AD%98/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Hexo</title>
+  <title>http缓存 | Hexo</title>
   
 
 
@@ -144,9 +151,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -162,10 +170,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-04/http%E7%BC%93%E5%AD%98/" class="post-title-link" itemprop="url">http缓存</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          http缓存
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -198,7 +205,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><ul>
+        <h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><ul>
 <li>1、浏览器缓存分为 强缓存和协商缓存</li>
 <li>2、第一次请求时，浏览器缓将请求结果和缓存标识存入浏览器</li>
 <li>3、再起发起，浏览将在缓存中查找是否有该请求的缓存，如果命中强缓存则使用强缓存，如果没有命中，则使用协议缓存</li>
@@ -246,248 +253,30 @@
 </ul>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903764566999054">实践这一次,彻底搞懂浏览器缓存机制</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/54cc04190252">深入理解浏览器的缓存机制</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ljt">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">css高度百分百与100vh的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-31 15:58:55 / 修改时间：16:04:15" itemprop="dateCreated datePublished" datetime="2021-12-31T15:58:55+08:00">2021-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>vh: 相对于视窗的高度, 视窗被均分为100单位的vh<br>正常情况下</p>
-<p><code>height:100vh == height:100%;</code></p>
-<p>注意点：<br>100vh：是相对视窗的高度<br>100%：是相对父元素的高度，如果父元素高度为0，即使子元素设置了<code>height:100%</code>,其高度依旧为0</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="css高度百分百与100vh的区别">
+      <i class="fa fa-chevron-left"></i> css高度百分百与100vh的区别
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ljt">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/" class="post-title-link" itemprop="url">多个commit合并</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-31 13:48:11 / 修改时间：15:00:43" itemprop="dateCreated datePublished" datetime="2021-12-31T13:48:11+08:00">2021-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="初始化环境"><a href="#初始化环境" class="headerlink" title="初始化环境"></a>初始化环境</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/1.png" alt="avatar"></p>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><ul>
-<li>目的： 将【第三次提交】【第二次提交】【第一次提交】合并到【要合并的位置】并重新提交</li>
-<li>通过<code>git log</code>查看提交的日志</li>
-<li>使用rebase命令设置提交的位置，这里有个需要注意的地方，因为我想把最后的三次提交合到要合并的位置，这里其实是需要合并最后的四次提交，所以需要合并的commit为<code>5865c72e6d8ba0bbd6c53eac6de7a865f0b571cf</code>及【要合并的位置】的上一次提交</li>
-<li>使用命令<code>git rebase -i 5865c7</code>或者<code>git rebase -i HEAD~4</code> 会弹出一个执行命令的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/2.png" alt="avatar"></li>
-<li>我们将 最后的三次commit 前方的命令改成 squash 或 s，然后输入:wq以保存并退出<ul>
-<li>pick 的意思是要会执行这个 commit</li>
-<li>squash 的意思是这个 commit 会被合并到前一个commit</li>
-</ul>
-</li>
-<li>保存之后我们会看到 commit message 的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/3.png" alt="avatar"></li>
-<li>要做的就是将多个commit信息合并为一个</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/4.png" alt="avatar"></li>
-<li>这个时候再使用<code>git log</code>或者可视化工具查看就会发现多次提交已经合并，并且合并后的commit也已经修改</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ljt">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-31 13:23:53" itemprop="dateCreated datePublished" datetime="2021-12-31T13:23:53+08:00">2021-12-31</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -540,6 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">先说结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E7%BC%93%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">强制缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Expires"><span class="nav-number">2.0.1.</span> <span class="nav-text">Expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Control"><span class="nav-number">2.0.2.</span> <span class="nav-text">Cache-Control</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#etag-if-none-match"><span class="nav-number">3.0.1.</span> <span class="nav-text">etag &#x2F; if-none-match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#last-modified-if-modified-since"><span class="nav-number">3.0.2.</span> <span class="nav-text">last-modified &#x2F; if-modified-since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memory-cache-%E5%92%8C-disk-cache"><span class="nav-number">3.0.3.</span> <span class="nav-text">memory cache 和 disk cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#F5%E5%8F%8ACtrl-F5"><span class="nav-number">3.0.4.</span> <span class="nav-text">F5及Ctrl+F5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.0.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
