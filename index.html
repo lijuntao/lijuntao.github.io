@@ -260,6 +260,22 @@
 
               <time title="创建时间：2022-01-06 13:08:59" itemprop="dateCreated datePublished" datetime="2022-01-06T13:08:59+08:00">2022-01-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-10 14:09:08" itemprop="dateModified" datetime="2022-01-10T14:09:08+08:00">2022-01-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
 
           
 
@@ -272,7 +288,71 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="css世界笔记"><a href="#css世界笔记" class="headerlink" title="css世界笔记"></a>css世界笔记</h1><h2 id="border"><a href="#border" class="headerlink" title="border"></a>border</h2><p>border-width：<br>thin: 薄薄的，等同于1px;<br>medium: 默认值，等同于3px; （border-style:double至少3px才有效果）<br>thick:厚厚的，等同于4px；</p>
+<h2 id="margin"><a href="#margin" class="headerlink" title="margin"></a>margin</h2><p>margin百分比值无论是水平方向还是垂直方向均是相对于宽度计算的！</p>
+<h3 id="margin合并"><a href="#margin合并" class="headerlink" title="margin合并"></a>margin合并</h3><p>只发生在垂直方向上</p>
+<ul>
+<li>margin-top合并：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、父元素设置为块状格式化上下文元素</span><br><span class="line">2、父元素设置border-top值</span><br><span class="line">3、父元素设置padding-top值</span><br><span class="line">4、父元素和子元素中间插入内联元素进行分割</span><br></pre></td></tr></table></figure></li>
+<li>margin-bottom合并  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、父元素设置为块状格式化上下文元素</span><br><span class="line">2、父元素设置border-bottom值</span><br><span class="line">3、父元素设置padding-bottom值</span><br><span class="line">4、父元素和子元素中间插入内联元素进行分割</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="margin合并规则"><a href="#margin合并规则" class="headerlink" title="margin合并规则"></a>margin合并规则</h3><p>总结概括为“正正取大值”“正负值相加”“负负最负值”</p>
+<h4 id="正正取大值"><a href="#正正取大值" class="headerlink" title="正正取大值"></a>正正取大值</h4><ul>
+<li>如果是相邻元素合并，间距取50px 大值  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: 50px; &#125;</span><br><span class="line">.b &#123; margin-top: 20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取50px 相当于father margin-top: 50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: 20px; &#125;</span><br><span class="line">.son &#123; margin-top: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为50px 大值 【空元素】   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: 20px; margin-bottom: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="正负相加"><a href="#正负相加" class="headerlink" title="正负相加"></a>正负相加</h4><ul>
+<li>如果是相邻元素合并，间距取30px （-20 + 50）  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: 50px; &#125;</span><br><span class="line">.b &#123; margin-top: -20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取-30px （-20 + 50） 相当于father margin-top: -30px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: -20px; &#125;</span><br><span class="line">.son &#123; margin-top: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为-30px （-20 + 50）   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: -20px; margin-bottom: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="负负取最负"><a href="#负负取最负" class="headerlink" title="负负取最负"></a>负负取最负</h4><ul>
+<li>如果是相邻元素合并，间距取-50px 最负  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: -50px; &#125;</span><br><span class="line">.b &#123; margin-top: -20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取-50px 相当于father margin-top: -50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: -20px; &#125;</span><br><span class="line">.son &#123; margin-top: -50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为-50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: -20px; margin-bottom: -50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="margin：auto填充规则"><a href="#margin：auto填充规则" class="headerlink" title="margin：auto填充规则"></a>margin：auto填充规则</h3>1、如果一侧有auto，一侧为定值，则auto为自动填充剩余空间<br>2、如果两侧均为auto，则平分剩余空间</li>
+</ul>
+<p>margin垂直居中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0; right: 0; bottom: 0; left: 0;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    margin:auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="margin失效"><a href="#margin失效" class="headerlink" title="margin失效"></a>margin失效</h3><ul>
+<li><p>margin合并的时候，更改margin值可能是没有效果 （更改小值）</p>
+</li>
+<li><p>绝对定位元素非定位方位的margin值“无效”</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">    top:10%;</span><br><span class="line">    left: 30%;</span><br><span class="line">    margin-right: 30px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定高容器的子元素的margin-bottom或者宽度定死的子元素的margin-right的定位“失效”,(影响后续兄弟元素)</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">　   &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">.box &#123;</span><br><span class="line">　  height: 100px;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">　  height: 80px;</span><br><span class="line">　  margin-bottom: 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>鞭长莫及导致margin无效</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;img src=&quot;mm1.jpg&quot;&gt;</span><br><span class="line">    &lt;p&gt;内容&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.box &gt; img &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:256px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.box &gt; p &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    margin-left:200px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">此时的&lt;p&gt;的margin-left从负无穷到256px都是没有任何效果的</span><br><span class="line">float和overflow 影响</span><br></pre></td></tr></table></figure></li>
+<li><p>内联特性导致margin无效</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;img src=&quot;mm1.jpg&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.box &gt; img &#123;</span><br><span class="line">    height:95px;</span><br><span class="line">    margin-top:-200px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">一个容器里面有一个图片，然后这张图片设置margin-top负值，让图片上偏移。但是，</span><br><span class="line">随着我们的负值越来越负，结果达到某一个具体负值的时候，图片不再往上偏移了。比方</span><br><span class="line">说，本例margin-top设置的是-200px，如果此时把margin-top设置成-300px，图片会</span><br><span class="line">再往上偏移100px吗？不会！它会微丝不动，margin-top变得无效了</span><br><span class="line">vertical-align影响</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h2><p>padding 足够大时，width失效<br>padding百分比值无论是水平方向还是垂直方向均是相对于宽度计算的！</p>
+<h2 id="content-计数器"><a href="#content-计数器" class="headerlink" title="content 计数器"></a>content 计数器</h2><ul>
+<li>counter-reset 创建或者重置计数器</li>
+<li>counter-increment 递增变量</li>
+<li>counter()或者counters()函数 得出计数器的值</li>
+</ul>
+<p>要想实现嵌套，必须让每一个列表容器拥有一个“普照源”，通过子辈对父辈的counter-reset重置、配合counters()方法才能实现计数嵌套效果<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/13.png" alt="avatar"></p>
+<h2 id="伪元素"><a href="#伪元素" class="headerlink" title="伪元素"></a>伪元素</h2><p>常见伪元素 <code>::first-letter,::first-line,::before,::after,::selection</code></p>
+<p>::before和::after必须配合content属性来使用，content用来定义插入的内容，content必须有值，至少是空。 当插入元素后content的宽度或者高度会发生变化</p>
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><p>指定一个元素是否必须移动(清除浮动后)到在它之前的浮动元素下面。clear 属性适用于浮动和非浮动元素</p>
+<ul>
+<li>none 元素不会向下移动清除之前的浮动</li>
+<li>left 元素被向下移动用于清除之前的左浮动。</li>
+<li>right 元素被向下移动用于清除之前的右浮动。</li>
+<li>both 元素被向下移动用于清除之前的左右浮动。</li>
+<li>inline-start 该关键字表示该元素向下移动以清除其包含块的起始侧上的浮动。即在某个区域的左侧浮动或右侧浮动。</li>
+<li>inline-end 该关键字表示该元素向下移动以清除其包含块的末端的浮点，即在某个区域的右侧浮动或左侧浮动。</li>
+</ul>
+<h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>盒子模型<br>    <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/10.png" alt="avatar"></p>
+<ul>
+<li>box-sizing: content-box 默认值 width = content区域宽度 / height = content区域高度<br>  <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/11.png" alt="avatar"></li>
+<li>box-sizing:border-box  width = content区域宽度 + padding + border / height = content区域高度 + padding + border<br>  <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/12.png" alt="avatar"></li>
+</ul>
+<pre><code>box-sizing:border-box 可以使原生普通文本框```&lt;input&gt;```和文本域```&lt;textarea&gt;```100%自适应父容器宽度
+</code></pre>
+
       
     </div>
 
