@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="CommonJS&#x2F;AMD&#x2F;CMD&#x2F;UMD&#x2F;ES Module简介CommonJSCommonJS是服务器端模块的规范，Node.js采用了这个规范。根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。Node内部提供一个Module构建函数。所有模块都是Module的实例 12345678910111">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS模块化总结">
+<meta property="og:url" content="http://example.com/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CommonJS&#x2F;AMD&#x2F;CMD&#x2F;UMD&#x2F;ES Module简介CommonJSCommonJS是服务器端模块的规范，Node.js采用了这个规范。根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。Node内部提供一个Module构建函数。所有模块都是Module的实例 12345678910111">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-18T03:17:57.000Z">
+<meta property="article:modified_time" content="2022-01-18T03:18:51.577Z">
+<meta property="article:author" content="juntaoli@yeah.net">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JS模块化总结 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="juntaoli@yeah.net">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS模块化总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-18 11:17:57 / 修改时间：11:18:51" itemprop="dateCreated datePublished" datetime="2022-01-18T11:17:57+08:00">2022-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="CommonJS-AMD-CMD-UMD-ES-Module简介"><a href="#CommonJS-AMD-CMD-UMD-ES-Module简介" class="headerlink" title="CommonJS/AMD/CMD/UMD/ES Module简介"></a>CommonJS/AMD/CMD/UMD/ES Module简介</h2><h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>CommonJS是服务器端模块的规范，Node.js采用了这个规范。根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。Node内部提供一个Module构建函数。所有模块都是Module的实例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Module(id, parent) &#123;</span><br><span class="line">  this.id = id;</span><br><span class="line">  this.exports = &#123;&#125;;</span><br><span class="line">  this.parent = parent;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line">module.id 模块的识别符，通常是带有绝对路径的模块文件名。</span><br><span class="line">module.filename 模块的文件名，带有绝对路径。</span><br><span class="line">module.loaded 返回一个布尔值，表示模块是否已经完成加载。</span><br><span class="line">module.parent 返回一个对象，表示调用该模块的模块。</span><br><span class="line">module.children 返回一个数组，表示该模块要用到的其他模块。</span><br><span class="line">module.exports 表示模块对外输出的值。</span><br></pre></td></tr></table></figure>
+<p>CommonJS 加载模块是同步的，所以只有加载完成才能执行后面的操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// math.js  定义</span><br><span class="line">var x = 5;</span><br><span class="line">var addX = function(value) &#123;</span><br><span class="line">  return value + x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.x = x;</span><br><span class="line">module.exports.addX = addX;</span><br><span class="line"></span><br><span class="line">// 也可以改写为如下</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  x: x,</span><br><span class="line">  addX: addX,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 使用</span><br><span class="line">let math = require(&#x27;./math.js&#x27;);</span><br><span class="line">console.log(&#x27;math.x&#x27;,math.x);</span><br><span class="line">console.log(&#x27;math.addX&#x27;, math.addX(4));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/nodejs/module.html">CommonJS规范</a></p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD是”Asynchronous Module Definition”的缩写，意思就是”异步模块定义”.<br><code>典型的代表requirejs</code> RequireJS 是一个前端的模块化管理的工具库，遵循AMD规范，它的作者就是AMD规范的创始人 James Burke。</p>
+<h3 id="定义模块API：define-id-dependencies-factory"><a href="#定义模块API：define-id-dependencies-factory" class="headerlink" title="定义模块API：define(id?, dependencies?, factory);"></a>定义模块API：define(id?, dependencies?, factory);</h3><ul>
+<li><p>id： 参数 id 为字符串类型，表示了模块标识，为可选参数。若不存在则模块标识应该默认定义为在加载器中被请求脚本的标识。如果存在，那么模块标识必须为顶层的或者一个绝对的标识。</p>
+</li>
+<li><p>dependencies：数组类型，是一个当前模块依赖的，已被模块定义的模块标识的数组字面量。</p>
+</li>
+<li><p>factory：一个需要进行实例化的函数或者一个对象</p>
+</li>
+</ul>
+<ol>
+<li><p>定义无依赖的模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define( &#123;</span><br><span class="line">    add : function( x, y )&#123;</span><br><span class="line">        return x + y ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></li>
+<li><p>定义有依赖的模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">define([&quot;alpha&quot;], function( alpha )&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        verb : function()&#123;</span><br><span class="line">            return alpha.verb() + 1 ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>定义数据对象模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(&#123;</span><br><span class="line">    users: [],</span><br><span class="line">    members: []</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>具名模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">define(&quot;alpha&quot;, [ &quot;require&quot;, &quot;exports&quot;, &quot;beta&quot; ], function( require, exports, beta )&#123;</span><br><span class="line">    export.verb = function()&#123;</span><br><span class="line">        return beta.verb();</span><br><span class="line">        // or:</span><br><span class="line">        return require(&quot;beta&quot;).verb();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>包装模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(function(require, exports, module) &#123;</span><br><span class="line">    var a = require(&#x27;a&#x27;),</span><br><span class="line">          b = require(&#x27;b&#x27;);</span><br><span class="line"></span><br><span class="line">    exports.action = function() &#123;&#125;;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="模块加载-require-module-callback"><a href="#模块加载-require-module-callback" class="headerlink" title="模块加载 require([module], callback)"></a>模块加载 require([module], callback)</h3><p>使用全局或局部的require函数实现加载一个或多个模块，所有模块加载完成之后的回调函数。</p>
+<ul>
+<li>[module]：是一个数组，里面的成员就是要加载的模块；</li>
+<li>callback：是模块加载完成之后的回调函数。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&#x27;math&#x27;], function(math) &#123;</span><br><span class="line">　math.add(2, 3);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CMD-代表"><a href="#CMD-代表" class="headerlink" title="CMD 代表"></a>CMD 代表</h2><p>CMD是SeaJS 在推广过程中对模块定义的规范化产出，CMD = Common Module Definition 即 通用模块定义</p>
+<p>CMD规范和AMD类似，都主要运行于浏览器端，写法上看起来也很类似。主要是区别在于 模块初始化时机</p>
+<ul>
+<li>AMD中只要模块作为依赖时，就会加载并初始化</li>
+<li>CMD中，模块作为依赖且被引用时才会初始化，否则只会加载</li>
+<li>CMD推崇依赖就近，AMD推崇依赖前置。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//AMD</span><br><span class="line">define([&#x27;./a&#x27;,&#x27;./b&#x27;], function (a, b) &#123;</span><br><span class="line"></span><br><span class="line">    //依赖一开始就写好</span><br><span class="line">    a.test();</span><br><span class="line">    b.test();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//CMD</span><br><span class="line">define(function (requie, exports, module) &#123;</span><br><span class="line"></span><br><span class="line">    //依赖可以就近书写</span><br><span class="line">    var a = require(&#x27;./a&#x27;);</span><br><span class="line">    a.test();</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    //软依赖</span><br><span class="line">    if (status) &#123;</span><br><span class="line">        var b = requie(&#x27;./b&#x27;);</span><br><span class="line">        b.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h2><p>UMD 是AMD 和 CommonJS的糅合</p>
+<p>UMD 先判断是否支持 Node.js 的模块（exports）是否存在，存在则使用 Node.js 模块模式。再判断是否支持 AMD（define 是否存在），存在则使用 AMD 方式加载模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(function (window, factory) &#123;</span><br><span class="line">    if (typeof exports === &#x27;object&#x27;) &#123;</span><br><span class="line"></span><br><span class="line">        module.exports = factory();</span><br><span class="line">    &#125; else if (typeof define === &#x27;function&#x27; &amp;&amp; define.amd) &#123;</span><br><span class="line"></span><br><span class="line">        define(factory);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line"></span><br><span class="line">        window.eventUtil = factory();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(this, function () &#123;</span><br><span class="line">    //module ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="ES-Module"><a href="#ES-Module" class="headerlink" title="ES Module"></a>ES Module</h2><p>es6模块的语法分为两部分：</p>
+<ul>
+<li>export 模块导出</li>
+<li>import模块导入</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// math.js</span><br><span class="line">export function add (a, b) &#123;</span><br><span class="line">    return a, b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// use.js</span><br><span class="line">import &#123;add&#125; from &#x27;math&#x27;</span><br><span class="line">add(1, 2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES-Module-和-CommonsJs-区别"><a href="#ES-Module-和-CommonsJs-区别" class="headerlink" title="ES Module 和 CommonsJs 区别"></a>ES Module 和 CommonsJs 区别</h3><ul>
+<li>CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用</li>
+<li>CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。</li>
+<li>CommonJS 模块的require()是同步加载模块，ES6 模块的import命令是异步加载，有一个独立的模块依赖的解析阶段。</li>
+</ul>
+<p>CommonJS 输出值的拷贝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// lib.js</span><br><span class="line">var counter = 3;</span><br><span class="line">var obj = &#123;</span><br><span class="line">    name: &#x27;David&#x27;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function changeValue() &#123;</span><br><span class="line">    counter++;</span><br><span class="line">    obj.name = &#x27;Peter&#x27;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    counter: counter,</span><br><span class="line">    obj: obj,</span><br><span class="line">    changeValue: changeValue,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">var mod = require(&#x27;./lib&#x27;);</span><br><span class="line"></span><br><span class="line">console.log(mod.counter);  // 3</span><br><span class="line">console.log(mod.obj.name);  //  &#x27;David&#x27;</span><br><span class="line">mod.changeValue();</span><br><span class="line">console.log(mod.counter);  // 3</span><br><span class="line">console.log(mod.obj.name);  //  &#x27;Peter&#x27;</span><br><span class="line"></span><br><span class="line">// Or</span><br><span class="line">console.log(require(&#x27;./lib&#x27;).counter);  // 3</span><br><span class="line">console.log(require(&#x27;./lib&#x27;).obj.name);  //  &#x27;Peter&#x27;</span><br><span class="line"></span><br><span class="line">counter 是基本类型值，模块内部值的变化不影响输出的值变化。</span><br><span class="line">obj 是引用类型值，模块内部值的变化影响输出的值变化。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ES Module 输出值的引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// lib.js</span><br><span class="line">export let counter = 3;</span><br><span class="line">export function incCounter() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">import &#123; counter, incCounter &#125; from &#x27;./lib&#x27;;</span><br><span class="line">console.log(counter); // 3</span><br><span class="line">incCounter();</span><br><span class="line">console.log(counter); // 4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>问题：</p>
+<ul>
+<li>CommonJS 循环依赖</li>
+<li>ES Module 循环依赖<br><a target="_blank" rel="noopener" href="http://www.qiutianaimeili.com/html/page/2019/12/fnpo81u8ni9.html">ES module和commonJS循环引用问题</a></li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903961128861704">JS模块化——CommonJS AMD CMD UMD ES6 Module 比较</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/moqiutao/p/13268861.html">JS之AMD、CMD、CommonJS、ES6、UMD的使用笔记</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004873947">AMD, CMD, CommonJS和UMD</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/module-loader">Module 的加载实现</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41231046">JS模块化加载之CommonJS、AMD、CMD、ES6</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75980415">前端模块化（AMD、CommonJS、UMD）总结</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" rel="prev" title="JS和CSS阻塞浏览器渲染">
+      <i class="fa fa-chevron-left"></i> JS和CSS阻塞浏览器渲染
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS-AMD-CMD-UMD-ES-Module%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">CommonJS&#x2F;AMD&#x2F;CMD&#x2F;UMD&#x2F;ES Module简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS"><span class="nav-number">2.</span> <span class="nav-text">CommonJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">3.</span> <span class="nav-text">AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97API%EF%BC%9Adefine-id-dependencies-factory"><span class="nav-number">3.1.</span> <span class="nav-text">定义模块API：define(id?, dependencies?, factory);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD-require-module-callback"><span class="nav-number">3.2.</span> <span class="nav-text">模块加载 require([module], callback)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD-%E4%BB%A3%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">CMD 代表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UMD"><span class="nav-number">5.</span> <span class="nav-text">UMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-Module"><span class="nav-number">6.</span> <span class="nav-text">ES Module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES-Module-%E5%92%8C-CommonsJs-%E5%8C%BA%E5%88%AB"><span class="nav-number">6.1.</span> <span class="nav-text">ES Module 和 CommonsJs 区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">juntaoli@yeah.net</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">juntaoli@yeah.net</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
