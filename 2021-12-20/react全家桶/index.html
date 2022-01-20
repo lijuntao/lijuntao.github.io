@@ -20,28 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+  <meta name="description" content="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）reduxredux全局数据状态管理工具（状态管理机），用作组件通信 state一个数据对象，存储redux中的数据。不能直接修改，只能通过action来修改 action每一次修改数据的动作可以描述为一个action，如果需要更改state中的数据，就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react全家桶">
+<meta property="og:url" content="http://example.com/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）reduxredux全局数据状态管理工具（状态管理机），用作组件通信 state一个数据对象，存储redux中的数据。不能直接修改，只能通过action来修改 action每一次修改数据的动作可以描述为一个action，如果需要更改state中的数据，就">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-20T04:05:18.000Z">
+<meta property="article:modified_time" content="2022-01-20T04:07:43.606Z">
 <meta property="article:author" content="juntaoli@yeah.net">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/page/2/">
+<link rel="canonical" href="http://example.com/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Hexo</title>
+  <title>react全家桶 | Hexo</title>
   
 
 
@@ -144,166 +148,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="juntaoli@yeah.net">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/" class="post-title-link" itemprop="url">多个commit合并</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-31 13:48:11 / 修改时间：15:00:43" itemprop="dateCreated datePublished" datetime="2021-12-31T13:48:11+08:00">2021-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="初始化环境"><a href="#初始化环境" class="headerlink" title="初始化环境"></a>初始化环境</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/1.png" alt="avatar"></p>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><ul>
-<li>目的： 将【第三次提交】【第二次提交】【第一次提交】合并到【要合并的位置】并重新提交</li>
-<li>通过<code>git log</code>查看提交的日志</li>
-<li>使用rebase命令设置提交的位置，这里有个需要注意的地方，因为我想把最后的三次提交合到要合并的位置，这里其实是需要合并最后的四次提交，所以需要合并的commit为<code>5865c72e6d8ba0bbd6c53eac6de7a865f0b571cf</code>及【要合并的位置】的上一次提交</li>
-<li>使用命令<code>git rebase -i 5865c7</code>或者<code>git rebase -i HEAD~4</code> 会弹出一个执行命令的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/2.png" alt="avatar"></li>
-<li>我们将 最后的三次commit 前方的命令改成 squash 或 s，然后输入:wq以保存并退出<ul>
-<li>pick 的意思是要会执行这个 commit</li>
-<li>squash 的意思是这个 commit 会被合并到前一个commit</li>
-</ul>
-</li>
-<li>保存之后我们会看到 commit message 的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/3.png" alt="avatar"></li>
-<li>要做的就是将多个commit信息合并为一个</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/4.png" alt="avatar"></li>
-<li>这个时候再使用<code>git log</code>或者可视化工具查看就会发现多次提交已经合并，并且合并后的commit也已经修改</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="juntaoli@yeah.net">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-31 13:23:53" itemprop="dateCreated datePublished" datetime="2021-12-31T13:23:53+08:00">2021-12-31</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -319,10 +167,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-title-link" itemprop="url">react全家桶</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          react全家桶
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -351,6 +198,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -361,7 +215,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"><a href="#react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）" class="headerlink" title="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"></a>react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）</h1><h2 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h2><h3 id="redux-1"><a href="#redux-1" class="headerlink" title="redux"></a>redux</h3><p>全局数据状态管理工具（状态管理机），用作组件通信</p>
+        <h1 id="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"><a href="#react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）" class="headerlink" title="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"></a>react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）</h1><h2 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h2><h3 id="redux-1"><a href="#redux-1" class="headerlink" title="redux"></a>redux</h3><p>全局数据状态管理工具（状态管理机），用作组件通信</p>
 <h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>一个数据对象，存储redux中的数据。不能直接修改，只能通过action来修改</p>
 <h3 id="action"><a href="#action" class="headerlink" title="action"></a>action</h3><p>每一次修改数据的动作可以描述为一个action，如果需要更改state中的数据，就发送一个action。一般为 {type,payload}，其中的type属性是必须的，表示 Action 的名称。</p>
 <h3 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h3><p>更改state的具体实现，根据action来最state中的数据进行操作更新。<br>可以添加多个reducer，redux 提供了一个combineReducers方法，将各个reducer函数合成一个大的reducer。</p>
@@ -468,25 +322,31 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Link</span><br><span class="line">1、通过字符串执行跳转路由</span><br><span class="line">&lt;------&gt;</span><br><span class="line">&lt;Link to=&#x27;/login&#x27;&gt;</span><br><span class="line">   	&lt;span&gt;登录&lt;/span&gt;</span><br><span class="line">&lt;/Link&gt;</span><br><span class="line">&lt;------&gt;</span><br><span class="line">2、对象指定跳转路由</span><br><span class="line">参数：</span><br><span class="line">1、pathname: 表示要链接到的路径的字符串。</span><br><span class="line">2、search: 表示查询参数的字符串形式。</span><br><span class="line">3、hash: 放入网址的 hash，例如 #a-hash。</span><br><span class="line">4、state: 状态持续到 location。通常用于隐式传参（埋点），可以用来统计页面来源</span><br><span class="line">&lt;------&gt;</span><br><span class="line">&lt;Link to=&#123;&#123;</span><br><span class="line">       pathname: &#x27;/login&#x27;,</span><br><span class="line">       search: &#x27;?name=cedric&#x27;,</span><br><span class="line">       hash: &#x27;#someHash&#x27;,</span><br><span class="line">       state: &#123; fromWechat: true &#125;</span><br><span class="line">   &#125;&#125;&gt;</span><br><span class="line">   	&lt;span&gt;登录&lt;/span&gt;</span><br><span class="line">&lt;/Link&gt;</span><br><span class="line">&lt;------&gt;</span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021-12-31/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
 
 
 
@@ -538,6 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#react%E5%85%A8%E5%AE%B6%E6%A1%B6%EF%BC%88react%E3%80%81redux%E3%80%81react-redux%E3%80%81react-dom%E3%80%81react-router%E3%80%81react-router-dom%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redux"><span class="nav-number">1.1.</span> <span class="nav-text">redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redux-1"><span class="nav-number">1.1.1.</span> <span class="nav-text">redux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state"><span class="nav-number">1.1.2.</span> <span class="nav-text">state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#action"><span class="nav-number">1.1.3.</span> <span class="nav-text">action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reducer"><span class="nav-number">1.1.4.</span> <span class="nav-text">reducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#store"><span class="nav-number">1.1.5.</span> <span class="nav-text">store</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch"><span class="nav-number">1.1.6.</span> <span class="nav-text">dispatch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-redux"><span class="nav-number">1.2.</span> <span class="nav-text">react-redux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UI%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">UI组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UI%E7%BB%84%E4%BB%B6-1"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">UI组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">容器组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#connect-%E7%94%A8%E6%88%B7%E4%BB%8EUI%E7%BB%84%E4%BB%B6%E7%94%9F%E6%88%90%E5%AE%B9%E5%99%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">connect() 用户从UI组件生成容器组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapStateToProps"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">mapStateToProps()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapDispatchToProps"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">mapDispatchToProps()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-dom"><span class="nav-number">1.3.</span> <span class="nav-text">react-dom</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#render"><span class="nav-number">1.3.1.</span> <span class="nav-text">render</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findDOMNode"><span class="nav-number">1.3.2.</span> <span class="nav-text">findDOMNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unmountComponentAtNode"><span class="nav-number">1.3.3.</span> <span class="nav-text">unmountComponentAtNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#react-router%E5%92%8Creact-router-dom%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.4.</span> <span class="nav-text">react-router和react-router-dom的区别</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
