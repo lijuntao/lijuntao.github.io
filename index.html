@@ -150,6 +150,138 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/lighthouse%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="juntaoli@yeah.net">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-21/lighthouse%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">lighthouse简单使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-21 15:09:03 / 修改时间：15:09:20" itemprop="dateCreated datePublished" datetime="2022-01-21T15:09:03+08:00">2022-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Lighthouse 是 Google 开发的一款开源自动化工具，用于分析网络应用和网页，收集现代性能指标和见解，让开发人员根据生成的评估页面，来进行网站优化和完善，提高用户体验</p>
+<img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/20.png" width="1000px"/>
+
+<p>点击 Generate report（生成报告），Lighthouse 会收集该网页的相关信息，并生成报告，如下图：</p>
+<img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/21.png" width="1000px"/>
+
+<h2 id="功能解析"><a href="#功能解析" class="headerlink" title="功能解析"></a>功能解析</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/21.png" alt="avatar"><br>最上面显示五个指标：</p>
+<ul>
+<li>Performance 性能</li>
+<li>Accessibility 无障碍功能</li>
+<li>Best Practice 最佳做法</li>
+<li>SEO 搜索引擎优化</li>
+<li>Progressive Web App 渐进式网页应用程序</li>
+</ul>
+<p>点击右上角的︙（Tools menu，工具菜单），这里有 7 个选项，分别为</p>
+<ul>
+<li>Print Summary：打印摘要，可另存为 PDF</li>
+<li>Print Expanded：打印详细信息，可另存为 PDF</li>
+<li>Copy JSON：复制 JSON</li>
+<li>Save as HTML：另存为 HTML</li>
+<li>Save as JSON：另存为 JSON，json 格式的报告可以通过 Lighthouse Report Viewer（Lighthouse 报告查看器）打开</li>
+<li>Open in Viewer：在 Lighthouse Report Viewer 中打开报告</li>
+<li>Toggle Dark Theme：切换为黑夜主题</li>
+</ul>
+<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/22.png" alt="avatar"></p>
+<ul>
+<li>First Contentful Paint（FCP）：初始渲染，首次内容渲染时间，<br>  即浏览器首次将任意内容（如文字、图像、canvas 等）绘制到屏幕上的时间点</li>
+<li>Speed Index（SI）：速度指数，衡量了首屏可见内容绘制在屏幕上的速度。在首次加载页面的过程中尽量展现更多的内容，往往能给用户带来更好的体验，所以速度指标的值约小越好</li>
+<li>Largest Contentful Paint（LCP）：最大内容绘制，用于监控网页可视区内“绘制面积”最大的元素开始呈现在屏幕上的时间</li>
+<li>Time to Interactive（TTI）：交互时间，页面达到完全可交互状态所需要的时间。即指的是所有的页面内容都已经成功加载，且能够快速地对用户的操作做出反应的时间点</li>
+<li>Total Blocking Time（TBI）：总阻塞时间，任务执行时间超过 50ms 时，FCP 和交互时间之间的所有时间段的总和，以毫秒为单位</li>
+<li>Cumulative Layout Shift（CLS）：累积布局偏移，指网页布局在加载期间的偏移量，用来衡量视觉界面稳定性的一个指标</li>
+</ul>
+<p>这 6 个指标对应的权重分别为 10%、10%、25%、10%、30%、15%，通过加权平均计算出性能总分为图中的 95 分23</p>
+<p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/23.png" alt="avatar"></p>
+<p>1、单击 View Original Trace（查看原始跟踪）按钮将转到 Performance（性能）面板，在其中跟踪加载详细信息<br>2、单击 View Treemap（查看树形图）会在新标签页中打开 Lighthouse Treemap，查看 JS 的 Resource Bytes（字节大小）、Unused Bytes（未使用字节）以及 Coverage（覆盖率）</p>
+<p>Show audits relevant（显示相关审核）按 ALL、FCP、LCP、TBT、CLS 五个指标显示，对应上面<strong>metrics</strong>中的指标，往下滑动可以看到 Opportunities、Diagnostics 两个部分。<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/24.png" alt="avatar"><br>在这里面可以看到给出各个方面的性能优化建议，比如图片、css、js 这些文件的处理，还有 html 里面标签的使用、缓存处理等建议，可以根据这些来对网站进行优化</p>
+<ul>
+<li>Opportunities 指的是优化机会，它提供了详细的建议和文档，帮助我们具体进行实现和改进，这些建议可以帮助您更快地加载页面</li>
+<li>Diagnostics 指的是诊断存在的问题，显示了有关应用程序性能的更多信息，为进一步改善性能的实验和调整给出了指导</li>
+<li>Passed audits 是通过审核的的各项良好性能参数</li>
+</ul>
+<h3 id="Accessibility（无障碍功能）"><a href="#Accessibility（无障碍功能）" class="headerlink" title="Accessibility（无障碍功能）"></a>Accessibility（无障碍功能）</h3><p>当我们说某个网站具有 Accessibility（无障碍功能）时，我们的意思是网站的内容可用，其功能可由任何人操作。所有用户都能使用键盘、鼠标或触摸屏，与网页内容进行清晰明了的交互，这会让使用者获得良好的体验。</p>
+<h3 id="Best-Practice（最佳做法）"><a href="#Best-Practice（最佳做法）" class="headerlink" title="Best Practice（最佳做法）"></a>Best Practice（最佳做法）</h3><p>Best Practice（最佳做法）评分的分数区间为 0-100，影响这项评分的指标项的权重都是相同的<br>比如：推荐使用 https，跨域的跳转链接需要使用 rel 标识，不能使用废弃的 API 等等</p>
+<h3 id="SEO（搜索引擎优化）"><a href="#SEO（搜索引擎优化）" class="headerlink" title="SEO（搜索引擎优化）"></a>SEO（搜索引擎优化）</h3><p>SEO（Search Engine Optimization）：汉译为搜索引擎优化，它检查页面是否针对搜索引擎结果排名进行了优化。</p>
+<h3 id="Progressive-Web-App（渐进式网页应用程序）"><a href="#Progressive-Web-App（渐进式网页应用程序）" class="headerlink" title="Progressive Web App（渐进式网页应用程序）"></a>Progressive Web App（渐进式网页应用程序）</h3><p>Lighthouse 使用 PWA 基准检查项列表（Baseline PWA Checklist）进行测评，测评结果将这些指标项分成了四个类别，共包含 12 个自动测试项和 3 个手动测试项，其中各个自动测试项的评分权重是相同的</p>
+<h4 id="快速可靠"><a href="#快速可靠" class="headerlink" title="快速可靠"></a>快速可靠</h4><ul>
+<li>页面在移动网络条件下能够快速加载</li>
+<li>在离线条件下页面能够返回状态码 200，这里我们可以通过 Service Worker 来实现离线可用</li>
+<li>start_url 在离线条件下返回状态码 200，start_url 是 manifest.json 中的一个属性，它指定了用户打开该 PWA 时加载的 URL<h4 id="可安装"><a href="#可安装" class="headerlink" title="可安装"></a>可安装</h4></li>
+<li>始终使用 HTTPS</li>
+<li>注册 Service Worker 来缓存页面以及 start_url</li>
+<li>使用 manifest 文件来实现安装 PWA 的需求，浏览器能够主动通知用户将应用添加到桌面，增加留存率<h4 id="PWA-优化"><a href="#PWA-优化" class="headerlink" title="PWA 优化"></a>PWA 优化</h4></li>
+<li>将 HTTP 流量重定向到 HTTPS</li>
+<li>配置自定义启动画面</li>
+<li>设置地址栏主题颜色</li>
+<li>页面内容针对视口大小自适应，对移动用户的展示更友好</li>
+<li>使用了 <meta name="viewport"> 标签，并设置了 width 或 initial-scale 属性</li>
+<li>当 JavaScript 文件不可用时，提供降级措施，页面能显示基本内容而不出现白屏</li>
+</ul>
+<h4 id="手动测试项"><a href="#手动测试项" class="headerlink" title="手动测试项"></a>手动测试项</h4><ul>
+<li>站点跨浏览器可用，如主流浏览器 Chrome, Edge, Firefox 及 Safari 等</li>
+<li>页面间切换流畅，即使在较差的网络环境下，切换动画也应该简洁顺畅，这是提高用户感知体验的关键</li>
+<li>保证每个页面都有独一无二的 URL，能够在新的浏览器窗口打开，且方便在社交媒体上进行分享</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1166,74 +1298,6 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E5%8E%9F%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="juntaoli@yeah.net">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-05/%E5%8E%9F%E5%9E%8B/" class="post-title-link" itemprop="url">原型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-05 15:40:15 / 修改时间：15:41:06" itemprop="dateCreated datePublished" datetime="2022-01-05T15:40:15+08:00">2022-01-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/9.png" alt="avatar"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1303,7 +1367,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
