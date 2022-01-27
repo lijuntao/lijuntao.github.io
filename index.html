@@ -173,10 +173,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-26 16:46:00 / 修改时间：16:46:37" itemprop="dateCreated datePublished" datetime="2022-01-26T16:46:00+08:00">2022-01-26</time>
+              <time title="创建时间：2022-01-26 16:46:00" itemprop="dateCreated datePublished" datetime="2022-01-26T16:46:00+08:00">2022-01-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-27 13:04:00" itemprop="dateModified" datetime="2022-01-27T13:04:00+08:00">2022-01-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -205,7 +211,46 @@
 <h3 id="布局视口（layout-viewport）"><a href="#布局视口（layout-viewport）" class="headerlink" title="布局视口（layout viewport）"></a>布局视口（layout viewport）</h3><p>布局视口是在html元素之上的容器，我们的页面就“装”在布局视口中,如果说CSS是一支画笔，那么布局视口就是那张画布。<br>移动设备上的浏览器都会把自己默认的 viewport 设为980px或其他值，一般都比移动端浏览器可视区域大很多，所以就会出现浏览器出现横向滚动条的情况。<br>布局视区的宽度是可以用 <code>document.documentElement.clientWidth</code> 来获取<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/25.awebp"></p>
 <h3 id="可视视口（visual-viewport）"><a href="#可视视口（visual-viewport）" class="headerlink" title="可视视口（visual viewport）"></a>可视视口（visual viewport）</h3><p>浏览器的可视区域,用户通过屏幕看到的页面区域，通过缩放查看显示内容的区域，在移动端缩放不会改变布局视口的宽度.一般移动端的浏览器默认为全屏状态，所以visual viewport也可以认为是手机屏幕的大小<br>可视视口的宽度可以通过window.innerWidth 来获取<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/26.awebp"></p>
 <h3 id="理想视口（ideal-viewport）"><a href="#理想视口（ideal-viewport）" class="headerlink" title="理想视口（ideal viewport）"></a>理想视口（ideal viewport）</h3><p>有了layout viewport和visual viewport，但是浏览器觉得还不够，因为现在越来越多的网站都会为移动设备进行单独的设计，所以必须还要有一个能完美适配移动设备的viewport，所以就出现了ideal viewport，有了ideal viewport，用户不用缩放和拖动网页就能够很好的进行网页浏览。ideal viewport 并没有一个固定的尺寸，不同的设备拥有有不同的 ideal viewport<br>可以到 <a target="_blank" rel="noopener" href="http://viewportsizes.com/">http://viewportsizes.com</a> 去查看一下，里面收集了众多设备的理想宽度</p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>先看一下viewport的常用的属性有哪些：<br>|name|value|description|<br>|—|—|—|<br>|width|正整数或device-width|定义布局视口的宽度，单位为像素|<br>|height|正整数或device-height|定义布局视口的高度，单位为像素|<br>|initial-scale|[0.0-10.0]|定义初始缩放值|<br>|maximum-scale|[0.0-10.0]|定义放大最大比例，它必须大于或等于minimum-scale设置|<br>|minimum-scale|[0.0-10.0]|定义缩小最小比例，它必须小于或等于maximum-scale设置|<br>|user-scalable|[0.0-10.0]|定义是否允许用户手动缩放页面，默认值yes|</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>先看一下viewport的常用的属性有哪些：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>正整数或device-width</td>
+<td>定义布局视口的宽度，单位为像素</td>
+</tr>
+<tr>
+<td>height</td>
+<td>正整数或device-height</td>
+<td>定义布局视口的高度，单位为像素</td>
+</tr>
+<tr>
+<td>initial-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义初始缩放值</td>
+</tr>
+<tr>
+<td>maximum-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义放大最大比例，它必须大于或等于minimum-scale设置</td>
+</tr>
+<tr>
+<td>minimum-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义缩小最小比例，它必须小于或等于maximum-scale设置</td>
+</tr>
+<tr>
+<td>user-scalable</td>
+<td>[0.0-10.0]</td>
+<td>定义是否允许用户手动缩放页面，默认值yes</td>
+</tr>
+</tbody></table>
 <h4 id="width"><a href="#width" class="headerlink" title="width"></a>width</h4><p>控制 viewport 的大小，可以指定的一个值，如 500，或者特殊的值，如 device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）</p>
 <h4 id="initial-scale"><a href="#initial-scale" class="headerlink" title="initial-scale"></a>initial-scale</h4><p>初始缩放比例，也即是当页面第一次 load 的时候缩放比例</p>
 <h4 id="height"><a href="#height" class="headerlink" title="height"></a>height</h4><p>与width类似，但实际上却不常用</p>
@@ -711,7 +756,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-27 12:46:24" itemprop="dateModified" datetime="2022-01-27T12:46:24+08:00">2022-01-27</time>
+                <time title="修改时间：2022-01-27 12:48:17" itemprop="dateModified" datetime="2022-01-27T12:48:17+08:00">2022-01-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -834,8 +879,8 @@
 <td>打包工具、模块化、编译模块代码方案</td>
 </tr>
 <tr>
-<td>gulp主要侧重前端开发工作流程的自动化，就像一个流水线，定义不同的Task任务，来实现不同的功能，比如动server、sass/less预编译、文件的合并压缩等等。将这些不同的任务按照一定的步骤组合起来实现一个流程的自动化</td>
-<td>webpack侧重于模块的打包，实现了模块化开发和文件处理。webpack将各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module，从entry配置的一个入口文件（JS文件）开始，据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源，主要通过loader（加载器）和plugins（插件）对资源进行处理的</td>
+<td>gulp主要侧重前端开发工作流程的自动化，就像一个流水线(万物皆可流)，定义不同的Task任务，来实现不同的功能，比如动server、sass/less预编译、文件的合并压缩等等。将这些不同的任务按照一定的步骤组合起来实现一个流程的自动化</td>
+<td>webpack侧重于模块(万物皆可模块)的打包，实现了模块化开发和文件处理。webpack将各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module，从entry配置的一个入口文件（JS文件）开始，据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源，主要通过loader（加载器）和plugins（插件）对资源进行处理的</td>
 </tr>
 <tr>
 <td>gulp通过插件的形式可以实现webpack的功能(构建、压缩)，插件比如<code>webpack-stream</code>、<code>gulp-uglify</code></td>
