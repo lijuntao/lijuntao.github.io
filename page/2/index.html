@@ -150,6 +150,339 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/CommonsChunkPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-20/CommonsChunkPlugin/" class="post-title-link" itemprop="url">CommonsChunkPlugin</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-20 09:22:33 / 修改时间：12:05:52" itemprop="dateCreated datePublished" datetime="2022-01-20T09:22:33+08:00">2022-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="CommonsChunkPlugin简介"><a href="#CommonsChunkPlugin简介" class="headerlink" title="CommonsChunkPlugin简介"></a>CommonsChunkPlugin简介</h2><p>CommonsChunkPlugin主要是用来提取第三方库和公共模块，避免首屏加载的bundle文件或者按需加载的bundle文件体积过大，从而导致加载时间过长</p>
+<p>这里先说一下CommonsChunkPlugin提及的chunk有哪几种：</p>
+<ul>
+<li>webpack当中配置的入口文件（entry）是chunk，可以理解为entry chunk</li>
+<li>入口文件以及它的依赖文件通过code split（代码分割）出来的也是chunk，可以理解为children chunk</li>
+<li>通过CommonsChunkPlugin创建出来的文件也是chunk，可以理解为commons chunk</li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><p>name：以是已经存在的chunk（一般指入口文件）对应的name，那么就会把公共模块代码合并到这个chunk上；否则，会创建名字为name的commons chunk进行合并</p>
+</li>
+<li><p>filename：指定commons chunk的文件名</p>
+</li>
+<li><p>chunks：指定source chunk，即指定从哪些chunk当中去找公共模块，省略该选项的时候，默认就是entry chunks</p>
+</li>
+<li><p>minChunks：既可以是数字，也可以是函数，还可以是Infinity</p>
+<ul>
+<li>设定为数字（大于等于2），指定共用模块被多少个 chunk 使用才能被合并。</li>
+<li>也可以设为函数，接受 (module, count) 两个参数，用法如上。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">name: &#x27;vendor&#x27;,</span><br><span class="line">minChunks: (module,count) =&gt; &#123;</span><br><span class="line">      // 所有 node_modules 下的文件</span><br><span class="line">      return module.resource &amp;&amp; /node_modules/.test(module.resource)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure></li>
+<li>特别地，还可以设置为 Infinity ，即马上创建 commons chunk 但不合并任何共用模块。这时一般搭配 entry 的配置一起用</li>
+</ul>
+</li>
+<li><p>children 设为 true 时，指定 source chunks 为 children of commons chunk。这里的 children of commons chunk 比较难理解，可以认为是 entry chunks 通过 code split 创建的 children chunks。children 与 chunks不可同时设置（它们都是指定 source chunks 的）。<br>  <strong>children 可以用来把 entry chunk 创建的 children chunks 的共用模块合并到自身，但这会导致初始加载时间较长：</strong></p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  // names: [&quot;app&quot;, &quot;subPageA&quot;]</span><br><span class="line">  // (choose the chunks, or omit for all chunks)</span><br><span class="line"></span><br><span class="line">  children: true,</span><br><span class="line">  // (select all children of chosen chunks)</span><br><span class="line"></span><br><span class="line">  // minChunks: 3,</span><br><span class="line">  // (3 children must share the module before it&#x27;s moved)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>async 即解决children: true时合并到 entry chunks 自身时初始加载时间过长的问题。async 设为 true 时，commons chunk 将不会合并到自身，而是使用一个新的异步的 commons chunk。当这个 commons chunk 被下载时，自动并行下载相应的共用模块。</p>
+<p>  整体实现：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  name: &#x27;vendor&#x27;,</span><br><span class="line">  minChunks: module =&gt; &#123;</span><br><span class="line">    return module.resource &amp;&amp; /node_modules/.test(module.resource)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;),</span><br><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  name: &#x27;client&#x27;,</span><br><span class="line">  async: &#x27;chunk-vendor&#x27;,</span><br><span class="line">  children: true,</span><br><span class="line">  minChunks: (module, count) =&gt; &#123;</span><br><span class="line">    // 被 3 个及以上 chunk 使用的共用模块提取出来</span><br><span class="line">    return count &gt;= 3</span><br><span class="line">  &#125;</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="不分离出第三方库和自定义公共模块"><a href="#不分离出第三方库和自定义公共模块" class="headerlink" title="不分离出第三方库和自定义公共模块"></a>不分离出第三方库和自定义公共模块</h3><p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// common.js</span><br><span class="line">export const common = &#x27;common file&#x27;;</span><br><span class="line"></span><br><span class="line">// first.js</span><br><span class="line">import &#123; common &#125; from &#x27;./common&#x27;;</span><br><span class="line">import $ from &#x27;jquery&#x27;;</span><br><span class="line">console.log($, `first  $&#123;common&#125;`);</span><br><span class="line"></span><br><span class="line">// sencond.js</span><br><span class="line">import &#123; common &#125; from &#x27;./common&#x27;;</span><br><span class="line">import $ from &#x27;jquery&#x27;;</span><br><span class="line">console.log($, `second  $&#123;common&#125;`);</span><br></pre></td></tr></table></figure>
+
+<p>webpack配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        first: &#x27;./src/first.js&#x27;,</span><br><span class="line">        second: &#x27;./src/second.js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname,&#x27;./dist&#x27;),</span><br><span class="line">        filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/14.png" alt="avatar"><br>first.js和second.js，会发现共同引用的common.js文件和jquery都被打包进去了</p>
+<h3 id="分离出第三方库、自定义公共模块、webpack运行文件"><a href="#分离出第三方库、自定义公共模块、webpack运行文件" class="headerlink" title="分离出第三方库、自定义公共模块、webpack运行文件"></a>分离出第三方库、自定义公共模块、webpack运行文件</h3><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        first: &#x27;./src/first.js&#x27;,</span><br><span class="line">        second: &#x27;./src/second.js&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname,&#x27;./dist&#x27;),</span><br><span class="line">        filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/15.png" alt="avatar"><br>查看vendor.js文件，发现first.js和second.js文件中依赖的jquery和common.js都被打包进vendor.js中，同时还有webpack的运行文件</p>
+<h3 id="单独分离出第三方库、自定义公共模块、webpack运行文件"><a href="#单独分离出第三方库、自定义公共模块、webpack运行文件" class="headerlink" title="单独分离出第三方库、自定义公共模块、webpack运行文件"></a>单独分离出第三方库、自定义公共模块、webpack运行文件</h3><h4 id="第一步-先分离webpack运行文件"><a href="#第一步-先分离webpack运行文件" class="headerlink" title="第一步 先分离webpack运行文件"></a>第一步 先分离webpack运行文件</h4><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: [&#x27;vendor&#x27;, &#x27;runtime&#x27;],</span><br><span class="line">      filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">  /** 上面代码等价与下面</span><br><span class="line">   plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;</span><br><span class="line">        &#125;),</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;runtime&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            chunks: [&#x27;vendor&#x27;]</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">  **/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/16.png" alt="avatar"><br>发现vendor.js的体积已经减小，说明已经把webpack运行文件runtime.js提取出来了.但是<br>vendor.js中还有自定义的公共模块common.js，现在只想vendor.js拥有项目依赖的第三方库而已（这里是jquery）</p>
+<h4 id="第二步-抽离第三方库和自定义公共模块"><a href="#第二步-抽离第三方库和自定义公共模块" class="headerlink" title="第二步 抽离第三方库和自定义公共模块"></a>第二步 抽离第三方库和自定义公共模块</h4><h5 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h5><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;,</span><br><span class="line">    vendor:[&#x27;jquery&#x27;] //第三方库入口</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: [&#x27;vendor&#x27;, &#x27;runtime&#x27;],</span><br><span class="line">      filename: &#x27;[name].js&#x27;,</span><br><span class="line">      minChunks: Infinity</span><br><span class="line">    &#125;),</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: &#x27;common&#x27;,</span><br><span class="line">      filename: &#x27;[name].js&#x27;,</span><br><span class="line">      chunks: [&#x27;first&#x27;, &#x27;second&#x27;]//从first.js和second.js中抽取commons chunk</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/18.png" alt="avatar"><br>发现生成了common.js公共文件，包含了common和jquery，但是却没了vendor.js文件。这里有个细节就是：<strong>如果设置了·minChunks: Infinity,则表示立即生成公共chunk，但是不包含模块</strong>，所以可以理解为：生成了一个公共文件<code>vendor</code>,随后又提取了一个公共文件<code>runtime</code>,而vendor为空了，所以没有生成。可以这么修改：<br>在entry中增加一个vendor入口来提取第三方库文件。<br>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/19.png" alt="avatar"><br>此时：vendor.js 只包含了第三方库文件，common.js只包含了自定义的公共模块</p>
+<h5 id="第二种方式"><a href="#第二种方式" class="headerlink" title="第二种方式"></a>第二种方式</h5><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            minChunks: function (module,count) &#123;</span><br><span class="line">                console.log(module.resource,`引用次数$&#123;count&#125;`);</span><br><span class="line">                //&quot;有正在处理文件&quot; + &quot;这个文件是 .js 后缀&quot; + &quot;这个文件是在 node_modules 中&quot;</span><br><span class="line">                return (</span><br><span class="line">                    module.resource &amp;&amp;</span><br><span class="line">                    /\.js$/.test(module.resource) &amp;&amp;</span><br><span class="line">                    module.resource.indexOf(path.join(__dirname, &#x27;./node_modules&#x27;)) === 0</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;runtime&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            chunks: [&#x27;vendor&#x27;]</span><br><span class="line">        &#125;),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/18.png" alt="avatar"><br>上面的代码其实就是生成一个叫做vendor的commons chunk，那么有哪些模块会被加入到vendor中呢？就对入口文件及其依赖的模块进行遍历，如果该模块是js文件并且在node_modules中，就会加入到vendor当中，其实这也是一种让vendor只保留第三方库的办法。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000009070061">CommonsChunkPlugin的参数详解</a><br><a target="_blank" rel="noopener" href="https://github.com/creeperyang/blog/issues/37">Webpack 日常使用与优化</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012828879?utm_source=tag-newest">详解CommonsChunkPlugin的配置和用法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">JS模块化总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-18 11:17:57 / 修改时间：11:18:51" itemprop="dateCreated datePublished" datetime="2022-01-18T11:17:57+08:00">2022-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="CommonJS-AMD-CMD-UMD-ES-Module简介"><a href="#CommonJS-AMD-CMD-UMD-ES-Module简介" class="headerlink" title="CommonJS/AMD/CMD/UMD/ES Module简介"></a>CommonJS/AMD/CMD/UMD/ES Module简介</h2><h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>CommonJS是服务器端模块的规范，Node.js采用了这个规范。根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象。Node内部提供一个Module构建函数。所有模块都是Module的实例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Module(id, parent) &#123;</span><br><span class="line">  this.id = id;</span><br><span class="line">  this.exports = &#123;&#125;;</span><br><span class="line">  this.parent = parent;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line">module.id 模块的识别符，通常是带有绝对路径的模块文件名。</span><br><span class="line">module.filename 模块的文件名，带有绝对路径。</span><br><span class="line">module.loaded 返回一个布尔值，表示模块是否已经完成加载。</span><br><span class="line">module.parent 返回一个对象，表示调用该模块的模块。</span><br><span class="line">module.children 返回一个数组，表示该模块要用到的其他模块。</span><br><span class="line">module.exports 表示模块对外输出的值。</span><br></pre></td></tr></table></figure>
+<p>CommonJS 加载模块是同步的，所以只有加载完成才能执行后面的操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// math.js  定义</span><br><span class="line">var x = 5;</span><br><span class="line">var addX = function(value) &#123;</span><br><span class="line">  return value + x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.x = x;</span><br><span class="line">module.exports.addX = addX;</span><br><span class="line"></span><br><span class="line">// 也可以改写为如下</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  x: x,</span><br><span class="line">  addX: addX,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 使用</span><br><span class="line">let math = require(&#x27;./math.js&#x27;);</span><br><span class="line">console.log(&#x27;math.x&#x27;,math.x);</span><br><span class="line">console.log(&#x27;math.addX&#x27;, math.addX(4));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://javascript.ruanyifeng.com/nodejs/module.html">CommonJS规范</a></p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD是”Asynchronous Module Definition”的缩写，意思就是”异步模块定义”.<br><code>典型的代表requirejs</code> RequireJS 是一个前端的模块化管理的工具库，遵循AMD规范，它的作者就是AMD规范的创始人 James Burke。</p>
+<h3 id="定义模块API：define-id-dependencies-factory"><a href="#定义模块API：define-id-dependencies-factory" class="headerlink" title="定义模块API：define(id?, dependencies?, factory);"></a>定义模块API：define(id?, dependencies?, factory);</h3><ul>
+<li><p>id： 参数 id 为字符串类型，表示了模块标识，为可选参数。若不存在则模块标识应该默认定义为在加载器中被请求脚本的标识。如果存在，那么模块标识必须为顶层的或者一个绝对的标识。</p>
+</li>
+<li><p>dependencies：数组类型，是一个当前模块依赖的，已被模块定义的模块标识的数组字面量。</p>
+</li>
+<li><p>factory：一个需要进行实例化的函数或者一个对象</p>
+</li>
+</ul>
+<ol>
+<li><p>定义无依赖的模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define( &#123;</span><br><span class="line">    add : function( x, y )&#123;</span><br><span class="line">        return x + y ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></li>
+<li><p>定义有依赖的模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">define([&quot;alpha&quot;], function( alpha )&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        verb : function()&#123;</span><br><span class="line">            return alpha.verb() + 1 ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>定义数据对象模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(&#123;</span><br><span class="line">    users: [],</span><br><span class="line">    members: []</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>具名模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">define(&quot;alpha&quot;, [ &quot;require&quot;, &quot;exports&quot;, &quot;beta&quot; ], function( require, exports, beta )&#123;</span><br><span class="line">    export.verb = function()&#123;</span><br><span class="line">        return beta.verb();</span><br><span class="line">        // or:</span><br><span class="line">        return require(&quot;beta&quot;).verb();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>包装模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(function(require, exports, module) &#123;</span><br><span class="line">    var a = require(&#x27;a&#x27;),</span><br><span class="line">          b = require(&#x27;b&#x27;);</span><br><span class="line"></span><br><span class="line">    exports.action = function() &#123;&#125;;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="模块加载-require-module-callback"><a href="#模块加载-require-module-callback" class="headerlink" title="模块加载 require([module], callback)"></a>模块加载 require([module], callback)</h3><p>使用全局或局部的require函数实现加载一个或多个模块，所有模块加载完成之后的回调函数。</p>
+<ul>
+<li>[module]：是一个数组，里面的成员就是要加载的模块；</li>
+<li>callback：是模块加载完成之后的回调函数。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&#x27;math&#x27;], function(math) &#123;</span><br><span class="line">　math.add(2, 3);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CMD-代表"><a href="#CMD-代表" class="headerlink" title="CMD 代表"></a>CMD 代表</h2><p>CMD是SeaJS 在推广过程中对模块定义的规范化产出，CMD = Common Module Definition 即 通用模块定义</p>
+<p>CMD规范和AMD类似，都主要运行于浏览器端，写法上看起来也很类似。主要是区别在于 模块初始化时机</p>
+<ul>
+<li>AMD中只要模块作为依赖时，就会加载并初始化</li>
+<li>CMD中，模块作为依赖且被引用时才会初始化，否则只会加载</li>
+<li>CMD推崇依赖就近，AMD推崇依赖前置。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//AMD</span><br><span class="line">define([&#x27;./a&#x27;,&#x27;./b&#x27;], function (a, b) &#123;</span><br><span class="line"></span><br><span class="line">    //依赖一开始就写好</span><br><span class="line">    a.test();</span><br><span class="line">    b.test();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//CMD</span><br><span class="line">define(function (requie, exports, module) &#123;</span><br><span class="line"></span><br><span class="line">    //依赖可以就近书写</span><br><span class="line">    var a = require(&#x27;./a&#x27;);</span><br><span class="line">    a.test();</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    //软依赖</span><br><span class="line">    if (status) &#123;</span><br><span class="line">        var b = requie(&#x27;./b&#x27;);</span><br><span class="line">        b.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h2><p>UMD 是AMD 和 CommonJS的糅合</p>
+<p>UMD 先判断是否支持 Node.js 的模块（exports）是否存在，存在则使用 Node.js 模块模式。再判断是否支持 AMD（define 是否存在），存在则使用 AMD 方式加载模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(function (window, factory) &#123;</span><br><span class="line">    if (typeof exports === &#x27;object&#x27;) &#123;</span><br><span class="line"></span><br><span class="line">        module.exports = factory();</span><br><span class="line">    &#125; else if (typeof define === &#x27;function&#x27; &amp;&amp; define.amd) &#123;</span><br><span class="line"></span><br><span class="line">        define(factory);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line"></span><br><span class="line">        window.eventUtil = factory();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(this, function () &#123;</span><br><span class="line">    //module ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="ES-Module"><a href="#ES-Module" class="headerlink" title="ES Module"></a>ES Module</h2><p>es6模块的语法分为两部分：</p>
+<ul>
+<li>export 模块导出</li>
+<li>import模块导入</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// math.js</span><br><span class="line">export function add (a, b) &#123;</span><br><span class="line">    return a, b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// use.js</span><br><span class="line">import &#123;add&#125; from &#x27;math&#x27;</span><br><span class="line">add(1, 2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES-Module-和-CommonsJs-区别"><a href="#ES-Module-和-CommonsJs-区别" class="headerlink" title="ES Module 和 CommonsJs 区别"></a>ES Module 和 CommonsJs 区别</h3><ul>
+<li>CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用</li>
+<li>CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。</li>
+<li>CommonJS 模块的require()是同步加载模块，ES6 模块的import命令是异步加载，有一个独立的模块依赖的解析阶段。</li>
+</ul>
+<p>CommonJS 输出值的拷贝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// lib.js</span><br><span class="line">var counter = 3;</span><br><span class="line">var obj = &#123;</span><br><span class="line">    name: &#x27;David&#x27;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function changeValue() &#123;</span><br><span class="line">    counter++;</span><br><span class="line">    obj.name = &#x27;Peter&#x27;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    counter: counter,</span><br><span class="line">    obj: obj,</span><br><span class="line">    changeValue: changeValue,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">var mod = require(&#x27;./lib&#x27;);</span><br><span class="line"></span><br><span class="line">console.log(mod.counter);  // 3</span><br><span class="line">console.log(mod.obj.name);  //  &#x27;David&#x27;</span><br><span class="line">mod.changeValue();</span><br><span class="line">console.log(mod.counter);  // 3</span><br><span class="line">console.log(mod.obj.name);  //  &#x27;Peter&#x27;</span><br><span class="line"></span><br><span class="line">// Or</span><br><span class="line">console.log(require(&#x27;./lib&#x27;).counter);  // 3</span><br><span class="line">console.log(require(&#x27;./lib&#x27;).obj.name);  //  &#x27;Peter&#x27;</span><br><span class="line"></span><br><span class="line">counter 是基本类型值，模块内部值的变化不影响输出的值变化。</span><br><span class="line">obj 是引用类型值，模块内部值的变化影响输出的值变化。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ES Module 输出值的引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// lib.js</span><br><span class="line">export let counter = 3;</span><br><span class="line">export function incCounter() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// main.js</span><br><span class="line">import &#123; counter, incCounter &#125; from &#x27;./lib&#x27;;</span><br><span class="line">console.log(counter); // 3</span><br><span class="line">incCounter();</span><br><span class="line">console.log(counter); // 4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>问题：</p>
+<ul>
+<li>CommonJS 循环依赖</li>
+<li>ES Module 循环依赖<br><a target="_blank" rel="noopener" href="http://www.qiutianaimeili.com/html/page/2019/12/fnpo81u8ni9.html">ES module和commonJS循环引用问题</a></li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903961128861704">JS模块化——CommonJS AMD CMD UMD ES6 Module 比较</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/moqiutao/p/13268861.html">JS之AMD、CMD、CommonJS、ES6、UMD的使用笔记</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004873947">AMD, CMD, CommonJS和UMD</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/module-loader">Module 的加载实现</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41231046">JS模块化加载之CommonJS、AMD、CMD、ES6</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75980415">前端模块化（AMD、CommonJS、UMD）总结</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" class="post-title-link" itemprop="url">JS和CSS阻塞浏览器渲染</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-13 13:07:39" itemprop="dateCreated datePublished" datetime="2022-01-13T13:07:39+08:00">2022-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-18 13:56:08" itemprop="dateModified" datetime="2022-01-18T13:56:08+08:00">2022-01-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
+<li>1、JS会阻塞DOM的解析和渲染</li>
+<li>2、CSS不会阻塞DOM的解析</li>
+<li>3、CSS会阻塞DOM的渲染</li>
+<li>4、CSS会阻塞后面JS语句的执行，也就是如果JS前面如果有CSS连接的话，会等待CSS下载完成之后再继续执行JS</li>
+<li>5、<code>&lt;spacript&gt;</code>defer与async的区别是：defer要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行；async一旦下载完，渲染引擎就会中断渲染，执行这个脚本以后，再继续渲染。一句话，defer是“渲染完再执行”，async是“下载完就执行”。另外，如果有多个defer脚本，会按照它们在页面出现的顺序加载，而多个async脚本是不能保证加载顺序的。</li>
+<li>6、<code>&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot;&gt;&lt;/script&gt;</code>浏览器对于带有type=”module”的<code>&lt;script&gt;</code>，都是异步加载，不会造成堵塞浏览器，即等到整个页面渲染完，再执行模块脚本，等同于打开了<code>&lt;script&gt;</code>标签的defer属性  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;!-- 等同于 --&gt;</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot; defer&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;标签的async属性也可以打开，这时只要加载完成，渲染引擎就会中断渲染立即执行。执行完成后，再恢复渲染</span><br><span class="line">一旦使用了async属性，&lt;script type=&quot;module&quot;&gt;就不会按照在页面出现的顺序执行，而是只要该模块加载完成，就执行该模块。</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-11/EventLoop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -577,6 +910,166 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E7%BD%91%E7%BB%9C%E6%8F%A1%E6%89%8B%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-05/%E7%BD%91%E7%BB%9C%E6%8F%A1%E6%89%8B%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">网络握手相关</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-05 18:20:21" itemprop="dateCreated datePublished" datetime="2022-01-05T18:20:21+08:00">2022-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-10 16:11:19" itemprop="dateModified" datetime="2022-02-10T16:11:19+08:00">2022-02-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="网络握手相关"><a href="#网络握手相关" class="headerlink" title="网络握手相关"></a>网络握手相关</h1><h2 id="HTTPS-SSL-TLS认证过程"><a href="#HTTPS-SSL-TLS认证过程" class="headerlink" title="HTTPS SSL/TLS认证过程"></a>HTTPS SSL/TLS认证过程</h2><p>在学习HTTPS协议之前需要先了解几个概念</p>
+<h3 id="网络协议模型"><a href="#网络协议模型" class="headerlink" title="网络协议模型"></a>网络协议模型</h3><p>网络传输的实现比较复杂，OSI制定的一个用于计算机或通信系统间互联的标准体系,一般成为OSI七层模型，每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。它是一个七层的、抽象的模型体，不仅包括一系列抽象的术语或概念，也包括具体的协议。<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/36.jpeg" alt="avatar"></p>
+<p>用户接触到的，只是最上面的一层，根本没有感觉到下面的层。越下面的层，越靠近硬件；越上面的层，越靠近用户。每一层都是为了完成一种功能。为了实现这些功能，就需要大家都遵守共同的规则。大家都遵守的规则，就叫做”协议”（protocol）。互联网的每一层，都定义了很多协议。这些协议的总称，就叫做”互联网协议”（Internet Protocol Suite）。</p>
+<h4 id="五层协议"><a href="#五层协议" class="headerlink" title="五层协议"></a>五层协议</h4><p>现在一般将网络协议模型有7层简化为5层模型<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/37.png" alt="avatar"></p>
+<p>我们自下而上的理解每一层的功能。</p>
+<h4 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h4><p>这一层只是为数据端设备提供原始比特流的传输通路。就是把电脑连接起来的物理手段。它主要规定了网络的一些电气特性，作用是负责传送0和1的比特流电信号。<br>常见的实现：网线，集线器，无线电波</p>
+<h4 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h4><p>这一层提供了介质访问和链路管理。例如，将数据分帧（数据包），物理寻址（mac地址），重发等。<br>常见的实现：网卡，网桥等</p>
+<h4 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h4><p>这一层提供了IP选址及路由选择，实现不同网络之间的路径选择。<br>理论上来说只要有MAC地址，我们就可以实现两台设备之间的直接通讯，但是实现起来难度太大。在数据链路层是采用广播的机制进行寻址的，这在一个小的网络范围内问题不大，但是当网络设备量很大的时候，这样的广播机制会造成网络拥堵。而且现实中互联网是由一个个的局域网组成的，寻址广播只能在一个局域网中传播。<br>这就导致了”网络层”的诞生。它的作用是引进一套新的地址，使得我们能够区分不同的计算机是否属于同一个子网络。这套地址就叫做”网络地址”，简称”网址”，规定网络地址的协议，叫做IP协议，所以网址也成为IP地址。这样每台计算机有了两种地址，一种是MAC地址，另一种是网络地址，这两个地址随机的组合在一起。网络地址帮助我们确定计算机所在的子网络，MAC地址则将数据包送到该子网络中的目标网卡。</p>
+<p>常见的实现：路由器 ICMP IGMP IP ARP</p>
+<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>这一层提供了定义传输数据的协议端口号，以及流控和差错校验。<br>同一台主机上有许多程序都需要用到网络，比如我们一边浏览网页（一个进程），一边聊天（另一个进程），所有的这些数据都会通过下层协议发送出去，所以我们还需要区分这些数据是具体是那个进程需要的，这就需要增加一个”端口”（port）的概念，它其实是每一个使用网卡的程序的编号，应用程序能够根据端口来获取自己所需要的数据。<br>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流<br>常见的实现：TCP UDP</p>
+<h4 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h4><p>这一层提供了建立、管理、终止会话。（在五层模型里面已经合并到了应用层）</p>
+<h4 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h4><p>这一层提供了数据的表示、安全、压缩。（在五层模型里面已经合并到了应用层）</p>
+<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><p>这一层提供了访问网络程序的接口，可以让用户程序调用下层网络服务的接口。<br>例如：传输层TCP协议可以为各种各样的程序传递数据，比如Email、WWW、FTP等等。那么，必须有不同协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了”应用层”。<br>常见的实现：HTTP FTP Telnet Email DNS等</p>
+<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p>对称加密，顾名思义就是加密和解密都是使用同一个密钥，常见的对称加密算法有 DES、3DES 和 AES 等</p>
+<p>优点：算法公开、计算量小、加密速度快、加密效率高，适合加密比较大的数据<br>缺点：双方使用同样的秘钥，无法保证秘钥不被篡改，安全性不高；还有就是不同用户对之间使用的秘钥是不一样的，所以需要管理大量的秘钥，成本较高</p>
+<h3 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h3><p>非对称加密，顾名思义，就是加密和解密需要使用两个不同的密钥：公钥（public key）和私钥（private key）。公钥与私钥是一对，如果用公钥对数据进行加密，只有用对应的私钥才能解密；如果用私钥对数据进行加密，那么只有用对应的公钥才能解密。<br>优点：算法公开，加密和解密使用不同的钥匙，私钥不需要通过网络进行传输，安全性很高<br>缺点：计算量比较大，加密和解密速度相比对称加密慢很多</p>
+<h3 id="数字证书，数字签名"><a href="#数字证书，数字签名" class="headerlink" title="数字证书，数字签名"></a>数字证书，数字签名</h3><p>我觉得这个看阮一峰<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">这篇文章</a>就能很好的解释，这里就copy一下。</p>
+<p>1.<br> <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/38.png" alt="avatar"></p>
+<p>鲍勃有两把钥匙，一把公钥 一把私钥</p>
+<p>2.<br> <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/39.png" alt="avatar"><br>鲍勃把自己的公钥，分别分给了他的朋友帕蒂 道格 苏珊三个人</p>
+<p>3.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/40.png" alt="avatar"><br>苏珊要给鲍勃写信，就用鲍勃的公钥把信的内容进行加密，然后发送给鲍勃，达到安全保密的目的。这个时候只要鲍勃的私钥没有泄露，这封信件就是安全的，就算别人拿到也无法加密。</p>
+<p>4.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/41.png" alt="avatar"><br>鲍勃接收到加密后的信件，然后使用自己的私钥进行解密，就能看到信的内容。</p>
+<p>5.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/42.png" alt="avatar"><br>这个时候鲍勃要给苏珊回信，决定使用了“数字签名”，写完信之后先将信的内容用hash生成“摘要”</p>
+<p>6.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/43.png" alt="avatar"><br>然后鲍勃使用私钥给这个“摘要”加密，生成<strong>“数字签名”</strong></p>
+<p>7.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/44.png" alt="avatar"><br>鲍勃将这个数字签名，附在信件下面，一起发给苏珊</p>
+<p>8.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/45.png" alt="avatar"><br>苏珊收信后，获取数字签名，用鲍勃的公钥解密，得到信件的摘要。由此证明，这封信确实是鲍勃发出的。</p>
+<p>9.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/46.png" alt="avatar"><br>苏珊再对信件内容使用Hash函数，将得到的结果，及信件的摘要，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。</p>
+<p>10.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/47.png" alt="avatar"><br>网络环境总有使坏者。加入道格想欺骗苏珊，用自己的公钥偷偷替换了苏珊电脑中的鲍勃的公钥，此时苏珊实际所用的是道格的公钥，但是还是认为是鲍勃的公钥。这个时候道格截取了鲍勃发送给苏珊的信件，同时也有鲍勃的公钥，就可以修改信件的内容，并且使用自己的私钥生成数字签名，然后发送给苏珊。因为苏珊电脑上的公钥已经被道格替换过了，所以可以解密道格篡改过的信件。</p>
+<p>11.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/48.png" alt="avatar"><br>突然有一天，苏珊发现自己电脑上鲍勃的公钥异常，无法判断是否是鲍勃的公钥。就让鲍勃去权威的第三方证书中心（certificate authority，简称CA），对公钥做个认证。证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成<strong>“数字证书”（Digital Certificate）</strong></p>
+<p>12.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/49.png" alt="avatar"><br>鲍勃拿到数字证书以后，就可以放心了。以后再给苏珊写信，只要在签名的同时，再附上数字证书就行了</p>
+<p>13.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/50.png" alt="avatar"><br>苏珊收信后，用CA的公钥解开数字证书，就可以拿到鲍勃真实的公钥了，然后就能证明”数字签名”是否真的是鲍勃签的。</p>
+<h3 id="SSL协商认证"><a href="#SSL协商认证" class="headerlink" title="SSL协商认证"></a>SSL协商认证</h3><h3 id="CA数字证书签发和验证流程"><a href="#CA数字证书签发和验证流程" class="headerlink" title="CA数字证书签发和验证流程"></a>CA数字证书签发和验证流程</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/51.jpeg" alt="avatar"></p>
+<h4 id="签发"><a href="#签发" class="headerlink" title="签发"></a>签发</h4><p>CA证书包含以下信息：申请者公钥、申请者的组织信息和个人信息、签发机构 CA 的信息、有效时间、证书序列号等信息的明文，同时包含一个签名。<br>CA证书中签名的生成：首先，使用散列函数计算公开的明文信息的信息摘要，然后，采用 CA 的私钥对信息摘要进行加密，密文即签名</p>
+<p>具体过程：</p>
+<ul>
+<li>首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值</li>
+<li>然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；</li>
+<li>最后将 Certificate Signature 添加在文件证书上，形成数字证书</li>
+</ul>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><ul>
+<li>首先客户端会使用同样的 Hash 算法获取该证书的 Hash 值 H1</li>
+<li>通常浏览器和操作系统中集成了 CA 的公钥信息，浏览器收到证书后可以使用 CA 的公钥解密 Certificate Signature 内容，得到一个 Hash 值 H2</li>
+<li>最后比较 H1 和 H2，如果值相同，则为可信赖的证书，否则则认为证书不可信</li>
+</ul>
+<p>实际上，证书的验证过程中还存在一个证书信任链的问题，因为我们向 CA 申请的证书一般不是根证书签发的，而是由中间证书签发的，比如百度的证书，从下图你可以看到，证书的层级有三级<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/52.png" alt="avatar"></p>
+<ul>
+<li>客户端收到 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 的证书后，发现这个证书的签发者不是根证书，就无法根据本地已有的根证书中的公钥去验证 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书是否可信。于是，客户端根据 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书中的签发者，找到该证书的颁发机构是 “GlobalSign Organization Validation CA - SHA256 - G2”，然后向 CA 请求该中间证书</li>
+<li>请求到证书后发现 “GlobalSign Organization Validation CA - SHA256 - G2” 证书是由 “GlobalSign Root CA” 签发的，由于 “GlobalSign Root CA” 没有再上级签发机构，说明它是根证书，也就是自签证书。应用软件会检查此证书有否已预载于根证书清单上，如果有，则可以利用根证书中的公钥去验证 “GlobalSign Organization Validation CA - SHA256 - G2” 证书，如果发现验证通过，就认为该中间证书是可信的</li>
+<li>“GlobalSign Organization Validation CA - SHA256 - G2” 证书被信任后，可以使用 “GlobalSign Organization Validation CA - SHA256 - G2” 证书中的公钥去验证 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书的可信性，如果验证通过，就可以信任 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书。</li>
+</ul>
+<h4 id="SSL-TLS-握手"><a href="#SSL-TLS-握手" class="headerlink" title="SSL/TLS 握手"></a>SSL/TLS 握手</h4><p>先来看一下SSL/TLS在网络模型的位置<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/54.png" alt="avatar"><br>TLS握手主要是为了创建一个安全的连接，在创建连接的过程中，通信双方都做了那些操作呢？<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/53.png" alt="avatar"></p>
+<ul>
+<li>1、客户端通过发送”client hello”消息向服务器发起握手请求，这个消息包含了客户端所支持的TLS版本及加密方法以供服务器选择，同时还有一个”client random”随机字符串</li>
+<li>2、server回应”sever hello”消息，这个消息包含了服务端的数字证书及服务器选择的加密方法</li>
+<li>3、客户端收到服务器回应以后，首先验证服务器证书。如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。验证细节见【CA数字证书签发和验证流程】。</li>
+<li>4、客户端向服务器发送另一个随机字符串”premaster secret (预主密钥)”，这个字符串是经过服务器的公钥加密过的，只有对应的私钥才能解密</li>
+<li>5、服务器使用私钥解密”premaster secret”。</li>
+<li>6、客户端和服务器均使用 client random，server random 和 premaster secret，并通过相同的算法生成相同的共享密钥 KEY</li>
+<li>7、客户端发送经过共享密钥 KEY加密过的”finished”信号</li>
+<li>8、服务器发送经过共享密钥 KEY加密过的”finished”信号</li>
+<li>9、握手完成，双方使用对称加密进行安全通信</li>
+</ul>
+<p>总的来说：<br>握手主要做些如下的工作：</p>
+<ul>
+<li>商定双方通信所使用的的 TLS 版本 (例如 TLS1.0, 1.2, 1.3等等)；</li>
+<li>确定双方所要使用的加密方式</li>
+<li>客户端验证服务端的身份</li>
+<li>生成会话密钥，该密钥将用于握手结束后的对称加密</li>
+</ul>
+<h2 id="TCP三次握手，四次挥手"><a href="#TCP三次握手，四次挥手" class="headerlink" title="TCP三次握手，四次挥手"></a>TCP三次握手，四次挥手</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/34.png" alt="avatar"></p>
+<ul>
+<li>1、初始状态，客户端和服务端都是处于关闭的状态，但服务器B端一直处于监听的状态，时刻监听是否有建立连接的请求；</li>
+<li>2、<strong>第一次握手</strong>,客户端发起连接，会主动发送一个SYN报文，并携带一个随机数seq = x，</li>
+<li>3、<strong>第二次握手</strong>,服务器收到客户端发送的连接报文后，会回复一个确认同步报文， SYN = 1，并且 ACK = 1，同时服务端也会随机生成一个 seq = y，并将 ack = x + 1，回传给客户端</li>
+<li>4、<strong>第三次握手</strong>，当客户端接收到服务端的 ACK 确认报文后，会回复一个 ACK 确认报文，用于确认服务器报文已经收到，此报文 ACK = 1，seq = x + 1, ack = y + 1</li>
+</ul>
+<p>为什么需要三次握手，而不是两次握手呢，参见问题1。</p>
+<h3 id="四次握手"><a href="#四次握手" class="headerlink" title="四次握手"></a>四次握手</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/35.png" alt="avatar"></p>
+<ul>
+<li><strong>第一次挥手</strong> 客户端发起 FIN = 1断开连接的报文，携带随机生成的 seq 值 u，发送给服务端，并且自己处于 FIN-WSIT 状态</li>
+<li><strong>第二次挥手</strong> 服务器收到客户端发起的FIN 报文后，会回复一个ACK = 1报文，并随机生成一个 seq，以及 ack = u + 1</li>
+<li><strong>第三次挥手</strong> 当服务器数据发送完了过后，再发送一个 FIN 报文给客户端，通知客户端，服务端准备关闭连接了，此报文 FIN = 1，ACK = 1，ack = u + 1，seq = w</li>
+<li><strong>第四次挥手</strong> 当客户端收到服务发送的FIN 报文后，会发送确认报文，其中 ACK = 1，seq = u + 1，ack = w + 1，并进入 TIME-WAIT 状态，当等待 2MSL 后关闭连接</li>
+</ul>
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="1、为什么需要三次握手，而不是两次握手"><a href="#1、为什么需要三次握手，而不是两次握手" class="headerlink" title="1、为什么需要三次握手，而不是两次握手"></a>1、为什么需要三次握手，而不是两次握手</h4><p>tcp连接需要三次握手，主要解决确认报文延迟重传问题。<br>假设这样的一种情况，客户端发送了一个连接报文，由于网络拥堵等原因，没有及时的到达服务器；以致延误到连接释放以后的某个时间才到达服务器，服务器接收到这个报文以后，认为是客户端发起了连接，就会发送确认连接报文，但是这个报文对客户端来说是一个失效的报文，所以客户端不会理睬这个服务器回复的报文，由于采用二次握手，则服务器会一直处于连接状态，等待数据传输。<br>本质上：由于信道不可靠, 但是通信双发需要就某个问题达成一致. 而要解决这个问题, 无论你在消息中包含什么信息, 三次通信是理论上的最小值. 所以三次握手不是TCP本身的要求, 而是为了满足”在不可靠信道上可靠地传输信息”这一需求所导致的</p>
+<h4 id="2、为什么需要四次挥手"><a href="#2、为什么需要四次挥手" class="headerlink" title="2、为什么需要四次挥手"></a>2、为什么需要四次挥手</h4><p>因为握手的时候，没有数据传输需求，所以服务端的 SYN 和 ACK 报文可以合并在一起发送。但是挥手的时候，服务端也许还有数据没有发送完，需要FIN和ACK报文需要分开发，先发送ACK报文，等待数据传输完成之后再发送FIN报文</p>
+<h4 id="3、四次挥手后，为什么客户端还需要等到2MSL"><a href="#3、四次挥手后，为什么客户端还需要等到2MSL" class="headerlink" title="3、四次挥手后，为什么客户端还需要等到2MSL"></a>3、四次挥手后，为什么客户端还需要等到2MSL</h4><p>等待 2MSL 是因为保证服务端接收到了 ACK 报文，因为网络环境复杂，很有可能客户端最后发出 ACK 报文丢失了，如果服务端没接收到 ACK 报文的话，会重新发送 FIN 报文，只有当客户端等待了 2MSL 都没有收到重发的 FIN 报文时就表示服务端是正常收到了 ACK 报文，那么这个时候客户端就可以关闭了</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E5%8E%9F%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -831,377 +1324,6 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">css高度百分百与100vh的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-31 15:58:55" itemprop="dateCreated datePublished" datetime="2021-12-31T15:58:55+08:00">2021-12-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-06 14:12:18" itemprop="dateModified" datetime="2022-01-06T14:12:18+08:00">2022-01-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>vh: 相对于视窗的高度, 视窗被均分为100单位的vh<br>正常情况下</p>
-<p><code>height:100vh == height:100%;</code></p>
-<p>注意点：<br>100vh：是相对视窗的高度<br>100%：是相对父元素的高度，如果父元素高度为0，即使子元素设置了<code>height:100%</code>,其高度依旧为0</p>
-<p>height:100%<br>绝对定位元素的百分比计算和非绝对定位元素的百分比计算是有区别的，区别在于绝对定位的宽高百分比计算是相对于padding box的，也就是说会把padding大小值计算在内，但是，非绝对定位元素则是相对于content box计算的</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/%E5%A4%9A%E4%B8%AAcommit%E5%90%88%E5%B9%B6/" class="post-title-link" itemprop="url">多个commit合并</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-31 13:48:11 / 修改时间：15:00:43" itemprop="dateCreated datePublished" datetime="2021-12-31T13:48:11+08:00">2021-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="初始化环境"><a href="#初始化环境" class="headerlink" title="初始化环境"></a>初始化环境</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/1.png" alt="avatar"></p>
-<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><ul>
-<li>目的： 将【第三次提交】【第二次提交】【第一次提交】合并到【要合并的位置】并重新提交</li>
-<li>通过<code>git log</code>查看提交的日志</li>
-<li>使用rebase命令设置提交的位置，这里有个需要注意的地方，因为我想把最后的三次提交合到要合并的位置，这里其实是需要合并最后的四次提交，所以需要合并的commit为<code>5865c72e6d8ba0bbd6c53eac6de7a865f0b571cf</code>及【要合并的位置】的上一次提交</li>
-<li>使用命令<code>git rebase -i 5865c7</code>或者<code>git rebase -i HEAD~4</code> 会弹出一个执行命令的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/2.png" alt="avatar"></li>
-<li>我们将 最后的三次commit 前方的命令改成 squash 或 s，然后输入:wq以保存并退出<ul>
-<li>pick 的意思是要会执行这个 commit</li>
-<li>squash 的意思是这个 commit 会被合并到前一个commit</li>
-</ul>
-</li>
-<li>保存之后我们会看到 commit message 的编辑界面</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/3.png" alt="avatar"></li>
-<li>要做的就是将多个commit信息合并为一个</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/4.png" alt="avatar"></li>
-<li>这个时候再使用<code>git log</code>或者可视化工具查看就会发现多次提交已经合并，并且合并后的commit也已经修改</li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-<li><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/6.png" alt="avatar"></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-31 13:23:53" itemprop="dateCreated datePublished" datetime="2021-12-31T13:23:53+08:00">2021-12-31</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">Electron基本概念整理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-28 19:09:55" itemprop="dateCreated datePublished" datetime="2021-12-28T19:09:55+08:00">2021-12-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-20 12:15:02" itemprop="dateModified" datetime="2022-01-20T12:15:02+08:00">2022-01-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Electron基本概念整理"><a href="#Electron基本概念整理" class="headerlink" title="Electron基本概念整理"></a>Electron基本概念整理</h1><h2 id="详细参考文档"><a href="#详细参考文档" class="headerlink" title="详细参考文档"></a>详细参考文档</h2><p><a target="_blank" rel="noopener" href="https://electronjs.org/docs/all#%E4%BA%8B%E4%BB%B6-ready">官方文档</a></p>
-<h3 id="主线程-main-process"><a href="#主线程-main-process" class="headerlink" title="主线程 main process"></a>主线程 main process</h3><p>主进程，通常是名为main.js 的文件，是每个 Electron 应用的入口文件。它控制着整个 App 的生命周期，从打开到关闭。 它也管理着系统原生元素比如菜单，菜单栏，Dock 栏，托盘等。 主进程负责创建 APP 的每个渲染进程。而且整个 Node API 都集成在里面</p>
-<p>Electron 运行 package.json 的 main 脚本的进程被称为主进程。 在主进程中运行的脚本通过创建web页面来展示用户界面。 一个 Electron 应用总是有且只有一个主进程。</p>
-<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>渲染进程是你的应用内的一个浏览器窗口。与主进程不同的是，它能够同时存在多个而且运行在不一样的进程。而且它们也能够被隐藏。</p>
-<p>每个 Electron 中的 web 页面运行在它自己的渲染进程中。</p>
-<h3 id="主进程和渲染进程之间的区别"><a href="#主进程和渲染进程之间的区别" class="headerlink" title="主进程和渲染进程之间的区别"></a>主进程和渲染进程之间的区别</h3><p>主进程使用 BrowserWindow 实例创建页面。 每个 BrowserWindow 实例都在自己的渲染进程里运行页面。 当一个 BrowserWindow 实例被销毁后，相应的渲染进程也会被终止。主进程管理所有的web页面和它们对应的渲染进程。<br>每个人窗口or web页面都是一个渲染进程。每个渲染进程都是独立的，它只关心它所运行的 web 页面。</p>
-<h3 id="进程之间通信"><a href="#进程之间通信" class="headerlink" title="进程之间通信"></a>进程之间通信</h3><h4 id="主进程到渲染进程的异步通信"><a href="#主进程到渲染进程的异步通信" class="headerlink" title="主进程到渲染进程的异步通信"></a>主进程到渲染进程的异步通信</h4><p>ipcMain模块是EventEmitter类的一个实例。 当在主进程中使用时，它处理从渲染器进程（网页）发送出来的异步和同步信息。 从渲染器进程发送的消息将被发送到该模块。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 在主进程中.</span><br><span class="line">const &#123; ipcMain &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">ipcMain.on(&#x27;asynchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.reply(&#x27;asynchronous-reply&#x27;, &#x27;pong&#x27;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ipcMain.on(&#x27;synchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.returnValue = &#x27;pong&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//在渲染器进程 (网页) 中。</span><br><span class="line">const &#123; ipcRenderer &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(ipcRenderer.sendSync(&#x27;synchronous-message&#x27;, &#x27;ping&#x27;)) // prints &quot;pong&quot;</span><br><span class="line"></span><br><span class="line">ipcRenderer.on(&#x27;asynchronous-reply&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;pong&quot;</span><br><span class="line">&#125;)</span><br><span class="line">ipcRenderer.send(&#x27;asynchronous-message&#x27;, &#x27;ping&#x27;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="渲染进程之间通信"><a href="#渲染进程之间通信" class="headerlink" title="渲染进程之间通信"></a>渲染进程之间通信</h4><ul>
-<li><p>1、可以通过将消息发送至主进程，然后再目标渲染进程</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// In renderer process B</span><br><span class="line">ipcRenderer.send(&#x27;message&#x27;, &#x27;someArgs&#x27;)</span><br><span class="line"></span><br><span class="line">// In the main process.</span><br><span class="line">ipcMain.on(&#x27;message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  rendererAWindow.webContents.send(&#x27;message&#x27;, arg);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// In renderer process A</span><br><span class="line">ipcRenderer.on(&#x27;messaget&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>2、通过目标渲染进程的句柄发送消息</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api: contents.send(channel[, arg1][, arg2][, ...])</span><br></pre></td></tr></table></figure>
-
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">win.webContents.send(event, ...args);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="app"><a href="#app" class="headerlink" title="app"></a>app</h3><blockquote>
-<p>控制你的应用程序的事件生命周期。</p>
-<p>提供了app运行时的一些事件及方法</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">最后一个窗口被关闭时退出应用：</span><br><span class="line">const &#123; app &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">app.on(&#x27;window-all-closed&#x27;, () =&gt; &#123;</span><br><span class="line">  app.quit()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="BrowserWindow"><a href="#BrowserWindow" class="headerlink" title="BrowserWindow"></a>BrowserWindow</h3><blockquote>
-<p>创建和控制浏览器窗口。</p>
-</blockquote>
-<h3 id="BrowserView"><a href="#BrowserView" class="headerlink" title="BrowserView"></a>BrowserView</h3><blockquote>
-<p>创建和控制视图</p>
-<p>BrowserView 被用来让 BrowserWindow 嵌入更多的 web 内容。 它就像一个子窗口，除了它的位置是相对于父窗口。 这意味着可以替代webview标签.</p>
-</blockquote>
-<h3 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h3><blockquote>
-<p>在渲染进程中使用主进程模块。</p>
-<p>remote 模块为渲染进程（web页面）和主进程通信（IPC）提供了一种简单方法。</p>
-<p>在Electron中, GUI 相关的模块 (如 dialog、menu 等) 仅在主进程中可用, 在渲染进程中不可用。 为了在渲染进程中使用它们, ipc 模块是向主进程发送进程间消息所必需的。 使用 remote 模块, 你可以调用 main 进程对象的方法, 而不必显式发送进程间消息</p>
-</blockquote>
-<h3 id="类-WebContents"><a href="#类-WebContents" class="headerlink" title="类: WebContents"></a>类: WebContents</h3><blockquote>
-<p>渲染和控制 BrowserWindow 实例的内容。</p>
-</blockquote>
-<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><blockquote>
-<p>显示用于打开和保存文件、警报等的本机系统对话框。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//主进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(dialog.showOpenDialog(&#123; properties: [&#x27;openFile&#x27;, &#x27;openDirectory&#x27;, &#x27;multiSelections&#x27;] &#125;))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//渲染进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;).remote</span><br><span class="line">console.log(dialog)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通知Notification"><a href="#通知Notification" class="headerlink" title="通知Notification"></a>通知Notification</h3><blockquote>
-<p>创建OS(操作系统)桌面通知 主进程</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new Notification(title, &#123;body&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a><webview>标签</h3><blockquote>
-<p>在一个独立的 frame 和进程里显示外部 web 内容。</p>
-<p>使用 webview 标签在Electron 应用中嵌入 “外来” 内容 (如 网页)。外来”内容包含在 webview 容器中。 应用中的嵌入页面可以控制外来内容的布局和重绘。</p>
-<p>与 iframe 不同, webview 在与应用程序不同的进程中运行。它与您的网页没有相同的权限, 应用程序和嵌入内容之间的所有交互都将是异步的。 这将保证你的应用对于嵌入的内容的安全性。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;webview id=&quot;foo&quot; src=&quot;https://www.github.com/&quot; style=&quot;display:inline-flex; width:640px; height:480px&quot;&gt;&lt;/webview&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用Electron的API"><a href="#使用Electron的API" class="headerlink" title="使用Electron的API"></a>使用Electron的API</h3><p>在主进程和渲染进程中，你可以通过require的方式将其包含在模块中以此，获取Electron的API</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&#x27;electron&#x27;)</span><br></pre></td></tr></table></figure>
-<p>许多API只能被用于主进程或渲染进程中，但其中一些API可以同时在上述两种进程中使用。 每一个API的文档都将声明你可以在哪种进程中使用该API。</p>
-<p>例如：<br>Electron中的窗口是使用BrowserWindow类型创建的一个实例， 它只能在主进程中使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 这样写在主进程会有用，但是在渲染进程中会提示&#x27;未定义&#x27;</span><br><span class="line">const &#123; BrowserWindow &#125; = require(&#x27;electron&#x27;)</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
-<p>因为进程之间的通信是被允许的, 所以渲染进程可以调用主进程来执行任务。 Electron通过remote模块暴露一些通常只能在主进程中获取到的API。 为了在渲染进程中创建一个BrowserWindow的实例，我们通常使用remote模块为中间件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样写在渲染进程中时行得通的，但是在主进程中是&#x27;未定义&#x27;</span><br><span class="line">const &#123; remote &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">const &#123; BrowserWindow &#125; = remote</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1271,7 +1393,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
