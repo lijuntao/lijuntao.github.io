@@ -181,6 +181,22 @@
 
               <time title="创建时间：2022-02-09 16:16:35" itemprop="dateCreated datePublished" datetime="2022-02-09T16:16:35+08:00">2022-02-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-16 17:48:09" itemprop="dateModified" datetime="2022-02-16T17:48:09+08:00">2022-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
 
           
 
@@ -193,7 +209,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="NPM库制作"><a href="#NPM库制作" class="headerlink" title="NPM库制作"></a>NPM库制作</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>1、注册账号 <a target="_blank" rel="noopener" href="https://www.npmjs.com/">https://www.npmjs.com/</a><br>2、本机Node环境<br>3、实现功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">制作一个lib包，实现输入一个名字，然后将名字全部小写，并输出：hello! ljt 2022-02-15 12:24:37</span><br><span class="line">比如输入cdw或者cdW hello! cdw 2022-02-15 12:24:37</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单的NPM包"><a href="#简单的NPM包" class="headerlink" title="简单的NPM包"></a>简单的NPM包</h2><p>第一步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;ljt-lib&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;test包&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;keywords&quot;: [</span><br><span class="line">    &quot;test&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;author&quot;: &quot;ljt&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依次输入相关的信息，形成package.json文件</p>
+<p>第二步：<br>先导入所需的外部库，这里我们使用lodash和moment</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install lodash</span><br><span class="line">npm install moment</span><br></pre></td></tr></table></figure>
+<p>执行以上两步后，会安转lodash和moment两个外部库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;ljt-lib&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;test包&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;keywords&quot;: [</span><br><span class="line">    &quot;test&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;author&quot;: &quot;ljt&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  // 安装的第三方库</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;lodash&quot;: &quot;^4.17.21&quot;,</span><br><span class="line">    &quot;moment&quot;: &quot;^2.29.1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三步：<br>编写代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const &#123; toLower &#125; = require(&quot;lodash&quot;)</span><br><span class="line">const moment = require(&#x27;moment&#x27;)</span><br><span class="line">function sayHello(name = &#x27;ljt&#x27;) &#123;</span><br><span class="line">  return &#x27;hello!&#x27; + &#x27; &#x27; + toLower(name) + &#x27; &#x27; + moment().format(&quot;YYYY-MM-DD HH:mm:ss&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  sayHello</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>第四步：<br>将编写好的包发布至npm仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm login // 登录</span><br><span class="line">npm publish //发布</span><br><span class="line">npm unpublish ljt-lib --force //删除包</span><br></pre></td></tr></table></figure>
+
+<p>第五步：<br>在项目中引用刚刚发布的包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install ljt-lib</span><br><span class="line"></span><br><span class="line">const &#123; sayHello &#125; = require(ljt-lib)</span><br><span class="line">const hello = sayHello(&#x27;CDW)</span><br><span class="line">console.log(hello)</span><br></pre></td></tr></table></figure>
+
+<p>第六步：<br>如果需要更新包，则需要修改package.json中的version字段，然后重新发布</p>
+<h2 id="需要注意的问题"><a href="#需要注意的问题" class="headerlink" title="需要注意的问题"></a>需要注意的问题</h2><h3 id="package-json中dependencies和devDependencies的区别"><a href="#package-json中dependencies和devDependencies的区别" class="headerlink" title="package.json中dependencies和devDependencies的区别"></a>package.json中<code>dependencies</code>和<code>devDependencies</code>的区别</h3><p>dependencies：生产环境所需要依赖，例如：Vue，React 等，如果缺少依赖项目就运行错误<br>devDependencies:字面意思就是开发依赖，开发时候才会用到的工具包，例如：webpack，eslint等，等项目上线后不需依赖相关代码运行的工具</p>
+<p>单单从概念上理解会比较难，我们从两方面来理解：</p>
+<ul>
+<li><p>第一、在项目中<br>我们在开发项目中，我们一般使用<code>npm install &lt;package&gt;</code>或<code>npm install &lt;package&gt; --save-dev</code>来分别安装dependencies和devDependencies，这个时候会把包都安装在node_modules文件夹下，同时会生成一个<code>package-lock.json</code>文件。如果第三个使用这个项目的源码，执行<code>npm install</code>，则会安装所有的依赖。打包的时候不管你的依赖是在<code>dependencies</code>中，还是<code>devDependencies</code>中都会打包进去。以webpack为例，从入口文件开始构建依赖树，如果你的代码中引用了某个依赖就会被打包进进去。<br>这个时候安转在哪里其实没有什么区别，可以看作成一个规范和约束</p>
+</li>
+<li><p>第二、NPM库中<br>如果在制作NPM库中，这两个字段的差异就比较大了，当别人使用制作好的NPM包时<code>npm install &lt;package&gt;</code>，只会安装<code>dependencies</code>中的依赖，而不会去下载<code>devDependencies</code>中的依赖。如果将开发相关的依赖放到了<code>dependencies</code>依赖中，比如把<code>jest</code>放入到<code>dependencies</code>依赖，那么就会下载<code>jest</code>到别人的项目中，无形中增加了项目的体积。</p>
+</li>
+</ul>
+<p>除了<code>dependencies</code>和<code>devDependencies</code>这两个依赖相关的字段还有其他几个字段</p>
+<ul>
+<li>peerDependencies 同等依赖，或者叫同伴依赖，用于指定当前包（也就是你写的包）兼容的宿主版本.</li>
+<li>optionalDependencies 可选依赖，如果有一些依赖包即使安装失败，项目仍然能够运行或者希望npm继续运行，就可以使用optionalDependencies</li>
+<li>bundledDependencies 作者希望以压缩包（tar.gz）的方式发布项目，即没有 publish 到 npm register 上的包 这个字段不常用</li>
+</ul>
+<h2 id="增加webpack打包机制"><a href="#增加webpack打包机制" class="headerlink" title="增加webpack打包机制"></a>增加webpack打包机制</h2><p>第一步制作的NPM包有几个局限，使用了commonjs规范、无法使用ES6语法、无法减小包的体积等。如果使用webpack打包，则可以解决上述问题。</p>
+<ul>
+<li><p>先修改一下原先项目的目录<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/55.png" alt="avatar"><br>lib文件夹下放打包好的文件</p>
+</li>
+<li><p>使用es6语法编写代码</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// module.js</span><br><span class="line">const sayHello = (name) =&gt; &#123;</span><br><span class="line">  return &#x27;hello!&#x27; + name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123; sayHello &#125;</span><br><span class="line"></span><br><span class="line">// index.js</span><br><span class="line">import &#123; sayHello &#125; from &#x27;./module&#x27;</span><br><span class="line">export &#123;</span><br><span class="line">  sayHello</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改package.json文件,具体修改看注释</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;ljt-lib&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.16&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;test包&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;lib/main.js&quot;, //指定包的入口，即第三方安装后由这里加载</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;build&quot;: &quot;webpack&quot;, // 增加webpack打包命令</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;keywords&quot;: [</span><br><span class="line">    &quot;test&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;files&quot;: [</span><br><span class="line">    &quot;lib/*.js&quot; // 指定那些文件会被上传至NPM库中</span><br><span class="line">  ],</span><br><span class="line">  &quot;author&quot;: &quot;ljt&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;webpack&quot;: &quot;^5.69.0&quot;, // webpack相关依赖</span><br><span class="line">    &quot;webpack-cli&quot;: &quot;^4.9.2&quot; // webpack相关依赖</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>增加webpack.config.js配置文件,这个配置文件需要特别关注<code>libraryTarget: &#39;umd&#39;,</code>，这里表示要将这个lib包以什么规范来打包，也就是第三方能够已何种方式来使用（script标签/umd、npm安装包/commonjs）</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;none&#x27;,</span><br><span class="line">  entry: &#x27;./index.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;lib&#x27;),</span><br><span class="line">    filename: &quot;[name].js&quot;,</span><br><span class="line">    libraryTarget: &#x27;umd&#x27;,</span><br><span class="line">    clean: true</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>npm run build</code>编译无误后，按照第一部分的步骤发布即可</p>
+<h2 id="移除外部模块"><a href="#移除外部模块" class="headerlink" title="移除外部模块"></a>移除外部模块</h2><p>这个怎么理解呢，就是如果你在自己的包中使用了另一个第三方包，比如<code>lodash</code>,假如不做处理，你的build后的包的体积会很大，因为引入了<code>lodash</code>，这时我们可以将<code>lodash</code>排除在webpack打包之外。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;development&#x27;,</span><br><span class="line">  entry: &#x27;./index.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;lib&#x27;),</span><br><span class="line">    filename: &quot;[name].js&quot;,</span><br><span class="line">    libraryTarget: &#x27;umd&#x27;,</span><br><span class="line">    clean: true</span><br><span class="line">  &#125;,</span><br><span class="line">  externals: &#123;</span><br><span class="line">    lodash: &#x27;lodash&#x27;,</span><br><span class="line">    // lodash: &#123;</span><br><span class="line">    //   commonjs: &#x27;lodash&#x27;,</span><br><span class="line">    //   commonjs2: &#x27;lodash&#x27;,</span><br><span class="line">    //   amd: &#x27;lodash&#x27;,</span><br><span class="line">    //   root: &#x27;_&#x27;,</span><br><span class="line">    // &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="externals和libraryTarget"><a href="#externals和libraryTarget" class="headerlink" title="externals和libraryTarget"></a>externals和libraryTarget</h2><p>externals指定那些外部模块需要从打包后的bundle中移除，并且还指定了引入外部模块所加载的模式<br>libraryTarget指定以那种规范打包，同时也决定了以哪种模式去加载所引入的外部模块。也就是说，externals应该和libraryTarget保持一致。如果library运行在浏览器中的，你设置externals的模式为commonjs，那其实是运行不了的</p>
+
       
     </div>
 
@@ -1386,7 +1452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
