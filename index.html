@@ -155,6 +155,160 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-02-17/JS%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-02-17/JS%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">JS的类型转换</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-17 16:28:48 / 修改时间：16:29:07" itemprop="dateCreated datePublished" datetime="2022-02-17T16:28:48+08:00">2022-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JS的类型转换"><a href="#JS的类型转换" class="headerlink" title="JS的类型转换"></a>JS的类型转换</h1><h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><ul>
+<li>当一侧为String类型，被识别为字符串拼接，并会优先将另一侧转换为字符串类型</li>
+<li>当一侧为Number类型，另一侧为原始类型，则将原始类型转换为Number类型</li>
+<li>当一侧为Number类型，另一侧为引用类型，将引用类型和Number类型转换成字符串后拼接<h3 id="减、乘、除"><a href="#减、乘、除" class="headerlink" title="减、乘、除"></a>减、乘、除</h3>我们在对各种非Number类型运用数学运算符(- * /)时，会先将非Number类型转换为Number类型<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 - true // 0， 首先把 true 转换为数字 1， 然后执行 1 - 1</span><br><span class="line">1 - null // 1,  首先把 null 转换为数字 0， 然后执行 1 - 0</span><br><span class="line">1 * undefined //  NaN, undefined 转换为数字是 NaN</span><br><span class="line">2 * [&#x27;5&#x27;] //  10， [&#x27;5&#x27;]首先会变成 &#x27;5&#x27;, 然后再变成数字 5</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="使用-比较中的5条规则"><a href="#使用-比较中的5条规则" class="headerlink" title="使用 == 比较中的5条规则"></a>使用 == 比较中的5条规则</h3><ul>
+<li><p>规则 1：NaN和其他任何类型比较永远返回false（包括和他自己</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NaN == NaN // false</span><br></pre></td></tr></table></figure></li>
+<li><p>规则 2：Boolean 和其他任何类型比较，Boolean 首先被转换为 Number 类型</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">true == 1  // true</span><br><span class="line">true == &#x27;2&#x27;  // false, 先把 true 变成 1，而不是把 &#x27;2&#x27; 变成 true</span><br><span class="line">true == [&#x27;1&#x27;]  // true, 先把 true 变成 1， [&#x27;1&#x27;]拆箱成 &#x27;1&#x27;, 再参考规则3</span><br><span class="line">true == [&#x27;2&#x27;]  // false, 同上</span><br><span class="line">undefined == false // false ，首先 false 变成 0，然后参考规则4</span><br><span class="line">null == false // false，同上</span><br></pre></td></tr></table></figure></li>
+<li><p>规则 3：String和Number比较，先将String转换为Number类型</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">123 == &#x27;123&#x27; // true, &#x27;123&#x27; 会先变成 123</span><br><span class="line">&#x27;&#x27; == 0 // true, &#x27;&#x27; 会首先变成 0</span><br></pre></td></tr></table></figure></li>
+<li><p>规则 4：null == undefined比较结果是true，除此之外，null、undefined和其他任何结果的比较值都为false</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">null == undefined // true</span><br><span class="line">null == &#x27;&#x27; // false</span><br><span class="line">null == 0 // false</span><br><span class="line">null == false // false</span><br><span class="line">undefined == &#x27;&#x27; // false</span><br><span class="line">undefined == 0 // false</span><br><span class="line">undefined == false // false</span><br></pre></td></tr></table></figure></li>
+<li><p>规则 5： 原始类型和引用类型做比较时，引用类型会依照ToPrimitive规则转换为原始类型。</p>
+<ul>
+<li>ToPrimitive规则，是引用类型向原始类型转变的规则，它遵循先valueOf后toString的模式期望得到一个原始类型<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;[object Object]&#x27; == &#123;&#125;</span><br><span class="line">// true, 对象和字符串比较，对象通过 toString 得到一个基本类型值</span><br><span class="line">&#x27;1,2,3&#x27; == [1, 2, 3]</span><br><span class="line">// true, 同上  [1, 2, 3]通过 toString 得到一个基本类型值</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-02-17/React%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-02-17/React%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">React知识点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-17 10:39:57 / 修改时间：11:22:05" itemprop="dateCreated datePublished" datetime="2022-02-17T10:39:57+08:00">2022-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-02-10/webpack%E7%83%AD%E6%9B%B4%E6%96%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1027,358 +1181,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-21/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">跨域解决方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-21 12:19:49 / 修改时间：12:20:09" itemprop="dateCreated datePublished" datetime="2022-01-21T12:19:49+08:00">2022-01-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="怎么才算跨域"><a href="#怎么才算跨域" class="headerlink" title="怎么才算跨域"></a>怎么才算跨域</h2><p>协议 域名 端口 只要有一个不相同则会触发跨域问题<br><code>同源策略是一个重要的安全策略，它用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。</code></p>
-<h2 id="解决手段"><a href="#解决手段" class="headerlink" title="解决手段"></a>解决手段</h2><ul>
-<li>Nginx反向代理</li>
-<li>Websocket</li>
-<li>CORS</li>
-<li>window.postMessage</li>
-<li>window.name+ iframe</li>
-<li>document.domain + iframe</li>
-<li>window.location.hash + iframe</li>
-<li>JSONP</li>
-<li>Node 正向代理</li>
-</ul>
-<h2 id="Nginx-反向代理"><a href="#Nginx-反向代理" class="headerlink" title="Nginx 反向代理"></a>Nginx 反向代理</h2><p>静态资源和接口经nginx转发</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name local.test;</span><br><span class="line">    location /api &#123;</span><br><span class="line">        proxy_pass http://localhost:8080;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://localhost:8000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Websocket"><a href="#Websocket" class="headerlink" title="Websocket"></a>Websocket</h2><p>客户端和服务器之间存在持久的连接，而且双方都可以随时开始发送数据。实质上是走socket接口，已经不是HTTP请求了</p>
-<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>跨域资源共享(CORS) 是一种机制，它使用额外的HTTP头来告诉浏览器 让运行在一个 origin (domain) 上的 Web 应用被准许访问来自不同源服务器上的指定的资源,现代浏览器支持在 API 容器中（例如 XMLHttpRequest 或 Fetch）使用 CORS<br><strong>CORS 需要浏览器和后端同时支持</strong><br>服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</p>
-<h3 id="CORS跨域访问的请求可以分为两大类：简单请求、复杂请求"><a href="#CORS跨域访问的请求可以分为两大类：简单请求、复杂请求" class="headerlink" title="CORS跨域访问的请求可以分为两大类：简单请求、复杂请求"></a>CORS跨域访问的请求可以分为两大类：简单请求、复杂请求</h3><p>若请求满足所有下述条件，则该请求可视为“简单请求”：<br>条件一: 使用以下方法<br>    - GET<br>    - HEAD<br>    - POST<br>条件二：HTTP的头信息不超出以下几种字段<br>    - Accept<br>    - Accept-Language<br>    - Content-Language<br>    - Last-Event-ID<br>    - Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain<br>满足以上请求的为简单请求，除此之外为复杂请求</p>
-<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>不会触发CORS 预检请求，浏览器直接发出CORS请求。具体来说，就是在头信息之中，增加一个Origin字段。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
-<p>服务器会返回：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Access-Control-Expose-Headers: FooBar</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Origin</span><br><span class="line">该字段是必须的。它的值要么是请求时Origin字段的值，要么是一个*，</span><br><span class="line">表示接受任意域名的请求</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Credentials</span><br><span class="line">该字段可选。它的值是一个布尔值，表示是否允许发送Cookie。</span><br><span class="line">默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，</span><br><span class="line">Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，</span><br><span class="line">如果服务器不要浏览器发送Cookie，删除该字段即可</span><br><span class="line"></span><br><span class="line">Access-Control-Expose-Headers</span><br><span class="line">该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个</span><br><span class="line">基本字段：Cache-Control、Content-Language、Content-Type、Expires、</span><br><span class="line">Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers</span><br><span class="line">里面指定。上面的例子指定，getResponseHeader(&#x27;FooBar&#x27;)可以返回FooBar字段的值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>此外还有涉及到cookies的问题：<br>上面说到，CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服务器，一方面要服务器同意，指定Access-Control-Allow-Credentials字段；另一方面，开发者必须在AJAX请求中打开withCredentials属性。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.withCredentials = true;</span><br></pre></td></tr></table></figure>
-<p>否则，即使服务器同意发送Cookie，浏览器也不会发送。或者，服务器要求设置Cookie，浏览器也不会处理。<br><strong>如果要发送Cookie，Access-Control-Allow-Origin就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie</strong></p>
-<h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><h4 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h4><p>复杂请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。<br>复杂请求发送CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）<br><code>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">var url = &#x27;http://api.alice.com/cors&#x27;;</span><br><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.open(&#x27;PUT&#x27;, url, true);</span><br><span class="line">xhr.setRequestHeader(&#x27;X-Custom-Header&#x27;, &#x27;value&#x27;);</span><br><span class="line">xhr.send();</span><br><span class="line"></span><br><span class="line">HTTP请求的方法是PUT，并且发送一个自定义头信息X-Custom-Header,</span><br><span class="line">浏览器发现，这是一个非简单请求，就自动发出一个&quot;预检&quot;请求，</span><br><span class="line">要求服务器确认可以这样请求。下面是这个&quot;预检&quot;请求的HTTP头信息</span><br><span class="line"></span><br><span class="line">&quot;预检&quot;请求用的请求方法是OPTIONS，表示这个请求是用来询问的。</span><br><span class="line">头信息里面，关键字段是Origin，表示请求来自哪个源</span><br><span class="line"></span><br><span class="line">OPTIONS /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Access-Control-Request-Method: PUT</span><br><span class="line">Access-Control-Request-Headers: X-Custom-Header</span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br><span class="line"></span><br><span class="line">Access-Control-Request-Method</span><br><span class="line">该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是PUT</span><br><span class="line"></span><br><span class="line">Access-Control-Request-Headers</span><br><span class="line">该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段，</span><br><span class="line">上例是X-Custom-Header</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="预检请求的回应"><a href="#预检请求的回应" class="headerlink" title="预检请求的回应"></a>预检请求的回应</h4><p>服务器收到”预检”请求以后，检查了Origin、Access-Control-Request-Method和<br>Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Mon, 01 Dec 2008 01:15:39 GMT</span><br><span class="line">Server: Apache/2.0.61 (Unix)</span><br><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Access-Control-Allow-Methods: GET, POST, PUT</span><br><span class="line">Access-Control-Allow-Headers: X-Custom-Header</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Length: 0</span><br><span class="line">Keep-Alive: timeout=2, max=100</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>上面的HTTP回应中，关键的是<br>Access-Control-Allow-Origin字段<br>表示<code>http://api.bob.com</code>可以请求数据。<br>该字段也可以设为星号  Access-Control-Allow-Origin: *<br>表示同意任意跨源请求</p>
-<p>其他字段<br>Access-Control-Allow-Methods: GET, POST, PUT<br>该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。<br>注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次”预检”请求。</p>
-<p>Access-Control-Allow-Headers: X-Custom-Header<br>如果浏览器请求包括Access-Control-Request-Headers字段，<br>则Access-Control-Allow-Headers字段是必需的。<br>它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，<br>不限于浏览器在”预检”中请求的字段。</p>
-<p>Access-Control-Allow-Credentials: true<br>该字段与简单请求时的含义相同</p>
-<p>Access-Control-Max-Age: 1728000</p>
-<p>该字段可选，用来指定本次预检请求的有效期，单位为秒</p>
-<p>如果服务器否定了”预检”请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段,这时，浏览器就会认定，服务器不同意预检请求，因此触发一个错误，被XMLHttpRequest对象的onerror回调函数捕获</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http://api.alice.com.</span><br><span class="line">Origin http://api.bob.com is not allowed by Access-Control-Allow-Origin.</span><br></pre></td></tr></table></figure>
-
-<h4 id="浏览器的正常请求和回应"><a href="#浏览器的正常请求和回应" class="headerlink" title="浏览器的正常请求和回应"></a>浏览器的正常请求和回应</h4><p>一旦服务器通过了”预检”请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，会有一个Origin头信息字段。服务器的回应，也都会有一个Access-Control-Allow-Origin头信息字段</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">预检&quot;请求之后，浏览器的正常CORS请求</span><br><span class="line">PUT /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Host: api.alice.com</span><br><span class="line">X-Custom-Header: value</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br><span class="line"></span><br><span class="line">头信息的Origin字段是浏览器自动添加的</span><br></pre></td></tr></table></figure>
-
-<p>服务器响应：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Origin字段是每次回应都必定包含的。</span><br></pre></td></tr></table></figure>
-
-
-
-<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/04/cors.html">跨域资源共享 CORS 详解</a></p>
-<h2 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h2><p>用法：<br>发送：<br><code>otherWindow.postMessage(message, targetOrigin, [transfer]);</code></p>
-<ul>
-<li>otherWindow 其他窗口的一个引用，比如iframe的contentWindow属性、执行window.open返回的窗口对象、或者是命名过或数值索引的window.frames</li>
-<li>message 将要发送到其他 window的数据。它将会被结构化克隆算法序列化</li>
-<li>targetOrigin 通过窗口的origin属性来指定哪些窗口能接收到消息事件，其值可以是字符串<code>&quot;*&quot;</code>（表示无限制）或者一个URI。<strong>如果你明确的知道消息应该发送到哪个窗口，那么请始终提供一个有确切值的targetOrigin，而不是*。不提供确切的目标将导致数据泄露到任何对数据感兴趣的恶意站点</strong></li>
-<li>transfer</li>
-</ul>
-<p>接收：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;message&quot;, receiveMessage, false);</span><br><span class="line">receiveMessage = function(e)&#123;</span><br><span class="line">    e = e || window.event;</span><br><span class="line">    alert(e.data);</span><br><span class="line">&#125;;</span><br><span class="line">//或者：</span><br><span class="line">window.onmessage = function(e)&#123;</span><br><span class="line">    e = e || window.event;</span><br><span class="line">    alert(e.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>接收的数据包含以下属性：</p>
-<ul>
-<li>data 从其他 window 中传递过来的对象</li>
-<li>origin 调用 postMessage  时消息发送方窗口的 origin</li>
-<li>source 发送消息的窗口对象的引用</li>
-</ul>
-<p>示例：<br>发送</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// index.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--  一个 iframe 作为中间件  --&gt;</span><br><span class="line">    &lt;iframe id=&quot;myIframe&quot; src=&quot;http://localhost:8080/demoff/a.html&quot; style=&quot;display:none;&quot; onload=&quot;setData()&quot;&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        // 初始iframe加载后即执行</span><br><span class="line">        function setData()&#123;</span><br><span class="line">            var myIframe = document.getElementById(&#x27;myIframe&#x27;);</span><br><span class="line">            var win = myIframe.contentWindow;</span><br><span class="line">            //win.postMessage(&#x27;My name is null&#x27;,&#x27;*&#x27;);</span><br><span class="line">            win.postMessage(&#x27;My name is null&#x27;,&#x27;http://localhost:8080/&#x27;);</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-<p>接收</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// other.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        window.onmessage = function(e)&#123;</span><br><span class="line">            e = e || window.event;</span><br><span class="line">            alert(e.data);</span><br><span class="line">        &#125;;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="window-name-iframe"><a href="#window-name-iframe" class="headerlink" title="window.name + iframe"></a>window.name + iframe</h2><p>window.name属性的独特之处：name值在不同的页面（甚至不同域名）加载后依旧存在，并且可以支持非常长的 name 值（2MB）<br>用法：<br>需要中间页面的协助，a.html b.html(中间界面) (a、b同源), c.html</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">&lt;iframe</span><br><span class="line">  src=&quot;http://localhost:8080/name/c.html&quot;</span><br><span class="line">  frameborder=&quot;0&quot;</span><br><span class="line">  onload=&quot;load()&quot;</span><br><span class="line">  id=&quot;iframe&quot;</span><br><span class="line">&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  let first = true;</span><br><span class="line">  // onload事件会触发2次，第1次加载跨域页，并留存数据于window.name</span><br><span class="line">  function load() &#123;</span><br><span class="line">    if (first) &#123;</span><br><span class="line">      // 第1次onload(跨域页)成功后，切换到同域代理页面</span><br><span class="line">      iframe.src = &quot;http://localhost:8000/name/b.html&quot;;</span><br><span class="line">      first = false;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 第2次onload(同域b.html页)成功后，读取同域window.name中数据</span><br><span class="line">      console.log(iframe.contentWindow.name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">-----------------------------------</span><br><span class="line">b.html 为中间代理页，与 a.html 同域，内容为空。</span><br><span class="line">// b.html</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">-----------------------------------</span><br><span class="line">// c.html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  window.name = &quot;秋风的笔记&quot;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>总结：<br>通过 iframe 的 src 属性由外域转向本地域，跨域数据即由 iframe 的window.name从外域传递到本地域。</p>
-<h2 id="document-domain-iframe"><a href="#document-domain-iframe" class="headerlink" title="document.domain + iframe"></a>document.domain + iframe</h2><p><strong>该方式只能用于二级域名相同的情况下，比如 a.test.com 和 b.test.com 适用于该方式</strong><br>只需要给页面添加document.domain =’test.com’表示二级域名都相同就可以实现跨域</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// a.test.com</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  helloa</span><br><span class="line">  &lt;iframe</span><br><span class="line">    src=&quot;http://b.test.com/b.html&quot;</span><br><span class="line">    frameborder=&quot;0&quot;</span><br><span class="line">    onload=&quot;load()&quot;</span><br><span class="line">    id=&quot;frame&quot;</span><br><span class="line">  &gt;&lt;/iframe&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    document.domain = &quot;test.com&quot;;</span><br><span class="line">    function load() &#123;</span><br><span class="line">      console.log(frame.contentWindow.a);</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">------------------------------------------</span><br><span class="line">// b.test.com</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  hellob</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    document.domain = &quot;test.com&quot;;</span><br><span class="line">    var a = 100;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="window-location-hash-iframe"><a href="#window-location-hash-iframe" class="headerlink" title="window.location.hash + iframe"></a>window.location.hash + iframe</h2><p>原理就是通过 url 带 hash ，通过一个非跨域的中间页面来传递数据。<br>这个和<code>window.name + iframe</code>类似，也需要中间页面的协助。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">&lt;iframe src=&quot;http://localhost:8080/hash/c.html#name1&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  console.log(location.hash);</span><br><span class="line">  window.onhashchange = function() &#123;</span><br><span class="line">    console.log(location.hash);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">---------------------------------------------</span><br><span class="line">// b.html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  window.parent.parent.location.hash = location.hash;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">----------------------------------------------</span><br><span class="line">// c.html</span><br><span class="line">&lt;body&gt;&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  console.log(location.hash);</span><br><span class="line">  const iframe = document.createElement(&quot;iframe&quot;);</span><br><span class="line">  iframe.src = &quot;http://localhost:8000/hash/b.html#name2&quot;;</span><br><span class="line">  document.body.appendChild(iframe);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>执行流程：</p>
-<ul>
-<li>1、一开始 a.html 给 c.html 传一个 hash 值</li>
-<li>2、c.html 收到 hash 值后，再把 hash 值传递给 b.html</li>
-<li>3、b.html 将结果放到 a.html 的 hash 值中<br><strong>同样的，a.html 和 b.htm 是同域的</strong></li>
-</ul>
-<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>JSONP主要就是利用了script标签没有跨域限制的这个特性来完成的，但是仅支持 GET 方法</p>
-<p>基本流程：</p>
-<ul>
-<li>前端定义解析函数（例如 jsonpCallback=function(){….}）</li>
-<li>通过 params 形式包装请求参数，并且声明执行函数(例如 cb=jsonpCallback)</li>
-<li>后端获取前端声明的执行函数（jsonpCallback），并以带上参数并调用执行函数的方式传递给前端</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//前端</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  //全局函数</span><br><span class="line">  window.jsonpCallback = function(res) &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script</span><br><span class="line">  src=&quot;http://localhost:8080/api/jsonp?msg=hello&amp;cb=jsonpCallback&quot;</span><br><span class="line">  type=&quot;text/javascript&quot;</span><br><span class="line">&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//后端</span><br><span class="line">const Koa = require(&quot;koa&quot;);</span><br><span class="line">const fs = require(&quot;fs&quot;);</span><br><span class="line">const app = new Koa();</span><br><span class="line"></span><br><span class="line">app.use(async (ctx, next) =&gt; &#123;</span><br><span class="line">  if (ctx.path === &quot;/api/jsonp&quot;) &#123;</span><br><span class="line">    const &#123; cb, msg &#125; = ctx.query;</span><br><span class="line">    ctx.body = `$&#123;cb&#125;($&#123;JSON.stringify(&#123; msg &#125;)&#125;)`;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(8080);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Node-正向代理"><a href="#Node-正向代理" class="headerlink" title="Node 正向代理"></a>Node 正向代理</h2><p>多在开发中使用：<br>以webpack为例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    index: &quot;./index.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &quot;bundle.js&quot;,</span><br><span class="line">    path: path.resolve(__dirname, &quot;dist&quot;)</span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    port: 8000,</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      &quot;/api&quot;: &#123;</span><br><span class="line">        target: &quot;http://192.168.21.168:8080&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new HtmlWebpackPlugin(&#123;</span><br><span class="line">      filename: &quot;index.html&quot;,</span><br><span class="line">      template: &quot;webpack.html&quot;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/webpack%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-20/webpack%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">webpack笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-20 20:36:53" itemprop="dateCreated datePublished" datetime="2022-01-20T20:36:53+08:00">2022-01-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-27 12:48:17" itemprop="dateModified" datetime="2022-01-27T12:48:17+08:00">2022-01-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口 entry"></a>入口 entry</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const config = &#123;</span><br><span class="line">  entry: &#x27;./path/to/my/entry/file.js&#x27;</span><br><span class="line">  // 是下方模式的简写</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: &#x27;./path/to/my/entry/file.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: &#x27;./src/app.js&#x27;,</span><br><span class="line">    vendors: &#x27;./src/vendors.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>entry传入数组<br><code>当你向 entry 传入一个数组时会发生什么？向 entry 属性传入「文件路径(file path)数组」将创建“多个主入口(multi-main entry)”。在你想要多个依赖文件一起注入，并且将它们的依赖导向(graph)到一个“chunk”时，传入数组的方式就很有用</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">entry: [&#x27;./app.js&#x27;, &#x27;lodash&#x27;]</span><br><span class="line"></span><br><span class="line">等价与：</span><br><span class="line"></span><br><span class="line">entry: &#123;</span><br><span class="line">    main: [&#x27;./app.js&#x27;, &#x27;lodash&#x27;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">将lodash一起合并到main.js文件</span><br></pre></td></tr></table></figure>
-
-<h3 id="输出-output"><a href="#输出-output" class="headerlink" title="输出 output"></a>输出 output</h3><ul>
-<li><p>filename: filename 用于输出文件的文件名。</p>
-</li>
-<li><p>path: 目标输出目录 path 的绝对路径。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;bundle.js&#x27;,</span><br><span class="line">    path: &#x27;/home/proj/public/assets&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: &#x27;./src/app.js&#x27;,</span><br><span class="line">    search: &#x27;./src/search.js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;[name].js&#x27;, // [name]占位符</span><br><span class="line">    path: __dirname + &#x27;/dist&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 写入到硬盘：./dist/app.js, ./dist/search.js</span><br></pre></td></tr></table></figure></li>
-<li><p>publicPath CDN使用，暂时还没有用过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">  path: &quot;/home/proj/cdn/assets/[hash]&quot;,</span><br><span class="line">  publicPath: &quot;http://cdn.example.com/assets/[hash]/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="模式-mode"><a href="#模式-mode" class="headerlink" title="模式 mode"></a>模式 mode</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;production&#x27;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>选项</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>development</td>
-<td>会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin</td>
-</tr>
-<tr>
-<td>production</td>
-<td>会将 process.env.NODE_ENV 的值设为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 UglifyJsPlugin</td>
-</tr>
-</tbody></table>
-<h3 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h3><p>module.rules 允许你在 webpack 配置中指定多个 loader。 这是展示 loader 的一种简明方式，并且有助于使代码变得简洁</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; test: /\.css$/, use: &#x27;css-loader&#x27; &#125;,</span><br><span class="line">      &#123; test: /\.ts$/, use: &#x27;ts-loader&#x27; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>其他调用loader的方式：</p>
-<ul>
-<li>内联 <code>import Styles from &#39;style-loader!css-loader?modules!./styles.css&#39;; </code></li>
-<li>cli <code>webpack --module-bind jade-loader --module-bind &#39;css=style-loader!css-loader&#39;</code></li>
-</ul>
-<p>loader 特性</p>
-<ul>
-<li>loader 支持链式传递。能够对资源使用流水线(pipeline)。一组链式的 loader 将按照相反的顺序执行。loader 链中的第一个 loader 返回值给下一个 loader。在最后一个 loader，返回 webpack 所预期的 JavaScript。</li>
-<li>loader 可以是同步的，也可以是异步的</li>
-<li>loader 运行在 Node.js 中，并且能够执行任何可能的操作</li>
-<li>loader 接收查询参数。用于对 loader 传递配置</li>
-<li>loader 也能够使用 options 对象进行配置</li>
-<li>除了使用 package.json 常见的 main 属性，还可以将普通的 npm 模块导出为 loader，做法是在 package.json 里定义一个 loader 字段。</li>
-<li>插件(plugin)可以为 loader 带来更多特性</li>
-<li>loader 能够产生额外的任意文件</li>
-</ul>
-<h3 id="插件-plugins"><a href="#插件-plugins" class="headerlink" title="插件 plugins"></a>插件 plugins</h3><p>插件是 webpack 的支柱功能，插件目的在于解决 loader 无法实现的其他事。<br>由于插件可以携带参数/选项，你必须在 webpack 配置中，向 plugins 属性传入 new 实例。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&#x27;html-webpack-plugin&#x27;); //通过 npm 安装</span><br><span class="line">const webpack = require(&#x27;webpack&#x27;); //访问内置的插件</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#x27;./path/to/my/entry/file.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;my-first-webpack.bundle.js&#x27;,</span><br><span class="line">    path: path.resolve(__dirname, &#x27;dist&#x27;)</span><br><span class="line">  &#125;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.(js|jsx)$/,</span><br><span class="line">        use: &#x27;babel-loader&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.UglifyJsPlugin(), //内置插件</span><br><span class="line">    new HtmlWebpackPlugin(&#123;template: &#x27;./src/index.html&#x27;&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
-
-<p>具体实现：<br>webpack 插件是一个具有 apply 属性的 JavaScript 对象。apply 属性会被 webpack compiler 调用，并且 compiler 对象可在整个编译生命周期访问。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const pluginName = &#x27;ConsoleLogOnBuildWebpackPlugin&#x27;;</span><br><span class="line"></span><br><span class="line">class ConsoleLogOnBuildWebpackPlugin &#123;</span><br><span class="line">    apply(compiler) &#123;</span><br><span class="line">        compiler.hooks.run.tap(pluginName, compilation =&gt; &#123;</span><br><span class="line">            console.log(&quot;webpack 构建过程开始！&quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Node API使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&#x27;webpack&#x27;); //访问 webpack 运行时(runtime)</span><br><span class="line">  const configuration = require(&#x27;./webpack.config.js&#x27;);</span><br><span class="line"></span><br><span class="line">  let compiler = webpack(configuration);</span><br><span class="line">  compiler.apply(new webpack.ProgressPlugin());</span><br><span class="line"></span><br><span class="line">  compiler.run(function(err, stats) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置-configuration"><a href="#配置-configuration" class="headerlink" title="配置 configuration"></a>配置 configuration</h3><p>很少有 webpack 配置看起来很完全相同。这是因为 webpack 的配置文件，是导出一个对象的 JavaScript 文件.<br>以下是一个最基本的配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;development&#x27;,</span><br><span class="line">  entry: &#x27;./foo.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;dist&#x27;),</span><br><span class="line">    filename: &#x27;foo.bundle.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>其他方式<br>1、导出为一个函数：</p>
-<ul>
-<li>环境对象(environment)作为第一个参数</li>
-<li>一个选项 map 对象（argv）作为第二个参数,描述了传递给 webpack 的选项<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(env, argv) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    mode: env.production ? &#x27;production&#x27; : &#x27;development&#x27;,</span><br><span class="line">    devtool: env.production ? &#x27;source-maps&#x27; : &#x27;eval&#x27;,</span><br><span class="line">     plugins: [</span><br><span class="line">       new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">        compress: argv[&#x27;optimize-minimize&#x27;] // 只有传入 -p 或 --optimize-minimize</span><br><span class="line">       &#125;)</span><br><span class="line">     ]</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-2、 导出Promise<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = () =&gt; &#123;</span><br><span class="line">  return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      resolve(&#123;</span><br><span class="line">        entry: &#x27;./app.js&#x27;,</span><br><span class="line">        /* ... */</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;, 5000)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>3、导出多个配置对象<br>当运行 webpack 时，所有的配置对象都会构建.<br>以下示例表示：导出多个配置对象，对于针对多个构建目标（例如 AMD 和 CommonJS）打包成一个 library</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module.exports = [&#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;./dist-amd.js&#x27;,</span><br><span class="line">    libraryTarget: &#x27;amd&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  entry: &#x27;./app.js&#x27;,</span><br><span class="line">  mode: &#x27;production&#x27;,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;./dist-commonjs.js&#x27;,</span><br><span class="line">    libraryTarget: &#x27;commonjs&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  entry: &#x27;./app.js&#x27;,</span><br><span class="line">  mode: &#x27;production&#x27;,</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
-
-<h3 id="模块解析-module-resolution"><a href="#模块解析-module-resolution" class="headerlink" title="模块解析 module resolution"></a>模块解析 module resolution</h3><p>解析器resolver 是一个库(library)，用于帮助找到模块的绝对路径。一个模块可以作为另一个模块的依赖模块，然后被后者引用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import foo from &#x27;path/to/module&#x27;</span><br><span class="line">// 或者</span><br><span class="line">require(&#x27;path/to/module&#x27;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="manifest"><a href="#manifest" class="headerlink" title="manifest"></a>manifest</h3><h4 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h4><p>runtime，以及伴随的 manifest 数据，主要是指：在浏览器运行时，webpack 用来连接模块化的应用程序的所有代码。runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。</p>
-<h4 id="Manifest"><a href="#Manifest" class="headerlink" title="Manifest"></a>Manifest</h4><p>当编译器(compiler)开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 “Manifest”，当完成打包并发送到浏览器时，会在运行时通过 Manifest 来解析和加载模块。无论你选择哪种模块语法，那些 import 或 require 语句现在都已经转换为 <strong>webpack_require</strong> 方法，此方法指向模块标识符(module identifier)。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索出背后对应的模块</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/concepts/">webpack官方文档</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904007362674701">webpack 中那些最易混淆的 5 个知识点</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903952140468232">辛辛苦苦学会的 webpack dll 配置，可能已经过时了</a></p>
-<h2 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h2><p>一个基于流（stream）的自动化构建工具。gulp的核心是Task，我们可以配置一系列的Task，并且定义 task 要处理的事务（例如 ES6、ts 转化，图片压缩，scss 转成 css），之后让 grunt/gulp 来依次执行这些 task，而且让整个流程自动化。所以可以看做是<strong>前端自动化管理工具</strong></p>
-<h3 id="Gulp核心API"><a href="#Gulp核心API" class="headerlink" title="Gulp核心API"></a>Gulp核心API</h3><ul>
-<li>task 创建注册任务</li>
-<li>series 顺序执行多个任务</li>
-<li>prallel 并行执行多个任务</li>
-<li>src 读取数据源转换成stream</li>
-<li>pipe 管道-可以在中间对数据流进行处理</li>
-<li>dest 输出数据流到目标路径</li>
-<li>on 事件监听</li>
-<li>watch 数据源监听</li>
-</ul>
-<p>具体的使用可以参考<a target="_blank" rel="noopener" href="https://www.gulpjs.com.cn/docs/getting-started/quick-start/">官方文档</a></p>
-<h2 id="webpack和gulp的区别"><a href="#webpack和gulp的区别" class="headerlink" title="webpack和gulp的区别"></a>webpack和gulp的区别</h2><p>谈谈我个人的理解</p>
-<table>
-<thead>
-<tr>
-<th>gulp</th>
-<th>webpack</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>构建工具、自动化、提高效率用</td>
-<td>打包工具、模块化、编译模块代码方案</td>
-</tr>
-<tr>
-<td>gulp主要侧重前端开发工作流程的自动化，就像一个流水线(万物皆可流)，定义不同的Task任务，来实现不同的功能，比如动server、sass/less预编译、文件的合并压缩等等。将这些不同的任务按照一定的步骤组合起来实现一个流程的自动化</td>
-<td>webpack侧重于模块(万物皆可模块)的打包，实现了模块化开发和文件处理。webpack将各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module，从entry配置的一个入口文件（JS文件）开始，据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源，主要通过loader（加载器）和plugins（插件）对资源进行处理的</td>
-</tr>
-<tr>
-<td>gulp通过插件的形式可以实现webpack的功能(构建、压缩)，插件比如<code>webpack-stream</code>、<code>gulp-uglify</code></td>
-<td>本身即为打包而生，更加专业</td>
-</tr>
-<tr>
-<td>gulp可以定义许多各种各样的任务，更加的灵活。比如：CSS 压缩，图片压缩、文件转换，文件发布</td>
-<td>很难实现</td>
-</tr>
-<tr>
-<td>一般来说：Webpack 和 gulp 都是同时存在的，只是各自负责擅长的那部分，比如 Webpack 将模块的、互相依赖的分散的代码打包成数个文件，然后再使用 gulp 任务去做压缩，加版本号，替换等等其他工作</td>
-<td></td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1448,14 +1250,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

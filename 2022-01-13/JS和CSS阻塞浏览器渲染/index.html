@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="结论 1、JS会阻塞DOM的解析和渲染 2、CSS不会阻塞DOM的解析 3、CSS会阻塞DOM的渲染 4、CSS会阻塞后面JS语句的执行，也就是如果JS前面如果有CSS连接的话，会等待CSS下载完成之后再继续执行JS 5、&lt;spacript&gt;defer与async的区别是：defer要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行；async一">
+  <meta name="description" content="JS和CSS阻塞浏览器渲染浏览器的渲染流程：  1、渲染进程解析 HTML 内容转换为能够读懂的 DOM 树结构，解析 CSS 为 CSSDOM 把 DOM 和 CSSOM 结合起来生成渲染树(Render Tree) 渲染树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标 把渲染树展示到屏幕上。再下一步就是绘制，即遍历渲染树，绘制每个节点  需要注意的是：渲染引擎会以最快的速度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS和CSS阻塞浏览器渲染">
 <meta property="og:url" content="http://example.com/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="结论 1、JS会阻塞DOM的解析和渲染 2、CSS不会阻塞DOM的解析 3、CSS会阻塞DOM的渲染 4、CSS会阻塞后面JS语句的执行，也就是如果JS前面如果有CSS连接的话，会等待CSS下载完成之后再继续执行JS 5、&lt;spacript&gt;defer与async的区别是：defer要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行；async一">
+<meta property="og:description" content="JS和CSS阻塞浏览器渲染浏览器的渲染流程：  1、渲染进程解析 HTML 内容转换为能够读懂的 DOM 树结构，解析 CSS 为 CSSDOM 把 DOM 和 CSSOM 结合起来生成渲染树(Render Tree) 渲染树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标 把渲染树展示到屏幕上。再下一步就是绘制，即遍历渲染树，绘制每个节点  需要注意的是：渲染引擎会以最快的速度">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-13T05:07:39.000Z">
-<meta property="article:modified_time" content="2022-01-18T05:56:08.486Z">
+<meta property="article:modified_time" content="2022-02-17T07:48:11.837Z">
 <meta property="article:author" content="Hexo">
 <meta name="twitter:card" content="summary">
 
@@ -190,7 +190,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-18 13:56:08" itemprop="dateModified" datetime="2022-01-18T13:56:08+08:00">2022-01-18</time>
+                <time title="修改时间：2022-02-17 15:48:11" itemprop="dateModified" datetime="2022-02-17T15:48:11+08:00">2022-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,7 +220,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
+        <h2 id="JS和CSS阻塞浏览器渲染"><a href="#JS和CSS阻塞浏览器渲染" class="headerlink" title="JS和CSS阻塞浏览器渲染"></a>JS和CSS阻塞浏览器渲染</h2><p>浏览器的渲染流程：</p>
+<ul>
+<li>1、渲染进程解析 HTML 内容转换为能够读懂的 DOM 树结构，解析 CSS 为 CSSDOM</li>
+<li>把 DOM 和 CSSOM 结合起来生成渲染树(Render Tree)</li>
+<li>渲染树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标</li>
+<li>把渲染树展示到屏幕上。再下一步就是绘制，即遍历渲染树，绘制每个节点</li>
+</ul>
+<p>需要注意的是：<br>渲染引擎会以最快的速度展示内容，也就是说，浏览器一边解析 HTML，一边构建渲染树，构建一部分，就会把当前已有的元素渲染出来。如果这个时候外部样式并没有加载完成，渲染出来的就是浏览器默认样式了。</p>
+<p>第一点：由于DOM 解析和 CSS 解析是两个并行的进程，所以 CSS 加载不会阻塞 DOM 树的解析<br>第二点：CSS 加载会阻塞 DOM 树的渲染，因为渲染树是依赖于 DOM Tree 和 CSSOM Tree 的，所以无论 DOM Tree 是否已经完成，它都必须等待到 CSSOM Tree 构建完成，即 CSS 加载完成后，才能开始渲染<br>第三点：CSS加载会阻塞其后的 JS 执行。我们知道JS 的加载、解析与执行会阻塞 DOM 的构建，也就是说，在构建 DOM 时，HTML 解析器若遇到了 JS，那么它会暂停构建 DOM ，将控制权移交给JS引擎，等 JS 引擎运行完毕，浏览器再从中断的地方恢复 DOM 构建。但是如果在 JS 脚本前引入外部 CSS 文件，则CSS会阻塞JS的加载，也就是会阻塞DOM树的生成。因为 JS 不只是可以改 DOM ，它还可以更改样式，也就是它可以更改 CSSOM，如果这个时候CSS文件还没有加载完成（继续解析JS会造成浪费），所以JS会等到CSS文件加载完成继续解析</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
 <li>1、JS会阻塞DOM的解析和渲染</li>
 <li>2、CSS不会阻塞DOM的解析</li>
 <li>3、CSS会阻塞DOM的渲染</li>
@@ -308,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93"><span class="nav-number">1.</span> <span class="nav-text">JS和CSS阻塞浏览器渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -322,14 +331,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
