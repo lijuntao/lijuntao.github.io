@@ -20,32 +20,28 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="什么是纯函数，为什么需要纯函数概念：相同的输入，总是会的到相同的输出，并且在执行过程中没有任何副作用优点：  1、可缓存性，纯函数总能够根据输入来做缓存 2、独立性，可移植 3、可并行执行代码 3、可测试性for of 和 for in的区别for…in 循环只遍历可枚举属性（包括它的原型链上的可枚举属性）for…of语句在可迭代对象（包括Array，Map，Set，String，TypedArr">
-<meta property="og:type" content="article">
-<meta property="og:title" content="知识点">
-<meta property="og:url" content="http://example.com/2021-11-11/%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/4/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="什么是纯函数，为什么需要纯函数概念：相同的输入，总是会的到相同的输出，并且在执行过程中没有任何副作用优点：  1、可缓存性，纯函数总能够根据输入来做缓存 2、独立性，可移植 3、可并行执行代码 3、可测试性for of 和 for in的区别for…in 循环只遍历可枚举属性（包括它的原型链上的可枚举属性）for…of语句在可迭代对象（包括Array，Map，Set，String，TypedArr">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-11T12:37:42.000Z">
-<meta property="article:modified_time" content="2022-02-17T08:28:32.584Z">
 <meta property="article:author" content="Hexo">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021-11-11/%E7%9F%A5%E8%AF%86%E7%82%B9/">
+<link rel="canonical" href="http://example.com/page/4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
-    isPost : true,
+    isHome : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>知识点 | Hexo</title>
+  <title>Hexo</title>
   
 
 
@@ -153,10 +149,9 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content index posts-expand">
             
-
-    
+      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -172,9 +167,10 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          知识点
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021-11-11/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">知识点</a>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -203,13 +199,6 @@
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
 
         </div>
       </header>
@@ -220,7 +209,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="什么是纯函数，为什么需要纯函数"><a href="#什么是纯函数，为什么需要纯函数" class="headerlink" title="什么是纯函数，为什么需要纯函数"></a>什么是纯函数，为什么需要纯函数</h2><p>概念：相同的输入，总是会的到相同的输出，并且在执行过程中没有任何副作用<br>优点：</p>
+          <h2 id="什么是纯函数，为什么需要纯函数"><a href="#什么是纯函数，为什么需要纯函数" class="headerlink" title="什么是纯函数，为什么需要纯函数"></a>什么是纯函数，为什么需要纯函数</h2><p>概念：相同的输入，总是会的到相同的输出，并且在执行过程中没有任何副作用<br>优点：</p>
 <ul>
 <li>1、可缓存性，纯函数总能够根据输入来做缓存</li>
 <li>2、独立性，可移植</li>
@@ -361,31 +350,25 @@
 <li>编程习惯 偶数更加容易计算 12 * 1.5</li>
 </ul>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/" rel="next" title="react全家桶">
-      react全家桶 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 
 
@@ -437,7 +420,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%AF%E5%87%BD%E6%95%B0%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">什么是纯函数，为什么需要纯函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-of-%E5%92%8C-for-in%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">for of 和 for in的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF-XSS-SQL%E6%B3%A8%E5%85%A5-DDoS"><span class="nav-number">3.</span> <span class="nav-text">CSRF XSS SQL注入 DDoS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session-%E5%92%8Ccookies%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">session 和cookies的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeof-null%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BE%93%E5%87%BAobject"><span class="nav-number">5.</span> <span class="nav-text">typeof null为什么输出object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E7%9A%84loader%E5%92%8Cplugin%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text">webpack的loader和plugin区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E6%8E%92%E6%9F%A5%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">前端性能排查：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#301%E5%92%8C302%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">301和302区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E5%92%8C%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">箭头函数和普通函数的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%9B%91%E6%8E%A7%E4%BD%BF%E7%94%A8GIF%E8%BF%9B%E8%A1%8C%E4%B8%8A%E6%8A%A5%E4%B8%BB%E8%A6%81%E6%98%AF%E5%9B%A0%E4%B8%BA%EF%BC%9A"><span class="nav-number">10.</span> <span class="nav-text">前端监控使用GIF进行上报主要是因为：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-prototype-toString-call-%E3%80%81-instanceof-%E4%BB%A5%E5%8F%8A-Array-isArray"><span class="nav-number">11.</span> <span class="nav-text">Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http1-0-http1-1-http2%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">12.</span> <span class="nav-text">http1.0 http1.1 http2的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%88%90-ES5-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">13.</span> <span class="nav-text">ES6 代码转成 ES5 代码的实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babel%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">14.</span> <span class="nav-text">babel是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#polyfill%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">15.</span> <span class="nav-text">polyfill是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E9%82%A3%E4%BA%9B%E6%96%B9%E6%B3%95%E4%BC%9A%E6%94%B9%E5%8F%98%E5%8E%9F%E6%95%B0%E7%BB%84"><span class="nav-number">16.</span> <span class="nav-text">数组的那些方法会改变原数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isNaN%E5%92%8CNumber-isNaN%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">17.</span> <span class="nav-text">isNaN和Number.isNaN的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">18.</span> <span class="nav-text">构造函数的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%87%BA%E7%8E%B0%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">19.</span> <span class="nav-text">JS什么情况下会出现内存泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">19.1.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89-DOM-%E5%BC%95%E7%94%A8"><span class="nav-number">19.2.</span> <span class="nav-text">没有 DOM 引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E5%A4%96%E7%9A%84%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">19.3.</span> <span class="nav-text">意外的使用全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E5%BF%98%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8%E6%88%96%E8%80%85%E5%9B%9E%E8%B0%83"><span class="nav-number">19.4.</span> <span class="nav-text">遗忘的定时器或者回调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocket-SocketJS-Stomp%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">20.</span> <span class="nav-text">WebSocket SocketJS Stomp三者的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null-%E5%92%8C-undefined%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">21.</span> <span class="nav-text">null 和 undefined的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DocType%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E6%B7%B7%E6%9D%82%E6%A8%A1%E5%BC%8F%E5%92%8C%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">22.</span> <span class="nav-text">DocType的作用，什么是混杂模式和严格模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6-%E5%B1%95%E5%BC%80%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">23.</span> <span class="nav-text">扩展运算符...展开字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js-for%E5%BE%AA%E7%8E%AF%E5%92%8Cforeach%E6%95%88%E7%8E%87%E9%97%AE%E9%A2%98"><span class="nav-number">24.</span> <span class="nav-text">js for循环和foreach效率问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">25.</span> <span class="nav-text">nginx正向代理 反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">26.</span> <span class="nav-text">解构赋值的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css%E4%B8%ADlink%E5%92%8C-import%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">27.</span> <span class="nav-text">css中link和@import的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#position%EF%BC%9Aabsolute%E5%92%8Cfloat%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">28.</span> <span class="nav-text">position：absolute和float的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#display-none-%E5%92%8C-visibility-hidden%E5%8C%BA%E5%88%AB"><span class="nav-number">29.</span> <span class="nav-text">display: none 和 visibility: hidden区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rgba-%E5%92%8C-opacity-%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">30.</span> <span class="nav-text">rgba 和 opacity 透明效果有什么不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E5%AD%97%E4%BD%93%E6%98%AF%E4%BD%BF%E7%94%A8%E5%A5%87%E6%95%B0%E8%BF%98%E6%98%AF%E5%81%B6%E6%95%B0%E5%91%A2"><span class="nav-number">31.</span> <span class="nav-text">网页字体是使用奇数还是偶数呢</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

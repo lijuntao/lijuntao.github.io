@@ -155,6 +155,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-06/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-06/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">css世界笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-06 13:08:59" itemprop="dateCreated datePublished" datetime="2022-01-06T13:08:59+08:00">2022-01-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-10 14:09:08" itemprop="dateModified" datetime="2022-01-10T14:09:08+08:00">2022-01-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="css世界笔记"><a href="#css世界笔记" class="headerlink" title="css世界笔记"></a>css世界笔记</h1><h2 id="border"><a href="#border" class="headerlink" title="border"></a>border</h2><p>border-width：<br>thin: 薄薄的，等同于1px;<br>medium: 默认值，等同于3px; （border-style:double至少3px才有效果）<br>thick:厚厚的，等同于4px；</p>
+<h2 id="margin"><a href="#margin" class="headerlink" title="margin"></a>margin</h2><p>margin百分比值无论是水平方向还是垂直方向均是相对于宽度计算的！</p>
+<h3 id="margin合并"><a href="#margin合并" class="headerlink" title="margin合并"></a>margin合并</h3><p>只发生在垂直方向上</p>
+<ul>
+<li>margin-top合并：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、父元素设置为块状格式化上下文元素</span><br><span class="line">2、父元素设置border-top值</span><br><span class="line">3、父元素设置padding-top值</span><br><span class="line">4、父元素和子元素中间插入内联元素进行分割</span><br></pre></td></tr></table></figure></li>
+<li>margin-bottom合并  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、父元素设置为块状格式化上下文元素</span><br><span class="line">2、父元素设置border-bottom值</span><br><span class="line">3、父元素设置padding-bottom值</span><br><span class="line">4、父元素和子元素中间插入内联元素进行分割</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="margin合并规则"><a href="#margin合并规则" class="headerlink" title="margin合并规则"></a>margin合并规则</h3><p>总结概括为“正正取大值”“正负值相加”“负负最负值”</p>
+<h4 id="正正取大值"><a href="#正正取大值" class="headerlink" title="正正取大值"></a>正正取大值</h4><ul>
+<li>如果是相邻元素合并，间距取50px 大值  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: 50px; &#125;</span><br><span class="line">.b &#123; margin-top: 20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取50px 相当于father margin-top: 50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: 20px; &#125;</span><br><span class="line">.son &#123; margin-top: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为50px 大值 【空元素】   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: 20px; margin-bottom: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="正负相加"><a href="#正负相加" class="headerlink" title="正负相加"></a>正负相加</h4><ul>
+<li>如果是相邻元素合并，间距取30px （-20 + 50）  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: 50px; &#125;</span><br><span class="line">.b &#123; margin-top: -20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取-30px （-20 + 50） 相当于father margin-top: -30px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: -20px; &#125;</span><br><span class="line">.son &#123; margin-top: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为-30px （-20 + 50）   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: -20px; margin-bottom: 50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="负负取最负"><a href="#负负取最负" class="headerlink" title="负负取最负"></a>负负取最负</h4><ul>
+<li>如果是相邻元素合并，间距取-50px 最负  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-bottom: -50px; &#125;</span><br><span class="line">.b &#123; margin-top: -20px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是父子合并，间距取-50px 相当于father margin-top: -50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.father &#123; margin-top: -20px; &#125;</span><br><span class="line">.son &#123; margin-top: -50px; &#125;</span><br><span class="line">&lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果是自身合并，元素外部尺寸为-50px   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.a &#123; margin-top: -20px; margin-bottom: -50px; &#125;</span><br><span class="line">&lt;div class=&quot;a&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="margin：auto填充规则"><a href="#margin：auto填充规则" class="headerlink" title="margin：auto填充规则"></a>margin：auto填充规则</h3>1、如果一侧有auto，一侧为定值，则auto为自动填充剩余空间<br>2、如果两侧均为auto，则平分剩余空间</li>
+</ul>
+<p>margin垂直居中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0; right: 0; bottom: 0; left: 0;</span><br><span class="line">    width:100px;</span><br><span class="line">    height:100px;</span><br><span class="line">    margin:auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="margin失效"><a href="#margin失效" class="headerlink" title="margin失效"></a>margin失效</h3><ul>
+<li><p>margin合并的时候，更改margin值可能是没有效果 （更改小值）</p>
+</li>
+<li><p>绝对定位元素非定位方位的margin值“无效”</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">    top:10%;</span><br><span class="line">    left: 30%;</span><br><span class="line">    margin-right: 30px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定高容器的子元素的margin-bottom或者宽度定死的子元素的margin-right的定位“失效”,(影响后续兄弟元素)</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">　   &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">.box &#123;</span><br><span class="line">　  height: 100px;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">　  height: 80px;</span><br><span class="line">　  margin-bottom: 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>鞭长莫及导致margin无效</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;img src=&quot;mm1.jpg&quot;&gt;</span><br><span class="line">    &lt;p&gt;内容&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.box &gt; img &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:256px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.box &gt; p &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    margin-left:200px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">此时的&lt;p&gt;的margin-left从负无穷到256px都是没有任何效果的</span><br><span class="line">float和overflow 影响</span><br></pre></td></tr></table></figure></li>
+<li><p>内联特性导致margin无效</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;img src=&quot;mm1.jpg&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.box &gt; img &#123;</span><br><span class="line">    height:95px;</span><br><span class="line">    margin-top:-200px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">一个容器里面有一个图片，然后这张图片设置margin-top负值，让图片上偏移。但是，</span><br><span class="line">随着我们的负值越来越负，结果达到某一个具体负值的时候，图片不再往上偏移了。比方</span><br><span class="line">说，本例margin-top设置的是-200px，如果此时把margin-top设置成-300px，图片会</span><br><span class="line">再往上偏移100px吗？不会！它会微丝不动，margin-top变得无效了</span><br><span class="line">vertical-align影响</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h2><p>padding 足够大时，width失效<br>padding百分比值无论是水平方向还是垂直方向均是相对于宽度计算的！</p>
+<h2 id="content-计数器"><a href="#content-计数器" class="headerlink" title="content 计数器"></a>content 计数器</h2><ul>
+<li>counter-reset 创建或者重置计数器</li>
+<li>counter-increment 递增变量</li>
+<li>counter()或者counters()函数 得出计数器的值</li>
+</ul>
+<p>要想实现嵌套，必须让每一个列表容器拥有一个“普照源”，通过子辈对父辈的counter-reset重置、配合counters()方法才能实现计数嵌套效果<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/13.png" alt="avatar"></p>
+<h2 id="伪元素"><a href="#伪元素" class="headerlink" title="伪元素"></a>伪元素</h2><p>常见伪元素 <code>::first-letter,::first-line,::before,::after,::selection</code></p>
+<p>::before和::after必须配合content属性来使用，content用来定义插入的内容，content必须有值，至少是空。 当插入元素后content的宽度或者高度会发生变化</p>
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><p>指定一个元素是否必须移动(清除浮动后)到在它之前的浮动元素下面。clear 属性适用于浮动和非浮动元素</p>
+<ul>
+<li>none 元素不会向下移动清除之前的浮动</li>
+<li>left 元素被向下移动用于清除之前的左浮动。</li>
+<li>right 元素被向下移动用于清除之前的右浮动。</li>
+<li>both 元素被向下移动用于清除之前的左右浮动。</li>
+<li>inline-start 该关键字表示该元素向下移动以清除其包含块的起始侧上的浮动。即在某个区域的左侧浮动或右侧浮动。</li>
+<li>inline-end 该关键字表示该元素向下移动以清除其包含块的末端的浮点，即在某个区域的右侧浮动或左侧浮动。</li>
+</ul>
+<h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>盒子模型<br>    <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/10.png" alt="avatar"></p>
+<ul>
+<li>box-sizing: content-box 默认值 width = content区域宽度 / height = content区域高度<br>  <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/11.png" alt="avatar"></li>
+<li>box-sizing:border-box  width = content区域宽度 + padding + border / height = content区域高度 + padding + border<br>  <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/12.png" alt="avatar"></li>
+</ul>
+<pre><code>box-sizing:border-box 可以使原生普通文本框```&lt;input&gt;```和文本域```&lt;textarea&gt;```100%自适应父容器宽度
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E7%BD%91%E7%BB%9C%E6%8F%A1%E6%89%8B%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1208,223 +1345,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-11-11/%E7%9F%A5%E8%AF%86%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-11-11/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">知识点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-11 20:37:42" itemprop="dateCreated datePublished" datetime="2021-11-11T20:37:42+08:00">2021-11-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 16:28:32" itemprop="dateModified" datetime="2022-02-17T16:28:32+08:00">2022-02-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="什么是纯函数，为什么需要纯函数"><a href="#什么是纯函数，为什么需要纯函数" class="headerlink" title="什么是纯函数，为什么需要纯函数"></a>什么是纯函数，为什么需要纯函数</h2><p>概念：相同的输入，总是会的到相同的输出，并且在执行过程中没有任何副作用<br>优点：</p>
-<ul>
-<li>1、可缓存性，纯函数总能够根据输入来做缓存</li>
-<li>2、独立性，可移植</li>
-<li>3、可并行执行代码</li>
-<li>3、可测试性<h2 id="for-of-和-for-in的区别"><a href="#for-of-和-for-in的区别" class="headerlink" title="for of 和 for in的区别"></a>for of 和 for in的区别</h2>for…in 循环只遍历可枚举属性（包括它的原型链上的可枚举属性）<br>for…of语句在可迭代对象（包括Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.objCustom = function() &#123;&#125;;</span><br><span class="line">Array.prototype.arrCustom = function() &#123;&#125;;</span><br><span class="line"></span><br><span class="line">let iterable = [3, 5, 7];</span><br><span class="line">iterable.foo = &#x27;hello&#x27;;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  console.log(i); // 0, 1, 2, &quot;foo&quot;, &quot;arrCustom&quot;, &quot;objCustom&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  if (iterable.hasOwnProperty(i)) &#123;</span><br><span class="line">    console.log(i); // 0, 1, 2, &quot;foo&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i of iterable) &#123;</span><br><span class="line">  console.log(i); // 3, 5, 7</span><br><span class="line">&#125;</span><br><span class="line">总结：for in是遍历（object）键名，for of是遍历（array）键值</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="CSRF-XSS-SQL注入-DDoS"><a href="#CSRF-XSS-SQL注入-DDoS" class="headerlink" title="CSRF XSS SQL注入 DDoS"></a>CSRF XSS SQL注入 DDoS</h2><p>CSRF（Cross-site request forgery）跨站请求伪造，是指攻击者诱导受害者进入第三方网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的，流程如下：</p>
-<ul>
-<li>受害者登录 <a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> ，并保留了登录凭证（Cookie）</li>
-<li>攻击者引诱受害者访问了 <a target="_blank" rel="noopener" href="http://b.com/">http://b.com</a></li>
-<li><a target="_blank" rel="noopener" href="http://b.com/">http://b.com</a> 发送了一个请求： <a target="_blank" rel="noopener" href="http://a.com/act=xx">http://a.com/act=xx</a> 。浏览器会默认携带 <a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> 的Cookie。</li>
-<li><a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> 接收到请求后，对请求进行验证，并确认是受害者的凭证，误以为是受害者自己发送的请求。</li>
-<li><a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> 以受害者的名义执行了act=xx。</li>
-<li>攻击完成，攻击者在受害者不知情的情况下冒充受害者，让 <a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> 执行了自己定义的操作</li>
-</ul>
-<p>XSS 跨站脚本攻击（Cross Site Scripting），是指往页面恶意的注入脚代码本。当用户浏览该页时，嵌入其中的 Script 代码会被执行，从而达到恶意攻击用户的目的<br><code>&lt;script&gt;window.location.href=&quot;https://www.pzijun.cn/&quot;;&lt;/script&gt;</code></p>
-<p>SQL注入，是一种非常常见的数据库攻击手段，在表单中填写包含 SQL 关键字的数据，表单数据提交给服务器时让数据库执行恶意 SQL 的过程</p>
-<p>DDoS，分布式拒绝服务攻击（Distributed Denial of Service）就是发送大量的合法请求到服务器，服务器无法分辨这些请求是正常请求还是攻击请求，所以会照单全收。海量的请求造成服务器进入停止工作或拒绝服务的状态</p>
-<h2 id="session-和cookies的区别"><a href="#session-和cookies的区别" class="headerlink" title="session 和cookies的区别"></a>session 和cookies的区别</h2><p>session 和 cookie 都是缓存信息的手段，通常用于保存用户的登录态<br>session 是另一种记录服务器和客户端会话状态的机制<br>session 是基于 cookie 实现的，session 存储在服务器端，sessionId 会被存储到客户端的cookie 中</p>
-<h2 id="typeof-null为什么输出object"><a href="#typeof-null为什么输出object" class="headerlink" title="typeof null为什么输出object"></a>typeof null为什么输出object</h2><p>JS 的最初版本中，使用的是 32 位系统，为了性能考虑使用低位存储了变量的类型信息，000 开头代表是对象，然而 null 表示为全零，所以将它错误的判断为 object</p>
-<h2 id="webpack的loader和plugin区别是什么"><a href="#webpack的loader和plugin区别是什么" class="headerlink" title="webpack的loader和plugin区别是什么"></a>webpack的loader和plugin区别是什么</h2><p>loader，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。</p>
-<p>plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听webpack打包过程中的某些节点，执行广泛的任务</p>
-<h2 id="前端性能排查："><a href="#前端性能排查：" class="headerlink" title="前端性能排查："></a>前端性能排查：</h2><p>可以借助lighthouse对网站做一下分析</p>
-<ul>
-<li>1、如果是加载速度比较慢，则去排查是不是请求资源过大、请求数过多、未启用压缩等</li>
-<li>2、执行一下浏览器的perfermance，找出那些地方执行了比较耗时的操作，比如dom渲染比较频繁，js脚本执行了比较耗时的代码</li>
-</ul>
-<h2 id="301和302区别"><a href="#301和302区别" class="headerlink" title="301和302区别"></a>301和302区别</h2><p>301:永久的重定向，搜索引擎在抓取新的内容的同时也将旧的网址替换为了重定向之后的网址。<br>302:临时重定向，搜索引擎会抓取新的内容而保留旧的地址，因为服务器返回302，所以，搜索搜索引擎认为新的网址是暂时的，不利于SEO</p>
-<h2 id="箭头函数和普通函数的区别"><a href="#箭头函数和普通函数的区别" class="headerlink" title="箭头函数和普通函数的区别"></a>箭头函数和普通函数的区别</h2><p>箭头函数是普通函数的简写，可以更优雅的定义一个函数，但是也有几点不同</p>
-<ul>
-<li>1、函数体内的 this 对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
-<li>2、不可以使用 arguments 对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。</li>
-<li>3、不可以使用 yield 命令，因此箭头函数不能用作 Generator 函数。</li>
-<li>4、不可以使用 new 命令，因为：<ul>
-<li>没有自己的 this，无法调用 call，apply。</li>
-<li>没有 prototype 属性 ，而 new 命令在执行时需要将构造函数的 prototype 赋值给新的对象的 <code>__proto__</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="前端监控使用GIF进行上报主要是因为："><a href="#前端监控使用GIF进行上报主要是因为：" class="headerlink" title="前端监控使用GIF进行上报主要是因为："></a>前端监控使用GIF进行上报主要是因为：</h2><ul>
-<li>没有跨域问题；</li>
-<li>不会阻塞页面加载，影响用户体验；</li>
-<li>在所有图片中体积最小，相较BMP/PNG，可以节约41%/35%的网络资源</li>
-</ul>
-<h2 id="Object-prototype-toString-call-、-instanceof-以及-Array-isArray"><a href="#Object-prototype-toString-call-、-instanceof-以及-Array-isArray" class="headerlink" title="Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()"></a>Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()</h2><p>Object.prototype.toString.call()：每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]，其中 type 为对象的类型.常用于判断浏览器内置对象时</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.toString.call(&#x27;An&#x27;) // &quot;[object String]&quot;</span><br><span class="line">Object.prototype.toString.call(1) // &quot;[object Number]&quot;</span><br><span class="line">Object.prototype.toString.call(Symbol(1)) // &quot;[object Symbol]&quot;</span><br><span class="line">Object.prototype.toString.call(null) // &quot;[object Null]&quot;</span><br><span class="line">Object.prototype.toString.call(undefined) // &quot;[object Undefined]&quot;</span><br><span class="line">Object.prototype.toString.call(function()&#123;&#125;) // &quot;[object Function]&quot;</span><br><span class="line">Object.prototype.toString.call(&#123;name: &#x27;An&#x27;&#125;) // &quot;[object Object]&quot;</span><br></pre></td></tr></table></figure>
-<p>instanceof:部机制是通过判断对象的原型链中是不是能找到类型的 prototype</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function instance(left, right) &#123;//left表示左表达式，right表示构造类</span><br><span class="line"> var r = right.prototype;</span><br><span class="line"> l = left.__proto__;</span><br><span class="line"> while (true) &#123;</span><br><span class="line">   if (l === null)</span><br><span class="line">     return false;</span><br><span class="line">   if (r === l)  // 这里重点：严格等于时，返回 true</span><br><span class="line">     return true;</span><br><span class="line">   l = l.__proto__; //向上获取原型</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Array.isArray():判断对象是否为数组,ES5新增的方法</p>
-<p>[1].constructor 性能最好</p>
-<h2 id="http1-0-http1-1-http2的区别"><a href="#http1-0-http1-1-http2的区别" class="headerlink" title="http1.0 http1.1 http2的区别"></a>http1.0 http1.1 http2的区别</h2><p>http1.0:每个请求都会建立一个单独的连接,每次连接都会触发TCP的三次握手，并且由于TCP还存在慢启动的问题，效率比较低</p>
-<p>http1.1:主要增加了keep-live字段，默认开启，解决了多次触发TCP连接的问题，但是http请求还是顺序发送和接收，一个请求对应一个响应，必须等下上一个请求接受才能发起下一个请求。如果前面的请求发生阻塞，后面的请求就无法发送。此外，由于浏览器的机制，对于每个站点浏览器最大并发连接一般为6个，会造成连接数过多，增加服务的压力<br>备注：HTTP/1.1 不是二进制传输，而是通过文本进行传输。由于没有流的概念，在使用并行传输（多路复用）传递数据时，接收端在接收到响应后，并不能区分多个响应分别对应的请求，所以无法将多个响应的结果重新进行组装，也就实现不了多路复用</p>
-<p>http2.0:采用多路复用机制，同域名下所有通信都在单个连接上完成，单个连接上可以并行交错的请求和响应，之间互不干扰，并且数据采用二进制格式传输，更加高效。<br>数据分为帧（frame）和流（stream）,帧代表着最小的数据单位，每个帧会标识出该帧属于哪个流，多个帧组成的数据流,对端可以通过帧中的标识知道属于哪个请求</p>
-<h2 id="ES6-代码转成-ES5-代码的实现思路"><a href="#ES6-代码转成-ES5-代码的实现思路" class="headerlink" title="ES6 代码转成 ES5 代码的实现思路"></a>ES6 代码转成 ES5 代码的实现思路</h2><p>将ES6的代码转换为AST语法树，然后再将ES6 AST转为ES5 AST，再将AST转为代码<br>ES6 转 ES5 目前行业标配是用 Babel，转换的大致流程如下：</p>
-<ul>
-<li>解析：解析代码字符串，生成 AST</li>
-<li>转换：按一定的规则转换、修改 AST</li>
-<li>生成：将修改后的 AST 转换成普通代码<h2 id="babel是什么"><a href="#babel是什么" class="headerlink" title="babel是什么"></a>babel是什么</h2>babel是一个转译器，把同种语言的高版本规则翻译成低版本规则,babel的转译过程也分为三个阶段：parsing、transforming、generating,以ES6代码转译为ES5代码为例，babel转译的具体过程如下:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ES6代码输入 ==》 babylon进行解析 ==》 得到AST</span><br><span class="line">==》 plugin用babel-traverse对AST树进行遍历转译 ==》 得到新的AST树</span><br><span class="line">==》 用babel-generator通过AST树生成ES5代码</span><br></pre></td></tr></table></figure>
-<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kaicy/p/14696368.html">深入理解babel原理及使用</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kaicy/p/14696368.html">深入理解babel原理及使用</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903726465941518">webpack-babel篇</a></li>
-</ul>
-<h2 id="polyfill是什么"><a href="#polyfill是什么" class="headerlink" title="polyfill是什么"></a>polyfill是什么</h2><p>polyfill是一个js库，主要抚平不同浏览器之间对js实现的差异。比如，html5的storage(session,local), 不同浏览器，不同版本，有些支持，有些不支持。polyfill帮你把这些差异化抹平，不支持的变得支持了</p>
-<h2 id="数组的那些方法会改变原数组"><a href="#数组的那些方法会改变原数组" class="headerlink" title="数组的那些方法会改变原数组"></a>数组的那些方法会改变原数组</h2><ul>
-<li>1、shift：将第一个元素删除并且返回删除元素，空即为undefined</li>
-<li>2、unshift：向数组开头添加元素，并返回新的长度</li>
-<li>3、pop：删除最后一个并返回删除的元素</li>
-<li>4、push：向数组末尾添加元素，并返回新的长度</li>
-<li>5、reverse：颠倒数组顺序</li>
-<li>6、sort：对数组排序</li>
-<li>7、splice:splice(start,length,item)删，增，替换数组元素，返回被删除数组，无删除则不返回</li>
-<li>8、fill:用一个元素填充原来的数组</li>
-<li>9、copyWithin:方法浅复制数组的一部分到同一数组中的另一个位置，并返回它，不会改变原数组的长度</li>
-</ul>
-<h2 id="isNaN和Number-isNaN的区别"><a href="#isNaN和Number-isNaN的区别" class="headerlink" title="isNaN和Number.isNaN的区别"></a>isNaN和Number.isNaN的区别</h2><p>isNaN会对数值进行一个Number()的操作，而Number.isNaN则是严格进行判断</p>
-<h2 id="构造函数的函数"><a href="#构造函数的函数" class="headerlink" title="构造函数的函数"></a>构造函数的函数</h2><p>首先我们要明白，任何函数都是Function的实例，通过函数（Person）构造出来的对象（person），则是构造函数的实例，两者之间是存在继承关系。所以Object.getPrototypeOf(person) === Person.prototype 而 Object.getPrototypeOf(Person) === Function.prototype<br>请看下面两段代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123; &#125;;</span><br><span class="line">var a = Person.prototype;</span><br><span class="line">console.log(a);</span><br><span class="line">var b = Object.getPrototypeOf(Person);</span><br><span class="line">console.log(b);</span><br><span class="line">a === b // false</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123; &#125;</span><br><span class="line">var person = new Person();</span><br><span class="line"></span><br><span class="line">var a = person.__proto__;</span><br><span class="line">var b = Object.getPrototypeOf(person);</span><br><span class="line">var c = Person.prototype;</span><br><span class="line"></span><br><span class="line">var d = Person.__proto__;</span><br><span class="line">var e = Object.getPrototypeOf(Person);</span><br><span class="line">var f = Function.prototype;</span><br></pre></td></tr></table></figure>
-
-<h2 id="JS什么情况下会出现内存泄漏"><a href="#JS什么情况下会出现内存泄漏" class="headerlink" title="JS什么情况下会出现内存泄漏"></a>JS什么情况下会出现内存泄漏</h2><p>现代浏览器都使用了标记-清除垃圾回收算法。所有对JavaScript垃圾回收算法的改进都是基于标记-清除算法的改进。<br>此算法的大致步骤：</p>
-<ul>
-<li>1、设置一个叫做根（root）的对象（在Javascript里，根是全局对象）。垃圾回收器将定期从根开始，找所有从根开始引用的对象，然后找这些对象引用的对象</li>
-<li>2、垃圾回收器将所有可以获得的对象（活动对象）和所有不能获得的对象（垃圾对象）做出标记</li>
-<li>3、垃圾回收器释放垃圾对象所占用的内存并将其返回给操作系统</li>
-</ul>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>这是一个经典的闭包造成内存泄漏的例子，具体的理解：【暂时不理解、稍后补上】</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var theThing = null;</span><br><span class="line">var replaceThing = function () &#123;</span><br><span class="line">  var originalThing = theThing;</span><br><span class="line">  var unused = function () &#123;</span><br><span class="line">    if (originalThing)</span><br><span class="line">      console.log(&quot;hi&quot;);</span><br><span class="line">  &#125;;</span><br><span class="line">  theThing = &#123;</span><br><span class="line">    longStr: new Array(1000000).join(&#x27;*&#x27;),</span><br><span class="line">    someMethod: function () &#123;</span><br><span class="line">      console.log(someMessage);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">setInterval(replaceThing, 1000);</span><br></pre></td></tr></table></figure>
-
-<h3 id="没有-DOM-引用"><a href="#没有-DOM-引用" class="headerlink" title="没有 DOM 引用"></a>没有 DOM 引用</h3><p>如下代码所示：有一个变量elements持有了对button节点的引用，为了在函数daStuff中使用。但是在将来的某一时刻将button节点从DOM树中移除了，<code>document.body.removeChild(document.getElementById(&#39;button&#39;));</code>。这个时候直觉上会认为垃圾回收器会把button节点回收，但实际上不会发生，因为elements还持有对button节点的引用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var elements = &#123;</span><br><span class="line">    button: document.getElementById(&#x27;button&#x27;),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function doStuff() &#123;</span><br><span class="line">    button.click();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function removeButton() &#123;</span><br><span class="line">    // The button is a direct child of body.</span><br><span class="line">    document.body.removeChild(document.getElementById(&#x27;button&#x27;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="意外的使用全局变量"><a href="#意外的使用全局变量" class="headerlink" title="意外的使用全局变量"></a>意外的使用全局变量</h3><p>方式一：<br>假设你想在一个函数foo中创建一个变量，但是忘记使用var或者let声明，这样就会创建一个全局变量挂在在全局对象window上，而这些变量垃圾回收器是不会对这些变量回收的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo(arg) &#123;</span><br><span class="line">    bar = &quot;this is a hidden global variable&quot;;</span><br><span class="line">&#125;</span><br><span class="line">或者：</span><br><span class="line">function foo(arg) &#123;</span><br><span class="line">    window.bar = &quot;this is an explicit global variable&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还有一种情况是 错误的使用了this：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    this.variable = &quot;potential accidental global&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 直接调用函数foo，实际上是在window上调用了foo，this指向的是window。</span><br><span class="line">// 同样的创建了全局变量</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
-
-<p>备注：当启用JS的严格模式时，<code>&#39;use strict&#39;;</code>,这种情况是不允许的</p>
-<h3 id="遗忘的定时器或者回调"><a href="#遗忘的定时器或者回调" class="headerlink" title="遗忘的定时器或者回调"></a>遗忘的定时器或者回调</h3><p>定时器<br>使用<code>setInterval</code>在JS代码中是很常用的一个操作，用来循环的执行一些功能，如下面一段代码，<code>setInterval</code>对Node节点持有一个引用。如果在某一时刻将DOM中的Node节点删除。这个时候这段代码就是一段无效代码。但是因为<code>setInterval</code>依旧处于活动状态，内部还是会持有对Node和someResource的引用，垃圾回收器无法回收定时器所引用的对象。<br>解决方案：当定时器无效时，清除定时器 <code>clearInterval(timerId);</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var someResource = getData();</span><br><span class="line">setInterval(function() &#123;</span><br><span class="line">    var node = document.getElementById(&#x27;Node&#x27;);</span><br><span class="line">    if(node) &#123;</span><br><span class="line">        // Do stuff with node and someResource.</span><br><span class="line">        node.innerHTML = JSON.stringify(someResource));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, 1000);</span><br></pre></td></tr></table></figure>
-
-<p>观察者模式：<br>旧版本IE浏览器无法检测DOM节点和JS代码之间的循环引用。每次将观察者添加到IE中的节点时，都会导致泄漏，所以用户再删除节点之前需要先移除事件监听。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var element = document.getElementById(&#x27;button&#x27;);</span><br><span class="line"></span><br><span class="line">function onClick(event) &#123;</span><br><span class="line">    element.innerHtml = &#x27;text&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">element.addEventListener(&#x27;click&#x27;, onClick);</span><br><span class="line"></span><br><span class="line">// 移除事件监听器</span><br><span class="line">element.removeEventListener(&#x27;click&#x27;, onClick);</span><br><span class="line">element.parentNode.removeChild(element);</span><br></pre></td></tr></table></figure>
-<p>现代浏览器使用现代垃圾收集算法，一般情况下可以检测这些循环并正确处理它们</p>
-<h2 id="WebSocket-SocketJS-Stomp三者的关系"><a href="#WebSocket-SocketJS-Stomp三者的关系" class="headerlink" title="WebSocket SocketJS Stomp三者的关系"></a>WebSocket SocketJS Stomp三者的关系</h2><p>WebSocket是H5规范给出的网络层协议，旨在提供浏览器与服务端建立全双工的通信方式</p>
-<p>SocketJS 由于WebSocket协议并不是所有浏览器都提供支持，所以又出现了一个SockJs。SockJS 是 WebSocket 技术的一种模拟，提供了’类Websocket’、一致性、跨平台的API，旨在浏览器和服务器之间创建一个低延迟、全双工、支持跨域的实时通信信道，主要特点就是仿生Websocket，它会优先使用Websocket作为传输层，在不支持WebSocket的环境回退使用<a target="_blank" rel="noopener" href="https://bobi.ink/2019/07/07/sockjs/">其他解决方案</a>，例如XHR-Stream、轮询。</p>
-<p>Stomp：面向消息的简单文本协议，来为浏览器 和 server 间的通信增加适当的消息语义</p>
-<h2 id="null-和-undefined的区别"><a href="#null-和-undefined的区别" class="headerlink" title="null 和 undefined的区别"></a>null 和 undefined的区别</h2><p>null表示”没有对象”，即该处不应该有值 Number(null) // 0</p>
-<p>undefined表示”缺少值”，就是此处应该有一个值，但是还没有定义 Number(undefined) // NaN</p>
-<h2 id="DocType的作用，什么是混杂模式和严格模式"><a href="#DocType的作用，什么是混杂模式和严格模式" class="headerlink" title="DocType的作用，什么是混杂模式和严格模式"></a>DocType的作用，什么是混杂模式和严格模式</h2><p>声明位于文档中的最前面，处于标签之前。告知浏览器的解析器，用什么文档类型 规范来解析这个文档。</p>
-<p>严格模式：又称标准模式，是指浏览器按照 W3C 标准解析代码<br>混杂模式：又称怪异模式，是指浏览器用自己的方式解析代码。</p>
-<p>如何区分：<br>1、 如果文档包含严格的 DOCTYPE ，那么它一般以严格模式呈现<br>2、包含过渡 DTD 和 URI 的 DOCTYPE ，也以严格模式呈现，但有过渡 DTD 而没有 URI，会导致页面以混杂模式呈现<br>3、DOCTYPE 不存在或形式不正确会导致文档以混杂模式呈现<br>4、HTML5 没有 DTD ，因此也就没有严格模式与混杂模式的区别，HTML5 有相对宽松的语法，实现时，已经尽可能大的实现了向后兼容</p>
-<p>格式：<br>HTML5一种：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br></pre></td></tr></table></figure>
-
-<p>HTML 4.01（三种）:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTML 4.01 Strict ：&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">HTML 4.01 Transitional ：&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;  &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">HTML 4.01 Frameset ：&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Frameset//EN&quot;  &quot;http://www.w3.org/TR/html4/frameset.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>XHTML 1.0（四种）:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">XHTML 1.0 Strict ：&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">XHTML 1.0 Transitional ：&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot; http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">XHTML 1.0 Frameset： &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot;  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">// 该 DTD 等同于 XHTML 1.0 Strict，但允许添加模型</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="扩展运算符-展开字符串"><a href="#扩展运算符-展开字符串" class="headerlink" title="扩展运算符...展开字符串"></a>扩展运算符<code>...</code>展开字符串</h2><p>任何 Iterator 接口的对象，都可以用扩展运算符转为真正的数组</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 在字符串字面量上调用方法或属性时，</span><br><span class="line">// 程序会在背后默默的创建一个与这个字面量的值相等的临时字符串对象，</span><br><span class="line">// 然后再在这个临时对象上调用属性或方法，最后把结果返回去，</span><br><span class="line">// 这个临时字符串对象完成使命后也随之会被销毁</span><br><span class="line">const str = &#x27;Hello&#x27;;</span><br><span class="line">const arr = [...str];</span><br><span class="line">console.log(arr);</span><br><span class="line">// [ &#x27;H&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27; ]</span><br></pre></td></tr></table></figure>
-
-<h2 id="js-for循环和foreach效率问题"><a href="#js-for循环和foreach效率问题" class="headerlink" title="js for循环和foreach效率问题"></a>js for循环和foreach效率问题</h2><p>for &gt; forEach &gt; map</p>
-<p>for 顺序访问数组，是一个语法语句<br>forEach 使用迭代器实现，是一个API方法</p>
-<h2 id="nginx正向代理-反向代理"><a href="#nginx正向代理-反向代理" class="headerlink" title="nginx正向代理 反向代理"></a>nginx正向代理 反向代理</h2><p>正向代理 将多个客户端请求代理到服务器，服务器相对客户端透明<br>反向代理 将客户端请求分发到不同服务器 客户端相对服务器透明</p>
-<h2 id="解构赋值的原理"><a href="#解构赋值的原理" class="headerlink" title="解构赋值的原理"></a>解构赋值的原理</h2><p>解构赋值内部是将源数据使用函数ToObject将源数据转换成对象，然后引用对象中的属性，也就是说在解构的上下文中，原始值会被当成对象。这样意味着null和undefined不能被解构，否则会抛出异常</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let &#123;length&#125; = &#x27;ljt&#x27;</span><br><span class="line">// length 3</span><br><span class="line"></span><br><span class="line">let &#123; constructor: c &#125; = 4</span><br><span class="line">// constructor == Number true</span><br><span class="line"></span><br><span class="line">let &#123; _ &#125; = null;</span><br><span class="line">let &#123; _ &#125; = undefined;</span><br><span class="line">// TypeError</span><br></pre></td></tr></table></figure>
-
-<h2 id="css中link和-import的区别"><a href="#css中link和-import的区别" class="headerlink" title="css中link和@import的区别"></a>css中link和@import的区别</h2><p>1、@import是css提供的语法规则，只能导入样式表；link是HTML提供的标签，不但可以加载css，还可以定义 RSS、rel 连接属性<br>2、页面加载时，link会同时被加载，而@import引入的css会等到页面全部下载完成再被加载<br>3、@import是css2.1定的语法，只在IE5以上才会被识别；link是html标签，不存在兼容问题<br>4、可以通过 JS 操作 DOM ，插入link标签来改变样式，@import无法使用此方式<br>5、link引入的样式权重大于@import引入的样式</p>
-<h2 id="position：absolute和float的区别"><a href="#position：absolute和float的区别" class="headerlink" title="position：absolute和float的区别"></a>position：absolute和float的区别</h2><p>共同点：都可以使元素脱离文档流<br>不同点：float仍会占据位置，absolute会覆盖文档流中的其他元素</p>
-<h2 id="display-none-和-visibility-hidden区别"><a href="#display-none-和-visibility-hidden区别" class="headerlink" title="display: none 和 visibility: hidden区别"></a>display: none 和 visibility: hidden区别</h2><p>display:none 隐藏对应元素 元素不占空间<br>visibility: hidden 隐藏对应元素 元素依旧占居空间<br>opacity: 0 透明度为0，隐藏对应元素 元素依旧占居空间</p>
-<p>display: none和opacity: 0：是非继承属性，影响后代元素<br>visibility: hidden：是继承属性，子代元素可以通过visibility: visible重新显示</p>
-<h2 id="rgba-和-opacity-透明效果有什么不同"><a href="#rgba-和-opacity-透明效果有什么不同" class="headerlink" title="rgba 和 opacity 透明效果有什么不同"></a>rgba 和 opacity 透明效果有什么不同</h2><p>都能实现透明效果</p>
-<p>opacity作用于元素，并且会影响元素内（子元素）的透明度，会被继承<br>rgba作用于元素，只影响元素的透明度，不会影响子元素，不会被继承</p>
-<h2 id="网页字体是使用奇数还是偶数呢"><a href="#网页字体是使用奇数还是偶数呢" class="headerlink" title="网页字体是使用奇数还是偶数呢"></a>网页字体是使用奇数还是偶数呢</h2><p>使用偶数</p>
-<ul>
-<li>设计师的原因 ps 提供的字号是偶数，自然到了 前端那边也是用的是偶数</li>
-<li>系统原因 Windows 自带的点阵宋体（中易宋体）从 Vista 开始只提供 12、14、16 px 这三个大小的点阵</li>
-<li>编程习惯 偶数更加容易计算 12 * 1.5</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1490,7 +1414,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

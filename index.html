@@ -627,6 +627,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-27/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-27/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D/" class="post-title-link" itemprop="url">移动端适配</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-27 14:08:38" itemprop="dateCreated datePublished" datetime="2022-01-27T14:08:38+08:00">2022-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-18 14:09:34" itemprop="dateModified" datetime="2022-02-18T14:09:34+08:00">2022-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="viewport缩放方案"><a href="#viewport缩放方案" class="headerlink" title="viewport缩放方案"></a>viewport缩放方案</h3><p>基本原理，先将设备的布局视口设置成为设计稿的宽度（750px），直接按设计稿的标注来开发。比如设计稿里标注的文字字号是30px，CSS里就设置文字字号30px。然后再缩放页面（initial-scale）使其恰好撑满屏幕。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const WIDTH = 750</span><br><span class="line">    const mobileAdapter = () =&gt; &#123;</span><br><span class="line">      let scale = screen.width/WIDTH</span><br><span class="line">      let content = `width=$&#123;WIDTH&#125;, initial-scale=$&#123;scale&#125;, maximum-scale=$&#123;scale&#125;, minimum-scale=$&#123;scale&#125;`</span><br><span class="line">      let meta = document.querySelector(&#x27;meta[name=viewport]&#x27;)</span><br><span class="line">      if(!meta) &#123;</span><br><span class="line">        meta = document.createElement(&#x27;meta&#x27;)</span><br><span class="line">        meta.setAttribute(&#x27;name&#x27;, &#x27;viewport&#x27;)</span><br><span class="line">        document.head.appendChild(meta)</span><br><span class="line">      &#125;</span><br><span class="line">      meta.setAttribute(&#x27;content&#x27;, content)</span><br><span class="line">    &#125;</span><br><span class="line">    mobileAdapter()</span><br><span class="line">    window.onresize = mobileAdapter</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> ...</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>优点：开发流程很简单，工程师只需根据设计稿标注还原页面，不需要额外计算。适配范围广<br>缺点：页面整体放大缩小，对于不想缩放的元素无法控制</p>
+<h3 id="动态REM方案"><a href="#动态REM方案" class="headerlink" title="动态REM方案"></a>动态REM方案</h3><p>viewport缩放方案实现页面级的缩放适配。但该方案有个问题，1px的边框在大屏手机被放大后显得很粗，在小屏手机上被缩小后又显得太细。我们需要更换另外一种方案——整体能根据屏幕放大缩小，局部又能保持固定的尺寸。<br>基本原理：<br>使用单位控制页面元素大小时，可以使用固定单位px，也可以使用相对单位rem，1rem等于html标签fontsize的大小，对于需要适配屏幕等比缩放的元素可以选用rem作为单位，对于不需要等比缩放的元素依旧使用px作为单位。调整html标签的font-size，就能让所有使用rem单位的元素跟随着发生变化，而使用px单位的元素不受影响.</p>
+<p>举个实际的例子。设计师交付的设计稿宽度是750px，设计稿上一个div的标注尺寸是375px（宽度是设计稿宽度的一半）。我们可以</p>
+<ul>
+<li>设置html的font-size 为 100*屏幕宽度/设计稿宽度</li>
+<li>在写CSS时设置 div 的宽度是 3.75rem （计算时用设计稿标注值除以100），边框宽度为1px</li>
+</ul>
+<p>假设用户在逻辑像素宽度是375px的设备上打开页面，则html的font-size是100*375/750 = 50px，div的宽度是3.75rem ，即187.5px 正好是屏幕宽度的一半。</p>
+<p>假设用户在逻辑像素宽度是428px的设备上打开页面，则html的font-size是100*428/750 = 57.07px，div的宽度是3.75rem ，即214px 正好是屏幕宽度的一半。</p>
+<p>为什么要用100来乘以屏幕宽度/设计稿宽度？其实100只是随便选取的一个值，我们也可以随便其他任意值比如50。如果选100，设计稿中某个元素标注的尺寸是375px，我们可以很快速的计算出3.75rem,如果html的font-size 设置为 50*屏幕宽度/设计稿宽度，那么div的宽度就应该是7.5rem了。换算起来就没那么直观了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,</span><br><span class="line">    initial-scale=1, maximum-scale=1, minimum-scale=1&quot;&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const WIDTH = 750  //如果是尺寸的设计稿在这里修改</span><br><span class="line">    const mobileAdapter = () =&gt; &#123;</span><br><span class="line">      //设置html标签的fontSize</span><br><span class="line">      document.documentElement.style.fontSize = (100*screen.width/WIDTH) + &#x27;px&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    window.onresize = mobileAdapter</span><br><span class="line">    mobileAdapter()</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line"></span><br><span class="line">  &lt;style&gt;</span><br><span class="line">    div &#123;</span><br><span class="line">      width: 3.75rem; /* 需要随屏幕等比缩放，使用rem单位，比如设计稿中标注的32px这里写成0.32rem */</span><br><span class="line">      border: 1px solid #ccc; /*不需要缩放的部分用px*/</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div&gt;内容&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>优点：方案灵活技能实现整体缩放又能实现局部不缩放<br>缺点：需要使用JS,配原理稍复杂</p>
+<h3 id="vw方案"><a href="#vw方案" class="headerlink" title="vw方案"></a>vw方案</h3><p>vw是相对单位，1vw表示屏幕宽度的1%。基于此，我们可以把所有需要适配屏幕大小等比缩放的元素都使用vw做为单位。不需要缩放的元素使用px做单位,<br>举个例子。设计师交付的设计稿宽度是750px，设计稿上一个标题的fontSize标注尺寸是32px。(32/750)*100% = 4.27% ，换句话说这个标题的字号占屏幕宽度的占比是4.27%，不管任何屏幕都是如此。4.27% 即 4.27vw</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">  &lt;style&gt;</span><br><span class="line">    .button &#123;</span><br><span class="line">      width: 16vw;        /*  100vw*120/750  */</span><br><span class="line">      font-size: 3.73vw;  /*  100vw*28/750  */</span><br><span class="line">      line-height: 6.4vw; /*  100vw*48/750  */</span><br><span class="line">      border: 1px solid #000; /*不需要缩放的部分用px*/</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class=&quot;button&quot;&gt;按钮&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">// 使用less帮助计算</span><br><span class="line">.px2vw(@px) &#123;</span><br><span class="line">  @var: unit(@px / @width) * 10;</span><br><span class="line">  @rem: ~&#x27;@&#123;var&#125;rem&#x27;;</span><br><span class="line">&#125;</span><br><span class="line">.button &#123;</span><br><span class="line">  width: convert(120px)[@rem];</span><br><span class="line">  font-size: .convert(28px)[@rem];</span><br><span class="line">  line-height: .convert(48px)[@rem];</span><br><span class="line">  border: 1px solid #000;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：适配原理简单,不需要JS即可适配，方案灵活技能实现整体缩放又能实现局部不缩放<br>缺点：px换算到CSS的vw计算复杂</p>
+<h3 id="1px或者说0-5px问题"><a href="#1px或者说0-5px问题" class="headerlink" title="1px或者说0.5px问题"></a>1px或者说0.5px问题</h3><p>我认为1px或者0.5px是同一样的一个问题，根据我们前面说的适配方案，比如设计稿上一个分割线高度为1px，但是设计稿的是以750px为基准的，如果直接缩放转换到移动设备会是0.5px甚至会比0.5还小；如果我们直接写1px，根据移动设备的设备像素比，使用的实际像素会大于1像素，也就是说在设备像素比大的手机上线比较粗。所以针对这个问题我们特殊处理一下，有以下几种方法</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>直接使用0.5px实现</td>
+<td>代码简单，使用css即可</td>
+<td>IOS及Android老设备不支持</td>
+</tr>
+<tr>
+<td>box-shadow模拟边框实现</td>
+<td>兼容所有机型,使用简单，圆角也可以实现</td>
+<td>模拟的实现方法，是阴影不是边框</td>
+</tr>
+<tr>
+<td>border-image实现,使用边框图片</td>
+<td>兼容性好</td>
+<td>修改颜色没需要修改图片，无法实现圆角</td>
+</tr>
+<tr>
+<td>伪元素 + transform实现</td>
+<td>兼容性好</td>
+<td>暂用了after 伪元素，可能影响清除浮动</td>
+</tr>
+<tr>
+<td>viewport + rem 实现</td>
+<td>类似于rem动态适配</td>
+<td>影响全局布局，需要计算body中fontSize大小</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">  body &#123;</span><br><span class="line">    margin: 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box &#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">    height: 50px;</span><br><span class="line">    border-radius: 10px;</span><br><span class="line">    margin-top: 10px;</span><br><span class="line">    margin-left: 10px;</span><br><span class="line">    font-size: 0.3rem;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box0 &#123;</span><br><span class="line">    border: 1px solid #000;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box1 &#123;</span><br><span class="line">    border: 0.5px solid #000;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box2 &#123;</span><br><span class="line">    box-shadow: 0 -1px 1px -1px #000,</span><br><span class="line">      1px 0 1px -1px #000,</span><br><span class="line">      0 1px 1px -1px #000,</span><br><span class="line">      -1px 0 1px -1px #000;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box3 &#123;</span><br><span class="line">    border: 1px solid transparent;</span><br><span class="line">    border-image: url(&#x27;./1.jpg&#x27;) 2 repeat;</span><br><span class="line">    border-radius: 10px;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  .box4 &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /* .box4::after &#123;</span><br><span class="line">    content: &#x27;&#x27;;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 0;</span><br><span class="line">    height: 1px;</span><br><span class="line">    width: 100%;</span><br><span class="line">    background-color: #000;</span><br><span class="line">    transform-origin: 50% 0%;</span><br><span class="line">    transform: scaleY(0.5);</span><br><span class="line">  &#125; */</span><br><span class="line"></span><br><span class="line">  .box4::after &#123;</span><br><span class="line">    content: &#x27;&#x27;;</span><br><span class="line">    width: 200%;</span><br><span class="line">    height: 200%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 0;</span><br><span class="line">    border: 1px solid #000;</span><br><span class="line">    border-radius: 4px;</span><br><span class="line">    -webkit-transform: scale(0.5, 0.5);</span><br><span class="line">    transform: scale(0.5, 0.5);</span><br><span class="line">    -webkit-transform-origin: top left;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,</span><br><span class="line">      initial-scale=1, maximum-scale=1, minimum-scale=1&quot;&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const WIDTH = 750</span><br><span class="line">    const mobileAdapter = () =&gt; &#123;</span><br><span class="line">      //设置html标签的fontSize</span><br><span class="line">      document.documentElement.style.fontSize = (100 * screen.width / WIDTH) + &#x27;px&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    mobileAdapter()</span><br><span class="line">    window.onresize = mobileAdapter</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class=&quot;box box0&quot;&gt; 1px 边框，作为对比 &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;box box1&quot;&gt; 方案1: 直接设置0.5px边框&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;box box2&quot;&gt; 方案2: box-shadow模拟边框实现 &lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;box box3&quot;&gt; 方案3: 使用边框图片&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;box box4&quot;&gt; 方案4: 伪类 + transform&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-26/viewport/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1049,142 +1176,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/lighthouse%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-21/lighthouse%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">lighthouse简单使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-21 15:09:03 / 修改时间：15:09:20" itemprop="dateCreated datePublished" datetime="2022-01-21T15:09:03+08:00">2022-01-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Lighthouse 是 Google 开发的一款开源自动化工具，用于分析网络应用和网页，收集现代性能指标和见解，让开发人员根据生成的评估页面，来进行网站优化和完善，提高用户体验</p>
-<img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/20.png" width="1000px"/>
-
-<p>点击 Generate report（生成报告），Lighthouse 会收集该网页的相关信息，并生成报告，如下图：</p>
-<img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/21.png" width="1000px"/>
-
-<h2 id="功能解析"><a href="#功能解析" class="headerlink" title="功能解析"></a>功能解析</h2><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/21.png" alt="avatar"><br>最上面显示五个指标：</p>
-<ul>
-<li>Performance 性能</li>
-<li>Accessibility 无障碍功能</li>
-<li>Best Practice 最佳做法</li>
-<li>SEO 搜索引擎优化</li>
-<li>Progressive Web App 渐进式网页应用程序</li>
-</ul>
-<p>点击右上角的︙（Tools menu，工具菜单），这里有 7 个选项，分别为</p>
-<ul>
-<li>Print Summary：打印摘要，可另存为 PDF</li>
-<li>Print Expanded：打印详细信息，可另存为 PDF</li>
-<li>Copy JSON：复制 JSON</li>
-<li>Save as HTML：另存为 HTML</li>
-<li>Save as JSON：另存为 JSON，json 格式的报告可以通过 Lighthouse Report Viewer（Lighthouse 报告查看器）打开</li>
-<li>Open in Viewer：在 Lighthouse Report Viewer 中打开报告</li>
-<li>Toggle Dark Theme：切换为黑夜主题</li>
-</ul>
-<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/22.png" alt="avatar"></p>
-<ul>
-<li>First Contentful Paint（FCP）：初始渲染，首次内容渲染时间，<br>  即浏览器首次将任意内容（如文字、图像、canvas 等）绘制到屏幕上的时间点</li>
-<li>Speed Index（SI）：速度指数，衡量了首屏可见内容绘制在屏幕上的速度。在首次加载页面的过程中尽量展现更多的内容，往往能给用户带来更好的体验，所以速度指标的值约小越好</li>
-<li>Largest Contentful Paint（LCP）：最大内容绘制，用于监控网页可视区内“绘制面积”最大的元素开始呈现在屏幕上的时间</li>
-<li>Time to Interactive（TTI）：交互时间，页面达到完全可交互状态所需要的时间。即指的是所有的页面内容都已经成功加载，且能够快速地对用户的操作做出反应的时间点</li>
-<li>Total Blocking Time（TBI）：总阻塞时间，任务执行时间超过 50ms 时，FCP 和交互时间之间的所有时间段的总和，以毫秒为单位</li>
-<li>Cumulative Layout Shift（CLS）：累积布局偏移，指网页布局在加载期间的偏移量，用来衡量视觉界面稳定性的一个指标</li>
-</ul>
-<p>这 6 个指标对应的权重分别为 10%、10%、25%、10%、30%、15%，通过加权平均计算出性能总分为图中的 95 分23</p>
-<p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/23.png" alt="avatar"></p>
-<p>1、单击 View Original Trace（查看原始跟踪）按钮将转到 Performance（性能）面板，在其中跟踪加载详细信息<br>2、单击 View Treemap（查看树形图）会在新标签页中打开 Lighthouse Treemap，查看 JS 的 Resource Bytes（字节大小）、Unused Bytes（未使用字节）以及 Coverage（覆盖率）</p>
-<p>Show audits relevant（显示相关审核）按 ALL、FCP、LCP、TBT、CLS 五个指标显示，对应上面<strong>metrics</strong>中的指标，往下滑动可以看到 Opportunities、Diagnostics 两个部分。<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/24.png" alt="avatar"><br>在这里面可以看到给出各个方面的性能优化建议，比如图片、css、js 这些文件的处理，还有 html 里面标签的使用、缓存处理等建议，可以根据这些来对网站进行优化</p>
-<ul>
-<li>Opportunities 指的是优化机会，它提供了详细的建议和文档，帮助我们具体进行实现和改进，这些建议可以帮助您更快地加载页面</li>
-<li>Diagnostics 指的是诊断存在的问题，显示了有关应用程序性能的更多信息，为进一步改善性能的实验和调整给出了指导</li>
-<li>Passed audits 是通过审核的的各项良好性能参数</li>
-</ul>
-<h3 id="Accessibility（无障碍功能）"><a href="#Accessibility（无障碍功能）" class="headerlink" title="Accessibility（无障碍功能）"></a>Accessibility（无障碍功能）</h3><p>当我们说某个网站具有 Accessibility（无障碍功能）时，我们的意思是网站的内容可用，其功能可由任何人操作。所有用户都能使用键盘、鼠标或触摸屏，与网页内容进行清晰明了的交互，这会让使用者获得良好的体验。</p>
-<h3 id="Best-Practice（最佳做法）"><a href="#Best-Practice（最佳做法）" class="headerlink" title="Best Practice（最佳做法）"></a>Best Practice（最佳做法）</h3><p>Best Practice（最佳做法）评分的分数区间为 0-100，影响这项评分的指标项的权重都是相同的<br>比如：推荐使用 https，跨域的跳转链接需要使用 rel 标识，不能使用废弃的 API 等等</p>
-<h3 id="SEO（搜索引擎优化）"><a href="#SEO（搜索引擎优化）" class="headerlink" title="SEO（搜索引擎优化）"></a>SEO（搜索引擎优化）</h3><p>SEO（Search Engine Optimization）：汉译为搜索引擎优化，它检查页面是否针对搜索引擎结果排名进行了优化。</p>
-<h3 id="Progressive-Web-App（渐进式网页应用程序）"><a href="#Progressive-Web-App（渐进式网页应用程序）" class="headerlink" title="Progressive Web App（渐进式网页应用程序）"></a>Progressive Web App（渐进式网页应用程序）</h3><p>Lighthouse 使用 PWA 基准检查项列表（Baseline PWA Checklist）进行测评，测评结果将这些指标项分成了四个类别，共包含 12 个自动测试项和 3 个手动测试项，其中各个自动测试项的评分权重是相同的</p>
-<h4 id="快速可靠"><a href="#快速可靠" class="headerlink" title="快速可靠"></a>快速可靠</h4><ul>
-<li>页面在移动网络条件下能够快速加载</li>
-<li>在离线条件下页面能够返回状态码 200，这里我们可以通过 Service Worker 来实现离线可用</li>
-<li>start_url 在离线条件下返回状态码 200，start_url 是 manifest.json 中的一个属性，它指定了用户打开该 PWA 时加载的 URL<h4 id="可安装"><a href="#可安装" class="headerlink" title="可安装"></a>可安装</h4></li>
-<li>始终使用 HTTPS</li>
-<li>注册 Service Worker 来缓存页面以及 start_url</li>
-<li>使用 manifest 文件来实现安装 PWA 的需求，浏览器能够主动通知用户将应用添加到桌面，增加留存率<h4 id="PWA-优化"><a href="#PWA-优化" class="headerlink" title="PWA 优化"></a>PWA 优化</h4></li>
-<li>将 HTTP 流量重定向到 HTTPS</li>
-<li>配置自定义启动画面</li>
-<li>设置地址栏主题颜色</li>
-<li>页面内容针对视口大小自适应，对移动用户的展示更友好</li>
-<li>使用了 <meta name="viewport"> 标签，并设置了 width 或 initial-scale 属性</li>
-<li>当 JavaScript 文件不可用时，提供降级措施，页面能显示基本内容而不出现白屏</li>
-</ul>
-<h4 id="手动测试项"><a href="#手动测试项" class="headerlink" title="手动测试项"></a>手动测试项</h4><ul>
-<li>站点跨浏览器可用，如主流浏览器 Chrome, Edge, Firefox 及 Safari 等</li>
-<li>页面间切换流畅，即使在较差的网络环境下，切换动画也应该简洁顺畅，这是提高用户感知体验的关键</li>
-<li>保证每个页面都有独一无二的 URL，能够在新的浏览器窗口打开，且方便在社交媒体上进行分享</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1250,7 +1245,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
