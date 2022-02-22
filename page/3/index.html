@@ -155,6 +155,184 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-10/BFC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-10/BFC/" class="post-title-link" itemprop="url">BFC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-10 15:05:56" itemprop="dateCreated datePublished" datetime="2022-01-10T15:05:56+08:00">2022-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-17 12:04:00" itemprop="dateModified" datetime="2022-02-17T12:04:00+08:00">2022-02-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BFC/" itemprop="url" rel="index"><span itemprop="name">BFC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>BFC 全称：Block Formatting Context， 名为 “块级格式化上下文”。<br>简单来说就是，BFC是一个完全独立的空间（布局环境），让空间里的子元素不会影响到外面的布局。那么怎么使用BFC呢，BFC可以看做是一个CSS元素属性</p>
+<h2 id="BFC触发"><a href="#BFC触发" class="headerlink" title="BFC触发"></a>BFC触发</h2><ul>
+<li>根元素（<code>&lt;html&gt;</code>）</li>
+<li>浮动元素（元素的 float 不是 none）</li>
+<li>绝对定位元素（元素的 position 为 absolute 或 fixed）</li>
+<li>行内块元素（元素的 display 为 inline-block）</li>
+<li>overflow 计算值(Computed)不为 visible 的块元素</li>
+<li>display 值为 flow-root 的元素</li>
+<li>表格单元格（元素的 display 为 table-cell，HTML表格单元格默认为该值）</li>
+<li>表格标题（元素的 display 为 table-caption，HTML表格标题默认为该值）</li>
+<li>匿名表格单元格元素（元素的 display 为 table、table-row、 table-row-group、table-header-group、table-footer-group（分别是HTML table、row、tbody、thead、tfoot 的默认属性）或 inline-table）</li>
+<li>contain 值为 layout、content 或 paint 的元素</li>
+<li>弹性元素（display 为 flex 或 inline-flex 元素的直接子元素）</li>
+<li>网格元素（display 为 grid 或 inline-grid 元素的直接子元素）</li>
+<li>多列容器（元素的 column-count 或 column-width (en-US) 不为 auto，包括 column-count 为 1）</li>
+<li>column-span 为 all 的元素始终会创建一个新的BFC，即使该元素没有包裹在一个多列容器中（标准变更，Chrome bug）。</li>
+</ul>
+<h2 id="BFC影响点"><a href="#BFC影响点" class="headerlink" title="BFC影响点"></a>BFC影响点</h2><ul>
+<li>清除浮动</li>
+<li>防止同一BFC容器中的相邻元素间的外边距重叠问题<h3 id="使用float脱离文档流，高度塌陷"><a href="#使用float脱离文档流，高度塌陷" class="headerlink" title="使用float脱离文档流，高度塌陷"></a>使用float脱离文档流，高度塌陷</h3><h3 id="Margin边距重叠"><a href="#Margin边距重叠" class="headerlink" title="Margin边距重叠"></a>Margin边距重叠</h3></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-07/url%E8%AE%BF%E9%97%AE%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-07/url%E8%AE%BF%E9%97%AE%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">url访问流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-07 10:21:21 / 修改时间：11:10:14" itemprop="dateCreated datePublished" datetime="2022-01-07T10:21:21+08:00">2022-01-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><ul>
+<li>1、浏览器缓存</li>
+<li>2、DNS查询</li>
+<li>3、建立socket连接</li>
+<li>4、http请求</li>
+<li>5、服务器返回数据，</li>
+<li>6、页面加载渲染</li>
+<li>7、网络断开</li>
+</ul>
+<h2 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h2><p>关键字：强缓存</p>
+<h2 id="DNS查询"><a href="#DNS查询" class="headerlink" title="DNS查询"></a>DNS查询</h2><p>关键字：本地host 本地DNS服务器 DNS缓存 根域名服务器 递归查询</p>
+<h2 id="建立socket连接"><a href="#建立socket连接" class="headerlink" title="建立socket连接"></a>建立socket连接</h2><p>关键字： 三次握手</p>
+<h2 id="http请求"><a href="#http请求" class="headerlink" title="http请求"></a>http请求</h2><p>关键词： 请求头 请求体 TLS/SSL</p>
+<h2 id="服务器返回数据"><a href="#服务器返回数据" class="headerlink" title="服务器返回数据"></a>服务器返回数据</h2><p>关键词：协商缓存 CDN 状态码：304 302 200</p>
+<h2 id="页面加载解析渲染"><a href="#页面加载解析渲染" class="headerlink" title="页面加载解析渲染"></a>页面加载解析渲染</h2><p>关键词：dom树 重绘 重排 js加载 css加载</p>
+<h2 id="网络断开"><a href="#网络断开" class="headerlink" title="网络断开"></a>网络断开</h2><p>关键词：四次挥手</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#The_browsers_we_will_talk_about">浏览器工作原理</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904194801926157">从输入URL到渲染全过程</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/133906695">从输入 URL 到页面展示到底发生了什么</a><br><a target="_blank" rel="noopener" href="https://guoyueting.github.io/2018/08/13/%E9%9B%85%E8%99%8E35%E6%9D%A1%E5%86%9B%E8%A7%84%E2%80%94%E2%80%94%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">雅虎35条军规</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-06/css%E4%B8%96%E7%95%8C%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1077,274 +1255,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-26/electron%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-26/electron%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">electron问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-26 14:09:55" itemprop="dateCreated datePublished" datetime="2021-12-26T14:09:55+08:00">2021-12-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-20 12:10:28" itemprop="dateModified" datetime="2022-01-20T12:10:28+08:00">2022-01-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="窗口拖动事件处理"><a href="#窗口拖动事件处理" class="headerlink" title="窗口拖动事件处理"></a>窗口拖动事件处理</h3><h3 id="情况1（正常情况）"><a href="#情况1（正常情况）" class="headerlink" title="情况1（正常情况）"></a>情况1（正常情况）</h3><p>使用Electron创建床口的时候，默认是有标题栏，可以通点击标题栏拖动。</p>
-<h3 id="情况2"><a href="#情况2" class="headerlink" title="情况2"></a>情况2</h3><p>在某些情况下，我们需要隐藏自带的边框，如指定<code>&#123;frame:false&#125;</code>或<code>&#123;titleBarStyle: &#39;hidden&#39;&#125;</code>.在这种情况下没有标题栏，就没法移动窗口位置，需要自行实现窗口拖动区域。<br>官方文档介绍：</p>
-<ul>
-<li>默认情况下, 无边框窗口是不可拖拽的。 应用程序需要在 CSS 中指定 <code>-webkit-app-region: drag</code> 来告诉 Electron 哪些区域是可拖拽的（如操作系统的标准标题栏），在可拖拽区域内部使用 <code>-webkit-app-region: no-drag</code> 则可以将其中部分区域排除。 请注意, 当前只支持矩形形状</li>
-<li>要使整个窗口可拖拽, 您可以添加<code> -webkit-app-region: drag</code> 作为 body 的样式:</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;body style=&quot;-webkit-app-region: drag&quot;&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在本项目中，将最外层的div标签设置为<code> -webkit-app-region: drag</code>,使整个窗口可拖拽。</p>
-<blockquote>
-<p>请注意，如果您使整个窗口都可拖拽，则必须将其中的按钮标记为不可拖拽，否则用户将无法点击它们：(在mac上不设置也ok，但是在windows上必须设置)</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">button &#123;</span><br><span class="line">	  -webkit-app-region: no-drag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在无框窗口中, 拖动行为可能与选择文本冲突。 例如, 当您拖动标题栏时, 您可能会意外地选择标题栏上的文本。 为防止此操作, 您需要在可区域中禁用文本选择, 如下所选:</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.titlebar &#123;</span><br><span class="line">  	-webkit-user-select: none;</span><br><span class="line">  	-webkit-app-region: drag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-title-link" itemprop="url">react全家桶</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-20 12:05:18" itemprop="dateCreated datePublished" datetime="2021-12-20T12:05:18+08:00">2021-12-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-20 12:07:43" itemprop="dateModified" datetime="2022-01-20T12:07:43+08:00">2022-01-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"><a href="#react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）" class="headerlink" title="react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）"></a>react全家桶（react、redux、react-redux、react-dom、react-router、react-router-dom）</h1><h2 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h2><h3 id="redux-1"><a href="#redux-1" class="headerlink" title="redux"></a>redux</h3><p>全局数据状态管理工具（状态管理机），用作组件通信</p>
-<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>一个数据对象，存储redux中的数据。不能直接修改，只能通过action来修改</p>
-<h3 id="action"><a href="#action" class="headerlink" title="action"></a>action</h3><p>每一次修改数据的动作可以描述为一个action，如果需要更改state中的数据，就发送一个action。一般为 {type,payload}，其中的type属性是必须的，表示 Action 的名称。</p>
-<h3 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h3><p>更改state的具体实现，根据action来最state中的数据进行操作更新。<br>可以添加多个reducer，redux 提供了一个combineReducers方法，将各个reducer函数合成一个大的reducer。</p>
-<h3 id="store"><a href="#store" class="headerlink" title="store"></a>store</h3><p>全局保存数据的地方</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">store.getState() 获取state对象</span><br><span class="line">store.dispatch() 发送actiong</span><br><span class="line">store.subscribe() 监听state对象 一旦 State 发生变化，就自动执行这个函数。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="dispatch"><a href="#dispatch" class="headerlink" title="dispatch"></a>dispatch</h3><p>store.dispatch()是组件发出action的唯一方法。</p>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><p>redux 的作者封装了一个 react 专用的库 react-redux<br>这个库是可以选用的。实际项目中，你应该权衡一下，是直接使用 Redux，还是使用 React-Redux。后者虽然提供了便利，但是需要掌握额外的 API，并且要遵守它的组件拆分规范。</p>
-<h3 id="UI组件"><a href="#UI组件" class="headerlink" title="UI组件"></a>UI组件</h3><p>react-redux 将所有组件分成两大类：UI 组件（presentational component）和容器组件（container component）</p>
-<h4 id="UI组件-1"><a href="#UI组件-1" class="headerlink" title="UI组件"></a>UI组件</h4><p>数据显示组件，处理界面数据显示逻辑</p>
-<h4 id="容器组件"><a href="#容器组件" class="headerlink" title="容器组件"></a>容器组件</h4><p>记住一句话就可以了：UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑。</p>
-<h4 id="connect-用户从UI组件生成容器组件"><a href="#connect-用户从UI组件生成容器组件" class="headerlink" title="connect() 用户从UI组件生成容器组件"></a>connect() 用户从UI组件生成容器组件</h4><p>connect的意思，就是将这两种组件连起来。</p>
-<p>完整API如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; connect &#125; from &#x27;react-redux&#x27;;</span><br><span class="line">import TodoList from &#x27;./TodoList&#x27;;</span><br><span class="line"></span><br><span class="line">const Container = connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>输入逻辑：外部的数据（即state对象）如何转换为 UI 组件的参数</li>
-<li>输出逻辑：用户发出的动作如何变为 Action 对象，从 UI 组件传出去。</li>
-</ol>
-<h4 id="mapStateToProps"><a href="#mapStateToProps" class="headerlink" title="mapStateToProps()"></a>mapStateToProps()</h4><p>建立一个从（外部的）state对象到（UI 组件的）props对象的映射关系。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mapStateToProps = (state,ownProps) =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    todos: state.user.todos</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>mapStateToProps的第一个参数总是state对象，还可以使用第二个参数，代表容器组件的props对象。</p>
-</li>
-<li><p>mapStateToProps会订阅 Store，每当state更新的时候，就会自动执行，重新计算 UI 组件的参数，从而触发 UI 组件的重新渲染。</p>
-</li>
-<li><p>connect方法可以省略mapStateToProps参数，那样的话，UI 组件就不会订阅Store，就是说 Store 的更新不会引起 UI 组件的更新。</p>
-</li>
-</ul>
-<h4 id="mapDispatchToProps"><a href="#mapDispatchToProps" class="headerlink" title="mapDispatchToProps()"></a>mapDispatchToProps()</h4><p>用来建立 UI 组件的参数到store.dispatch方法的映射。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const mapDispatchToProps = (</span><br><span class="line">  dispatch,</span><br><span class="line">  ownProps</span><br><span class="line">) =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    onClick: () =&gt; &#123;</span><br><span class="line">      dispatch(&#123;</span><br><span class="line">        type: &#x27;SET_VISIBILITY_FILTER&#x27;,</span><br><span class="line">        filter: ownProps.filter</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>mapDispatchToProps也有两个参数，dispatch对象，和第二个参数ownProps，代表容器组件的props对象。</p>
-</li>
-<li><p>用法一</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// action</span><br><span class="line">export const handleChangeIndex = data =&gt; &#123;</span><br><span class="line">  store.dispatch(&#123;</span><br><span class="line">    type: C.CHART_CHANGEINDEX,</span><br><span class="line">    data,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">//</span><br><span class="line">// 容器组件</span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  const stocks = state.stocks;</span><br><span class="line">&#125;;</span><br><span class="line">const mapDispatchToProps = () =&gt; (&#123;</span><br><span class="line">  handleChangeIndex,</span><br><span class="line">&#125;);</span><br><span class="line">export default connect(mapStateToProps, mapDispatchToProps)(Demo);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用法二<br>compose 从右到左把接收到的函数合成后的最终函数。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// action</span><br><span class="line">export const handleChangeIndex = data =&gt; &#123;</span><br><span class="line">	return &#123;type: C.CHANGEINDEX, data&#125;;</span><br><span class="line">&#125;;</span><br><span class="line">//</span><br><span class="line">// 容器组件</span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  const stocks = state.stocks;</span><br><span class="line">&#125;;</span><br><span class="line">const mapDispatchToProps = dispatch =&gt; (&#123;</span><br><span class="line">	handleChangeIndex:compose(dispatch, handleChangeIndex)</span><br><span class="line">&#125;);</span><br><span class="line">export default connect(mapStateToProps, mapDispatchToProps)(Demo);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>用法三</p>
-<p>  bindActionCreators<br>  该方法的目的就是简化action的分发，我们在触发一个action时，最基本的调用是dispatch(action(param))。这样需要在每个调用的地方都写dispatch，非常麻烦。bindActionCreators就是将action封装了一层，返回一个封装过的对象，此后我们要出发action时直接调用action(param)就可以了。</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// action</span><br><span class="line">export const handleChangeIndex = data =&gt; &#123;</span><br><span class="line">	return &#123;type: C.CHANGEINDEX, data&#125;;</span><br><span class="line">&#125;;</span><br><span class="line">//</span><br><span class="line">// 容器组件</span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  const stocks = state.stocks;</span><br><span class="line">&#125;;</span><br><span class="line">const mapDispatchToProps = dispatch =&gt; (bindActionCreators(&#123;</span><br><span class="line">  handleChangeIndex</span><br><span class="line">&#125;, dispatch));</span><br><span class="line">export default connect(mapStateToProps, mapDispatchToProps)(Demo);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>用法四</p>
-<p>  redux-thunk提供了一个thunk中间件，用于处理异步的action</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function createThunkMiddleware(extraArgument) &#123;</span><br><span class="line"> return function(&#123; dispatch, getState &#125;) &#123;</span><br><span class="line">   return function(next)&#123;</span><br><span class="line">     return function(action)&#123;</span><br><span class="line">       if (typeof action === &#x27;function&#x27;) &#123;</span><br><span class="line">         return action(dispatch, getState, extraArgument);</span><br><span class="line">       &#125;</span><br><span class="line">       return next(action);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<pre><code>可以接受一个返回函数的action creator。如果这个action creator 返回的是一个函数，就执行它，如果不是，就按照原来的next(action)执行。
-</code></pre>
-<p>正因为这个action creator可以返回一个函数，那么就可以在这个函数中执行一些异步的操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	// action</span><br><span class="line">export const handleChangeIndex = data =&gt; &#123;</span><br><span class="line">	return  (dispatch, getState) =&gt; &#123;</span><br><span class="line">	 dispatch(&#123;type: C.CHANGEINDEX, data&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">//</span><br><span class="line">// 容器组件</span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  const stocks = state.stocks;</span><br><span class="line">&#125;;</span><br><span class="line">const mapDispatchToProps = dispatch =&gt; (bindActionCreators(&#123;</span><br><span class="line">  handleChangeIndex</span><br><span class="line">&#125;, dispatch));</span><br><span class="line">export default connect(mapStateToProps, mapDispatchToProps)(Demo);</span><br></pre></td></tr></table></figure>
-
-
-<hr>
-<h2 id="react-dom"><a href="#react-dom" class="headerlink" title="react-dom"></a>react-dom</h2><p>使用react开发时，会下载两个包 react和react-dom，其中react包是react的核心代码，react-dom则是React剥离出的涉及DOM操作的部分。</p>
-<p>react-dom主要包含三个API：findDOMNode、unmountComponentAtNode 和 render。下面按触发先后顺序进行介绍</p>
-<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>render用于将React渲染的虚拟DOM渲染到浏览器DOM，一般在顶层组件使用。</p>
-<p>该方法把元素挂载到 container 中，并且返回 element 的实例（即 refs 引用），如果是无状态组件，render 会返回 null。当组件装载完毕时，callback 就会被调用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">render(ReactElement element,DOMElement container,[function callback])</span><br></pre></td></tr></table></figure>
-<p>例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import ReactDOM from &#x27;react-dom&#x27;;</span><br><span class="line">const rootEl = ReactDOM.render(&lt;Example /&gt;, document.getElementById(&#x27;root&#x27;));</span><br><span class="line">// document.body.appendChild(rootEl);</span><br></pre></td></tr></table></figure>
-
-<h3 id="findDOMNode"><a href="#findDOMNode" class="headerlink" title="findDOMNode"></a>findDOMNode</h3><p>findDOMNode用于获取真正的DOM元素，以便对DOM节点进行操作。<br>在React中，虚拟DOM真正被添加到HTML中转变为真实DOM是在组件挂载（render()）后，故而我们可以在componentDidMount和componentDidUpdate这两个方法中获取。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123; findDOMNode &#125; from &#x27;react-dom&#x27;;</span><br><span class="line"></span><br><span class="line">&lt;Example ref=&#123; node=&gt;&#123; this.node = node&#125; &#125;&gt; // 利用ref获取Example组件的实例</span><br><span class="line"></span><br><span class="line">const dom = findDOMNode(this.node); // 通过findDOMNode获取实例对应的真实DOM</span><br></pre></td></tr></table></figure>
-
-<h3 id="unmountComponentAtNode"><a href="#unmountComponentAtNode" class="headerlink" title="unmountComponentAtNode"></a>unmountComponentAtNode</h3><p>unmountComponentAtNode用于执行卸载操作，执行在componentWillUnmount之前。<br>不常用</p>
-<hr>
-<h3 id="react-router和react-router-dom的区别"><a href="#react-router和react-router-dom的区别" class="headerlink" title="react-router和react-router-dom的区别"></a>react-router和react-router-dom的区别</h3><p>react-router: 实现了路由的核心功能</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供了路由的核心api。如Router、Route、Switch等，但没有提供有关dom操作进行路由跳转的api；</span><br></pre></td></tr></table></figure>
-
-<p>react-router-dom: 基于react-router，加入了在浏览器运行环境下的一些功能</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">提供了BrowserRouter、Route、Link等api，可以通过dom操作触发事件控制路由。</span><br><span class="line">例如：Link组件，会渲染一个a标签</span><br><span class="line">BrowserRouter和HashRouter 组件，前者使用pushState和popState事件构建路由，后者使用window.location.hash和hashchange事件构建路由。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>路由组件（作为根组件）: BrowserRouter（history模式） 和 HashRouter（hash模式）保持UI和URL的同步<br>  区别：前者基于rul的pathname段，后者基于hash段</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前者：http://127.0.0.1:3000/article/num1</span><br><span class="line">后者：http://127.0.0.1:3000/#/article/num1</span><br></pre></td></tr></table></figure>
-<pre><code>如果使用BrowserRouter，每次改变路由时，会向服务器发送请求。
-使用HashRouter，每次改变路由只是地址栏的修改，由前端完成路由切换，服务器始终是根路由
-</code></pre>
-<ul>
-<li>路径匹配组件: Route 和 Switch</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Route: 用来控制路径对应显示的组件</span><br><span class="line">参数：</span><br><span class="line">1、path：指定路由跳转路径</span><br><span class="line">2、exact: 精确匹配路由</span><br><span class="line">3、component：路由对应的组件</span><br><span class="line"></span><br><span class="line">Switch 渲染与该地址匹配的第一个子节点 &lt;Route&gt; 或者 &lt;Redirect&gt;</span><br><span class="line">1、匹配到第一个路由后，就不再继续匹配：</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>Redirect 导航到一个新的地址。即重定向</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Center extends PureComponent &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        const &#123; loginStatus &#125; = this.props;</span><br><span class="line">        if (loginStatus) &#123;</span><br><span class="line">            return (</span><br><span class="line">                &lt;div&gt;个人中心&lt;/div&gt;</span><br><span class="line">            )</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return &lt;Redirect to=&#x27;/login&#x27; /&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>withRouter<br>  可以将一个非路由组件包裹为路由组件，使这个非路由组件也能访问到当前路由的match, location, history对象。</p>
-</li>
-<li><p>导航组件: Link 和 NavLink 可以用来指定路由跳转</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Link</span><br><span class="line">1、通过字符串执行跳转路由</span><br><span class="line">&lt;------&gt;</span><br><span class="line">&lt;Link to=&#x27;/login&#x27;&gt;</span><br><span class="line">   	&lt;span&gt;登录&lt;/span&gt;</span><br><span class="line">&lt;/Link&gt;</span><br><span class="line">&lt;------&gt;</span><br><span class="line">2、对象指定跳转路由</span><br><span class="line">参数：</span><br><span class="line">1、pathname: 表示要链接到的路径的字符串。</span><br><span class="line">2、search: 表示查询参数的字符串形式。</span><br><span class="line">3、hash: 放入网址的 hash，例如 #a-hash。</span><br><span class="line">4、state: 状态持续到 location。通常用于隐式传参（埋点），可以用来统计页面来源</span><br><span class="line">&lt;------&gt;</span><br><span class="line">&lt;Link to=&#123;&#123;</span><br><span class="line">       pathname: &#x27;/login&#x27;,</span><br><span class="line">       search: &#x27;?name=cedric&#x27;,</span><br><span class="line">       hash: &#x27;#someHash&#x27;,</span><br><span class="line">       state: &#123; fromWechat: true &#125;</span><br><span class="line">   &#125;&#125;&gt;</span><br><span class="line">   	&lt;span&gt;登录&lt;/span&gt;</span><br><span class="line">&lt;/Link&gt;</span><br><span class="line">&lt;------&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1414,7 +1324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
