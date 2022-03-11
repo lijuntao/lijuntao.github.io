@@ -155,6 +155,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-11/EventLoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-11/EventLoop/" class="post-title-link" itemprop="url">EventLoop</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-11 14:57:46" itemprop="dateCreated datePublished" datetime="2022-01-11T14:57:46+08:00">2022-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-14 15:05:53" itemprop="dateModified" datetime="2022-01-14T15:05:53+08:00">2022-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="浏览器EventLoop循环"><a href="#浏览器EventLoop循环" class="headerlink" title="浏览器EventLoop循环"></a>浏览器EventLoop循环</h2><h3 id="宏任务"><a href="#宏任务" class="headerlink" title="宏任务"></a>宏任务</h3><ul>
+<li>script（整体代码）</li>
+<li>setTimeout()</li>
+<li>setInterval()</li>
+<li>postMessage()</li>
+<li>I/O</li>
+<li>UI交互事件</li>
+</ul>
+<h3 id="微任务"><a href="#微任务" class="headerlink" title="微任务"></a>微任务</h3><ul>
+<li>new Promise().then（回调）</li>
+<li>await (回调)</li>
+<li>MutationObserve （HTML5新特性）</li>
+</ul>
+<h2 id="Node的EventLoop循环"><a href="#Node的EventLoop循环" class="headerlink" title="Node的EventLoop循环"></a>Node的EventLoop循环</h2><p>Node中的Event Loop是基于libuv实现的，而libuv是 Node 的新跨平台抽象层，libuv使用异步，事件驱动的编程方式，核心是提供i/o的事件循环和异步回调。libuv的API包含有时间，非阻塞的网络，异步文件操作，子进程等等。<br>Event Loop就是在libuv中实现的，libuv引擎中的事件循环的模型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────┐</span><br><span class="line">┌─&gt;│        timers         │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">│  │     I/O callbacks     │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">│  │     idle, prepare     │</span><br><span class="line">│  └──────────┬────────────┘      ┌───────────────┐</span><br><span class="line">│  ┌──────────┴────────────┐      │   incoming:   │</span><br><span class="line">│  │         poll          │&lt;──connections───     │</span><br><span class="line">│  └──────────┬────────────┘      │   data, etc.  │</span><br><span class="line">│  ┌──────────┴────────────┐      └───────────────┘</span><br><span class="line">│  │        check          │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">└──┤    close callbacks    │</span><br><span class="line">   └───────────────────────┘</span><br></pre></td></tr></table></figure>
+<p>Node的EventLoop一共有6各阶段：</p>
+<ul>
+<li>timers: 执行setTimeout和setInterval中到期的callback</li>
+<li>pending callback: 上一轮循环中少数的callback会放在这一阶段执行</li>
+<li>idle, prepare: 仅在内部使用</li>
+<li>poll: 最重要的阶段，执行pending callback，在适当的情况下会阻塞在这个阶段</li>
+<li>check: 执行setImmediate(setImmediate()是将事件插入到事件队列尾部，主线程和事件队列的函数执行完成之后立即执行setImmediate指定的回调函数)的callback</li>
+<li>close callbacks: 执行close事件的callback，例如socket.on(‘close’[,fn])或者http.server.on(‘close, fn)</li>
+</ul>
+<h3 id="setImmediate和process-nextTick"><a href="#setImmediate和process-nextTick" class="headerlink" title="setImmediate和process.nextTick"></a>setImmediate和process.nextTick</h3><p>Node提供的与任务调度队列相关的方法</p>
+<ul>
+<li>process.nextTick方法可以在当前”执行栈”的尾部—-下一次Event Loop（主线程读取”任务队列”）之前—-触发回调函数。也就是说，它指定的任务总是发生在所有异步任务之前</li>
+<li>setImmediate方法则是在当前”任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次Event Loop时执行，这与setTimeout(fn, 0)很像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  process.nextTick(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">&#125;, 0)</span><br><span class="line">process.nextTick方法指定的回调函数，总是在当前&quot;执行栈&quot;的尾部触发，所以不仅函数A比setTimeout指定的回调函数timeout先执行，而且函数B也比timeout先执行</span><br><span class="line">输出：</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">TIMEOUT FIRED</span><br></pre></td></tr></table></figure>
+process.nextTick和setImmediate的一个重要区别：多个process.nextTick语句总是在当前”执行栈”一次执行完，多个setImmediate可能则需要多次loop才能执行完<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">像下面这样的递归调用process.nextTick，将会没完没了，主线程根本不会去读取&quot;事件队列&quot;</span><br><span class="line">process.nextTick(function foo() &#123;</span><br><span class="line">  process.nextTick(foo);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="setImmediate和setTimeout"><a href="#setImmediate和setTimeout" class="headerlink" title="setImmediate和setTimeout"></a>setImmediate和setTimeout</h3><p>setImmediate指定的回调函数，总是排在setTimeout前面。实际上，这种情况只发生在递归调用的时候<br>例子1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">输出是不确定：</span><br><span class="line">可能是：1--TIMEOUT FIRED--2</span><br><span class="line">也可能是：TIMEOUT FIRED--1--2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function ()&#123;</span><br><span class="line">  setImmediate(function A() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">    setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  setTimeout(function timeout() &#123;</span><br><span class="line">    console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">  &#125;, 0);</span><br><span class="line">&#125;);</span><br><span class="line">输出：</span><br><span class="line">1--TIMEOUT FIRED--2</span><br><span class="line">解析：2排在TIMEOUT FIRED的后面（即函数B在timeout后面触发），是因为setImmediate总是将事件注册到下一轮Event Loop，所以函数A和timeout是在同一轮Loop执行，而函数B在下一轮Loop执行</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="相关题目："><a href="#相关题目：" class="headerlink" title="相关题目："></a>相关题目：</h2><h3 id="题目一："><a href="#题目一：" class="headerlink" title="题目一："></a>题目一：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;script start&#x27;);</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&#x27;setTimeout&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">Promise.resolve().then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise1&#x27;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise2&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(&#x27;script end&#x27;);</span><br><span class="line"></span><br><span class="line">1、执行代码 输出script start</span><br><span class="line">2、遇到setTimeout 这是一个宏任务，添加到宏任务队列【宏任务1】</span><br><span class="line">3、Promise.resolve().then回调为微任务，放入微任务队列【微任务1】</span><br><span class="line">4、继续执行输出script end</span><br><span class="line">5、此时当前任务队列为空，去查看微任务队列是否有待执行任务，发现有【微任务1】</span><br><span class="line">6、执行【微任务1】输出promise1，发现还有Promise.then()【微任务2】，</span><br><span class="line">则继续执行【微任务2】输出promise2</span><br><span class="line">7、此时微任务全部执行完毕，去查看宏任务列表是否有待执行任务，</span><br><span class="line">发现有【宏任务1】，则执行【宏任务1】输出setTimeout</span><br><span class="line"></span><br><span class="line">输出结果为：</span><br><span class="line">script start</span><br><span class="line">script end</span><br><span class="line">promise1</span><br><span class="line">promise2</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
+
+<h3 id="题目二"><a href="#题目二" class="headerlink" title="题目二"></a>题目二</h3><p>先理解async和await：async/await 在底层转换成了 promise 和 then 回调函数；是promise的语法糖<br>我们使用 await, 解释器都创建一个 promise 对象，然后把剩下的 async 函数中的操作放到 then 回调函数中<br>简单的理解：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">async function f() &#123;</span><br><span class="line">  await p</span><br><span class="line">  console.log(&#x27;ok&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">翻译后：</span><br><span class="line"></span><br><span class="line">function f() &#123;</span><br><span class="line">  return RESOLVE(p).then(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;ok&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;script start&#x27;)</span><br><span class="line"></span><br><span class="line">async function async1() &#123;</span><br><span class="line">  await async2()</span><br><span class="line">  console.log(&#x27;async1 end&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">async function async2() &#123;</span><br><span class="line">  console.log(&#x27;async2 end&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">async1()</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&#x27;setTimeout&#x27;)</span><br><span class="line">&#125;, 0)</span><br><span class="line"></span><br><span class="line">new Promise(resolve =&gt; &#123;</span><br><span class="line">  console.log(&#x27;Promise&#x27;)</span><br><span class="line">  resolve()</span><br><span class="line">&#125;)</span><br><span class="line">  .then(function() &#123;</span><br><span class="line">    console.log(&#x27;promise1&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(function() &#123;</span><br><span class="line">    console.log(&#x27;promise2&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">console.log(&#x27;script end&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、执行代码 输出&#x27;script start&#x27;</span><br><span class="line">2、继续执行遇到async1()，进入async1()执行await async2()，输出&#x27;async2 end&#x27;，</span><br><span class="line">将await后面的代码放入到【微任务1】中</span><br><span class="line">3、继续执行setTimeout，将回调放入【宏任务1】中</span><br><span class="line">4、执行Promise，输出&#x27;Promise&#x27;,将then之后的代码放入到【微任务2】中</span><br><span class="line">5、继续执行输出&#x27;script end&#x27;</span><br><span class="line">6、此时当前任务队列执行完毕，查看是否有待执行的微任务队列，执行【微任务1】，输出&#x27;async2 end&#x27;</span><br><span class="line">7、微任务队列还有任务，执行【微任务2】，输出&#x27;promise1&#x27;，执行【微任务2】时，又添加了【微任务3】,继续执行【微任务3】，输出&#x27;promise2&#x27;,此时微任务队列执行完毕</span><br><span class="line">8、查看是否有宏任务队列，发现【宏任务1】，执行输出&#x27;setTimeout&#x27;</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">script start</span><br><span class="line">async2 end</span><br><span class="line">Promise</span><br><span class="line">script end</span><br><span class="line">async2 end</span><br><span class="line">promise1</span><br><span class="line">promise2</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
+
+<h3 id="题目三"><a href="#题目三" class="headerlink" title="题目三"></a>题目三</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;start&#x27;);</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;children2&#x27;);</span><br><span class="line">    Promise.resolve().then(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;children3&#x27;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">new Promise(function(resolve, reject) &#123;</span><br><span class="line">    console.log(&#x27;children4&#x27;);</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">        console.log(&#x27;children5&#x27;);</span><br><span class="line">        resolve(&#x27;children6&#x27;)</span><br><span class="line">    &#125;, 0)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">    console.log(&#x27;children7&#x27;);</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(res);</span><br><span class="line">    &#125;, 0)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">1、执行代码 输出&#x27;start&#x27;</span><br><span class="line">2、继续执行setTimeout，宏任务将回调放入到【宏任务1】</span><br><span class="line">3、执行Promise，输出&#x27;children4&#x27;,遇到setTimeout将回调放入到【宏任务2】中，特别注意，此时没有执行resolve，所以后续then没有被放入到微任务队列中</span><br><span class="line">4、继续执行，当前任务列表执行完毕，执行【宏任务1】</span><br><span class="line">5、【宏任务1】输出&#x27;children2&#x27;,又遇到Promise，将Promise.then()放入到【微任务1】中</span><br><span class="line">6、【宏任务1】执行完毕，此时需要查看微任务队列是否还有任务，发现【微任务1】</span><br><span class="line">7、执行【微任务1】输出&#x27;children3&#x27;,微任务队列执行完毕</span><br><span class="line">8、继续执行【宏任务2】,setTimeout将回调【宏任务3】放入到队列中，此时微任务队列为空，则直接执行【宏任务3】，输出&#x27;children5&#x27;,遇到resolve将then【微任务3】放入到微任务队列中</span><br><span class="line">9、执行完【宏任务3】后，宏任务队列清空，查看微任务队列，发现【微任务3】，执行输出&#x27;children7&#x27;</span><br><span class="line">10、继续执行再次遇到setTimeout，将回调【宏任务4】中，此时当前无任务执行，则【宏任务4】得到执行 ，输出&#x27;children6&#x27;</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">start</span><br><span class="line">children4</span><br><span class="line">children2</span><br><span class="line">children3</span><br><span class="line">children5</span><br><span class="line">children7</span><br><span class="line">children6</span><br></pre></td></tr></table></figure>
+
+<h3 id="题目4"><a href="#题目4" class="headerlink" title="题目4"></a>题目4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">const p = function() &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">            setTimeout(() =&gt; &#123;</span><br><span class="line">                resolve(1)</span><br><span class="line">            &#125;, 0)</span><br><span class="line">            resolve(2)</span><br><span class="line"></span><br><span class="line">            //setTimeout(() =&gt; &#123;</span><br><span class="line">            //    resolve(1)</span><br><span class="line">            //&#125;, 0)</span><br><span class="line">        &#125;)</span><br><span class="line">        p1.then((res) =&gt; &#123;</span><br><span class="line">            console.log(res);</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(3);</span><br><span class="line">        resolve(4);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p().then((res) =&gt; &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&#x27;end&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、执行代码，Promise本身是同步的立即执行函数，.then是异步执行函数。遇到setTimeout，先把其放入宏任务队列中，遇到p1.then会先放到微任务队列中，接着往下执行，输出&#x27;3&#x27;</span><br><span class="line">2、遇到 p().then 会先放到微任务队列中，接着往下执行，输出 end</span><br><span class="line">3、同步代码块执行完成后，开始执行微任务队列中的任务，首先执行 p1.then，输出 2, 接着执行p().then, 输出 4</span><br><span class="line">4、微任务执行完成后，开始执行宏任务，p1中的setTimeout, resolve(1)，但是此时 p1.then已经执行完成，此时 1不会输出</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ysaIHx_qltS7SjQxPr5_iw">浏览器和 Node.js 的 EventLoop 为什么这么设计？</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-10/BFC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1118,143 +1240,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">Electron基本概念整理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-28 19:09:55" itemprop="dateCreated datePublished" datetime="2021-12-28T19:09:55+08:00">2021-12-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-20 12:15:02" itemprop="dateModified" datetime="2022-01-20T12:15:02+08:00">2022-01-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Electron基本概念整理"><a href="#Electron基本概念整理" class="headerlink" title="Electron基本概念整理"></a>Electron基本概念整理</h1><h2 id="详细参考文档"><a href="#详细参考文档" class="headerlink" title="详细参考文档"></a>详细参考文档</h2><p><a target="_blank" rel="noopener" href="https://electronjs.org/docs/all#%E4%BA%8B%E4%BB%B6-ready">官方文档</a></p>
-<h3 id="主线程-main-process"><a href="#主线程-main-process" class="headerlink" title="主线程 main process"></a>主线程 main process</h3><p>主进程，通常是名为main.js 的文件，是每个 Electron 应用的入口文件。它控制着整个 App 的生命周期，从打开到关闭。 它也管理着系统原生元素比如菜单，菜单栏，Dock 栏，托盘等。 主进程负责创建 APP 的每个渲染进程。而且整个 Node API 都集成在里面</p>
-<p>Electron 运行 package.json 的 main 脚本的进程被称为主进程。 在主进程中运行的脚本通过创建web页面来展示用户界面。 一个 Electron 应用总是有且只有一个主进程。</p>
-<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>渲染进程是你的应用内的一个浏览器窗口。与主进程不同的是，它能够同时存在多个而且运行在不一样的进程。而且它们也能够被隐藏。</p>
-<p>每个 Electron 中的 web 页面运行在它自己的渲染进程中。</p>
-<h3 id="主进程和渲染进程之间的区别"><a href="#主进程和渲染进程之间的区别" class="headerlink" title="主进程和渲染进程之间的区别"></a>主进程和渲染进程之间的区别</h3><p>主进程使用 BrowserWindow 实例创建页面。 每个 BrowserWindow 实例都在自己的渲染进程里运行页面。 当一个 BrowserWindow 实例被销毁后，相应的渲染进程也会被终止。主进程管理所有的web页面和它们对应的渲染进程。<br>每个人窗口or web页面都是一个渲染进程。每个渲染进程都是独立的，它只关心它所运行的 web 页面。</p>
-<h3 id="进程之间通信"><a href="#进程之间通信" class="headerlink" title="进程之间通信"></a>进程之间通信</h3><h4 id="主进程到渲染进程的异步通信"><a href="#主进程到渲染进程的异步通信" class="headerlink" title="主进程到渲染进程的异步通信"></a>主进程到渲染进程的异步通信</h4><p>ipcMain模块是EventEmitter类的一个实例。 当在主进程中使用时，它处理从渲染器进程（网页）发送出来的异步和同步信息。 从渲染器进程发送的消息将被发送到该模块。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 在主进程中.</span><br><span class="line">const &#123; ipcMain &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">ipcMain.on(&#x27;asynchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.reply(&#x27;asynchronous-reply&#x27;, &#x27;pong&#x27;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ipcMain.on(&#x27;synchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.returnValue = &#x27;pong&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//在渲染器进程 (网页) 中。</span><br><span class="line">const &#123; ipcRenderer &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(ipcRenderer.sendSync(&#x27;synchronous-message&#x27;, &#x27;ping&#x27;)) // prints &quot;pong&quot;</span><br><span class="line"></span><br><span class="line">ipcRenderer.on(&#x27;asynchronous-reply&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;pong&quot;</span><br><span class="line">&#125;)</span><br><span class="line">ipcRenderer.send(&#x27;asynchronous-message&#x27;, &#x27;ping&#x27;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="渲染进程之间通信"><a href="#渲染进程之间通信" class="headerlink" title="渲染进程之间通信"></a>渲染进程之间通信</h4><ul>
-<li><p>1、可以通过将消息发送至主进程，然后再目标渲染进程</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// In renderer process B</span><br><span class="line">ipcRenderer.send(&#x27;message&#x27;, &#x27;someArgs&#x27;)</span><br><span class="line"></span><br><span class="line">// In the main process.</span><br><span class="line">ipcMain.on(&#x27;message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  rendererAWindow.webContents.send(&#x27;message&#x27;, arg);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// In renderer process A</span><br><span class="line">ipcRenderer.on(&#x27;messaget&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>2、通过目标渲染进程的句柄发送消息</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api: contents.send(channel[, arg1][, arg2][, ...])</span><br></pre></td></tr></table></figure>
-
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">win.webContents.send(event, ...args);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="app"><a href="#app" class="headerlink" title="app"></a>app</h3><blockquote>
-<p>控制你的应用程序的事件生命周期。</p>
-<p>提供了app运行时的一些事件及方法</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">最后一个窗口被关闭时退出应用：</span><br><span class="line">const &#123; app &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">app.on(&#x27;window-all-closed&#x27;, () =&gt; &#123;</span><br><span class="line">  app.quit()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="BrowserWindow"><a href="#BrowserWindow" class="headerlink" title="BrowserWindow"></a>BrowserWindow</h3><blockquote>
-<p>创建和控制浏览器窗口。</p>
-</blockquote>
-<h3 id="BrowserView"><a href="#BrowserView" class="headerlink" title="BrowserView"></a>BrowserView</h3><blockquote>
-<p>创建和控制视图</p>
-<p>BrowserView 被用来让 BrowserWindow 嵌入更多的 web 内容。 它就像一个子窗口，除了它的位置是相对于父窗口。 这意味着可以替代webview标签.</p>
-</blockquote>
-<h3 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h3><blockquote>
-<p>在渲染进程中使用主进程模块。</p>
-<p>remote 模块为渲染进程（web页面）和主进程通信（IPC）提供了一种简单方法。</p>
-<p>在Electron中, GUI 相关的模块 (如 dialog、menu 等) 仅在主进程中可用, 在渲染进程中不可用。 为了在渲染进程中使用它们, ipc 模块是向主进程发送进程间消息所必需的。 使用 remote 模块, 你可以调用 main 进程对象的方法, 而不必显式发送进程间消息</p>
-</blockquote>
-<h3 id="类-WebContents"><a href="#类-WebContents" class="headerlink" title="类: WebContents"></a>类: WebContents</h3><blockquote>
-<p>渲染和控制 BrowserWindow 实例的内容。</p>
-</blockquote>
-<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><blockquote>
-<p>显示用于打开和保存文件、警报等的本机系统对话框。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//主进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(dialog.showOpenDialog(&#123; properties: [&#x27;openFile&#x27;, &#x27;openDirectory&#x27;, &#x27;multiSelections&#x27;] &#125;))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//渲染进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;).remote</span><br><span class="line">console.log(dialog)</span><br></pre></td></tr></table></figure>
-
-<h3 id="通知Notification"><a href="#通知Notification" class="headerlink" title="通知Notification"></a>通知Notification</h3><blockquote>
-<p>创建OS(操作系统)桌面通知 主进程</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new Notification(title, &#123;body&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a><webview>标签</h3><blockquote>
-<p>在一个独立的 frame 和进程里显示外部 web 内容。</p>
-<p>使用 webview 标签在Electron 应用中嵌入 “外来” 内容 (如 网页)。外来”内容包含在 webview 容器中。 应用中的嵌入页面可以控制外来内容的布局和重绘。</p>
-<p>与 iframe 不同, webview 在与应用程序不同的进程中运行。它与您的网页没有相同的权限, 应用程序和嵌入内容之间的所有交互都将是异步的。 这将保证你的应用对于嵌入的内容的安全性。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;webview id=&quot;foo&quot; src=&quot;https://www.github.com/&quot; style=&quot;display:inline-flex; width:640px; height:480px&quot;&gt;&lt;/webview&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用Electron的API"><a href="#使用Electron的API" class="headerlink" title="使用Electron的API"></a>使用Electron的API</h3><p>在主进程和渲染进程中，你可以通过require的方式将其包含在模块中以此，获取Electron的API</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&#x27;electron&#x27;)</span><br></pre></td></tr></table></figure>
-<p>许多API只能被用于主进程或渲染进程中，但其中一些API可以同时在上述两种进程中使用。 每一个API的文档都将声明你可以在哪种进程中使用该API。</p>
-<p>例如：<br>Electron中的窗口是使用BrowserWindow类型创建的一个实例， 它只能在主进程中使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 这样写在主进程会有用，但是在渲染进程中会提示&#x27;未定义&#x27;</span><br><span class="line">const &#123; BrowserWindow &#125; = require(&#x27;electron&#x27;)</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
-<p>因为进程之间的通信是被允许的, 所以渲染进程可以调用主进程来执行任务。 Electron通过remote模块暴露一些通常只能在主进程中获取到的API。 为了在渲染进程中创建一个BrowserWindow的实例，我们通常使用remote模块为中间件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样写在渲染进程中时行得通的，但是在主进程中是&#x27;未定义&#x27;</span><br><span class="line">const &#123; remote &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">const &#123; BrowserWindow &#125; = remote</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1324,7 +1309,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

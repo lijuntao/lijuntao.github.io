@@ -155,6 +155,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">Electron基本概念整理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-28 19:09:55" itemprop="dateCreated datePublished" datetime="2021-12-28T19:09:55+08:00">2021-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-20 12:15:02" itemprop="dateModified" datetime="2022-01-20T12:15:02+08:00">2022-01-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Electron基本概念整理"><a href="#Electron基本概念整理" class="headerlink" title="Electron基本概念整理"></a>Electron基本概念整理</h1><h2 id="详细参考文档"><a href="#详细参考文档" class="headerlink" title="详细参考文档"></a>详细参考文档</h2><p><a target="_blank" rel="noopener" href="https://electronjs.org/docs/all#%E4%BA%8B%E4%BB%B6-ready">官方文档</a></p>
+<h3 id="主线程-main-process"><a href="#主线程-main-process" class="headerlink" title="主线程 main process"></a>主线程 main process</h3><p>主进程，通常是名为main.js 的文件，是每个 Electron 应用的入口文件。它控制着整个 App 的生命周期，从打开到关闭。 它也管理着系统原生元素比如菜单，菜单栏，Dock 栏，托盘等。 主进程负责创建 APP 的每个渲染进程。而且整个 Node API 都集成在里面</p>
+<p>Electron 运行 package.json 的 main 脚本的进程被称为主进程。 在主进程中运行的脚本通过创建web页面来展示用户界面。 一个 Electron 应用总是有且只有一个主进程。</p>
+<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>渲染进程是你的应用内的一个浏览器窗口。与主进程不同的是，它能够同时存在多个而且运行在不一样的进程。而且它们也能够被隐藏。</p>
+<p>每个 Electron 中的 web 页面运行在它自己的渲染进程中。</p>
+<h3 id="主进程和渲染进程之间的区别"><a href="#主进程和渲染进程之间的区别" class="headerlink" title="主进程和渲染进程之间的区别"></a>主进程和渲染进程之间的区别</h3><p>主进程使用 BrowserWindow 实例创建页面。 每个 BrowserWindow 实例都在自己的渲染进程里运行页面。 当一个 BrowserWindow 实例被销毁后，相应的渲染进程也会被终止。主进程管理所有的web页面和它们对应的渲染进程。<br>每个人窗口or web页面都是一个渲染进程。每个渲染进程都是独立的，它只关心它所运行的 web 页面。</p>
+<h3 id="进程之间通信"><a href="#进程之间通信" class="headerlink" title="进程之间通信"></a>进程之间通信</h3><h4 id="主进程到渲染进程的异步通信"><a href="#主进程到渲染进程的异步通信" class="headerlink" title="主进程到渲染进程的异步通信"></a>主进程到渲染进程的异步通信</h4><p>ipcMain模块是EventEmitter类的一个实例。 当在主进程中使用时，它处理从渲染器进程（网页）发送出来的异步和同步信息。 从渲染器进程发送的消息将被发送到该模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 在主进程中.</span><br><span class="line">const &#123; ipcMain &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">ipcMain.on(&#x27;asynchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.reply(&#x27;asynchronous-reply&#x27;, &#x27;pong&#x27;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ipcMain.on(&#x27;synchronous-message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;ping&quot;</span><br><span class="line">  event.returnValue = &#x27;pong&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//在渲染器进程 (网页) 中。</span><br><span class="line">const &#123; ipcRenderer &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(ipcRenderer.sendSync(&#x27;synchronous-message&#x27;, &#x27;ping&#x27;)) // prints &quot;pong&quot;</span><br><span class="line"></span><br><span class="line">ipcRenderer.on(&#x27;asynchronous-reply&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  console.log(arg) // prints &quot;pong&quot;</span><br><span class="line">&#125;)</span><br><span class="line">ipcRenderer.send(&#x27;asynchronous-message&#x27;, &#x27;ping&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="渲染进程之间通信"><a href="#渲染进程之间通信" class="headerlink" title="渲染进程之间通信"></a>渲染进程之间通信</h4><ul>
+<li><p>1、可以通过将消息发送至主进程，然后再目标渲染进程</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// In renderer process B</span><br><span class="line">ipcRenderer.send(&#x27;message&#x27;, &#x27;someArgs&#x27;)</span><br><span class="line"></span><br><span class="line">// In the main process.</span><br><span class="line">ipcMain.on(&#x27;message&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">  rendererAWindow.webContents.send(&#x27;message&#x27;, arg);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// In renderer process A</span><br><span class="line">ipcRenderer.on(&#x27;messaget&#x27;, (event, arg) =&gt; &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>2、通过目标渲染进程的句柄发送消息</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">api: contents.send(channel[, arg1][, arg2][, ...])</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">win.webContents.send(event, ...args);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="app"><a href="#app" class="headerlink" title="app"></a>app</h3><blockquote>
+<p>控制你的应用程序的事件生命周期。</p>
+<p>提供了app运行时的一些事件及方法</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">最后一个窗口被关闭时退出应用：</span><br><span class="line">const &#123; app &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">app.on(&#x27;window-all-closed&#x27;, () =&gt; &#123;</span><br><span class="line">  app.quit()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="BrowserWindow"><a href="#BrowserWindow" class="headerlink" title="BrowserWindow"></a>BrowserWindow</h3><blockquote>
+<p>创建和控制浏览器窗口。</p>
+</blockquote>
+<h3 id="BrowserView"><a href="#BrowserView" class="headerlink" title="BrowserView"></a>BrowserView</h3><blockquote>
+<p>创建和控制视图</p>
+<p>BrowserView 被用来让 BrowserWindow 嵌入更多的 web 内容。 它就像一个子窗口，除了它的位置是相对于父窗口。 这意味着可以替代webview标签.</p>
+</blockquote>
+<h3 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h3><blockquote>
+<p>在渲染进程中使用主进程模块。</p>
+<p>remote 模块为渲染进程（web页面）和主进程通信（IPC）提供了一种简单方法。</p>
+<p>在Electron中, GUI 相关的模块 (如 dialog、menu 等) 仅在主进程中可用, 在渲染进程中不可用。 为了在渲染进程中使用它们, ipc 模块是向主进程发送进程间消息所必需的。 使用 remote 模块, 你可以调用 main 进程对象的方法, 而不必显式发送进程间消息</p>
+</blockquote>
+<h3 id="类-WebContents"><a href="#类-WebContents" class="headerlink" title="类: WebContents"></a>类: WebContents</h3><blockquote>
+<p>渲染和控制 BrowserWindow 实例的内容。</p>
+</blockquote>
+<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><blockquote>
+<p>显示用于打开和保存文件、警报等的本机系统对话框。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//主进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">console.log(dialog.showOpenDialog(&#123; properties: [&#x27;openFile&#x27;, &#x27;openDirectory&#x27;, &#x27;multiSelections&#x27;] &#125;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//渲染进程</span><br><span class="line">const &#123; dialog &#125; = require(&#x27;electron&#x27;).remote</span><br><span class="line">console.log(dialog)</span><br></pre></td></tr></table></figure>
+
+<h3 id="通知Notification"><a href="#通知Notification" class="headerlink" title="通知Notification"></a>通知Notification</h3><blockquote>
+<p>创建OS(操作系统)桌面通知 主进程</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new Notification(title, &#123;body&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a><webview>标签</h3><blockquote>
+<p>在一个独立的 frame 和进程里显示外部 web 内容。</p>
+<p>使用 webview 标签在Electron 应用中嵌入 “外来” 内容 (如 网页)。外来”内容包含在 webview 容器中。 应用中的嵌入页面可以控制外来内容的布局和重绘。</p>
+<p>与 iframe 不同, webview 在与应用程序不同的进程中运行。它与您的网页没有相同的权限, 应用程序和嵌入内容之间的所有交互都将是异步的。 这将保证你的应用对于嵌入的内容的安全性。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;webview id=&quot;foo&quot; src=&quot;https://www.github.com/&quot; style=&quot;display:inline-flex; width:640px; height:480px&quot;&gt;&lt;/webview&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Electron的API"><a href="#使用Electron的API" class="headerlink" title="使用Electron的API"></a>使用Electron的API</h3><p>在主进程和渲染进程中，你可以通过require的方式将其包含在模块中以此，获取Electron的API</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&#x27;electron&#x27;)</span><br></pre></td></tr></table></figure>
+<p>许多API只能被用于主进程或渲染进程中，但其中一些API可以同时在上述两种进程中使用。 每一个API的文档都将声明你可以在哪种进程中使用该API。</p>
+<p>例如：<br>Electron中的窗口是使用BrowserWindow类型创建的一个实例， 它只能在主进程中使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 这样写在主进程会有用，但是在渲染进程中会提示&#x27;未定义&#x27;</span><br><span class="line">const &#123; BrowserWindow &#125; = require(&#x27;electron&#x27;)</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
+<p>因为进程之间的通信是被允许的, 所以渲染进程可以调用主进程来执行任务。 Electron通过remote模块暴露一些通常只能在主进程中获取到的API。 为了在渲染进程中创建一个BrowserWindow的实例，我们通常使用remote模块为中间件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样写在渲染进程中时行得通的，但是在主进程中是&#x27;未定义&#x27;</span><br><span class="line">const &#123; remote &#125; = require(&#x27;electron&#x27;)</span><br><span class="line">const &#123; BrowserWindow &#125; = remote</span><br><span class="line"></span><br><span class="line">const win = new BrowserWindow()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-26/electron%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -701,7 +838,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

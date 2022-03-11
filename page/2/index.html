@@ -155,6 +155,79 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-22/webpackloader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-22/webpackloader/" class="post-title-link" itemprop="url">webpackloader</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-22 20:36:53" itemprop="dateCreated datePublished" datetime="2022-01-22T20:36:53+08:00">2022-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-09 16:13:45" itemprop="dateModified" datetime="2022-02-09T16:13:45+08:00">2022-02-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/webpack%E6%8F%92%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1283,128 +1356,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-11/EventLoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-11/EventLoop/" class="post-title-link" itemprop="url">EventLoop</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-11 14:57:46" itemprop="dateCreated datePublished" datetime="2022-01-11T14:57:46+08:00">2022-01-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-14 15:05:53" itemprop="dateModified" datetime="2022-01-14T15:05:53+08:00">2022-01-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="浏览器EventLoop循环"><a href="#浏览器EventLoop循环" class="headerlink" title="浏览器EventLoop循环"></a>浏览器EventLoop循环</h2><h3 id="宏任务"><a href="#宏任务" class="headerlink" title="宏任务"></a>宏任务</h3><ul>
-<li>script（整体代码）</li>
-<li>setTimeout()</li>
-<li>setInterval()</li>
-<li>postMessage()</li>
-<li>I/O</li>
-<li>UI交互事件</li>
-</ul>
-<h3 id="微任务"><a href="#微任务" class="headerlink" title="微任务"></a>微任务</h3><ul>
-<li>new Promise().then（回调）</li>
-<li>await (回调)</li>
-<li>MutationObserve （HTML5新特性）</li>
-</ul>
-<h2 id="Node的EventLoop循环"><a href="#Node的EventLoop循环" class="headerlink" title="Node的EventLoop循环"></a>Node的EventLoop循环</h2><p>Node中的Event Loop是基于libuv实现的，而libuv是 Node 的新跨平台抽象层，libuv使用异步，事件驱动的编程方式，核心是提供i/o的事件循环和异步回调。libuv的API包含有时间，非阻塞的网络，异步文件操作，子进程等等。<br>Event Loop就是在libuv中实现的，libuv引擎中的事件循环的模型</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────┐</span><br><span class="line">┌─&gt;│        timers         │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">│  │     I/O callbacks     │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">│  │     idle, prepare     │</span><br><span class="line">│  └──────────┬────────────┘      ┌───────────────┐</span><br><span class="line">│  ┌──────────┴────────────┐      │   incoming:   │</span><br><span class="line">│  │         poll          │&lt;──connections───     │</span><br><span class="line">│  └──────────┬────────────┘      │   data, etc.  │</span><br><span class="line">│  ┌──────────┴────────────┐      └───────────────┘</span><br><span class="line">│  │        check          │</span><br><span class="line">│  └──────────┬────────────┘</span><br><span class="line">│  ┌──────────┴────────────┐</span><br><span class="line">└──┤    close callbacks    │</span><br><span class="line">   └───────────────────────┘</span><br></pre></td></tr></table></figure>
-<p>Node的EventLoop一共有6各阶段：</p>
-<ul>
-<li>timers: 执行setTimeout和setInterval中到期的callback</li>
-<li>pending callback: 上一轮循环中少数的callback会放在这一阶段执行</li>
-<li>idle, prepare: 仅在内部使用</li>
-<li>poll: 最重要的阶段，执行pending callback，在适当的情况下会阻塞在这个阶段</li>
-<li>check: 执行setImmediate(setImmediate()是将事件插入到事件队列尾部，主线程和事件队列的函数执行完成之后立即执行setImmediate指定的回调函数)的callback</li>
-<li>close callbacks: 执行close事件的callback，例如socket.on(‘close’[,fn])或者http.server.on(‘close, fn)</li>
-</ul>
-<h3 id="setImmediate和process-nextTick"><a href="#setImmediate和process-nextTick" class="headerlink" title="setImmediate和process.nextTick"></a>setImmediate和process.nextTick</h3><p>Node提供的与任务调度队列相关的方法</p>
-<ul>
-<li>process.nextTick方法可以在当前”执行栈”的尾部—-下一次Event Loop（主线程读取”任务队列”）之前—-触发回调函数。也就是说，它指定的任务总是发生在所有异步任务之前</li>
-<li>setImmediate方法则是在当前”任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次Event Loop时执行，这与setTimeout(fn, 0)很像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  process.nextTick(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">&#125;, 0)</span><br><span class="line">process.nextTick方法指定的回调函数，总是在当前&quot;执行栈&quot;的尾部触发，所以不仅函数A比setTimeout指定的回调函数timeout先执行，而且函数B也比timeout先执行</span><br><span class="line">输出：</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">TIMEOUT FIRED</span><br></pre></td></tr></table></figure>
-process.nextTick和setImmediate的一个重要区别：多个process.nextTick语句总是在当前”执行栈”一次执行完，多个setImmediate可能则需要多次loop才能执行完<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">像下面这样的递归调用process.nextTick，将会没完没了，主线程根本不会去读取&quot;事件队列&quot;</span><br><span class="line">process.nextTick(function foo() &#123;</span><br><span class="line">  process.nextTick(foo);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="setImmediate和setTimeout"><a href="#setImmediate和setTimeout" class="headerlink" title="setImmediate和setTimeout"></a>setImmediate和setTimeout</h3><p>setImmediate指定的回调函数，总是排在setTimeout前面。实际上，这种情况只发生在递归调用的时候<br>例子1：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">输出是不确定：</span><br><span class="line">可能是：1--TIMEOUT FIRED--2</span><br><span class="line">也可能是：TIMEOUT FIRED--1--2</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function ()&#123;</span><br><span class="line">  setImmediate(function A() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">    setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  setTimeout(function timeout() &#123;</span><br><span class="line">    console.log(&#x27;TIMEOUT FIRED&#x27;);</span><br><span class="line">  &#125;, 0);</span><br><span class="line">&#125;);</span><br><span class="line">输出：</span><br><span class="line">1--TIMEOUT FIRED--2</span><br><span class="line">解析：2排在TIMEOUT FIRED的后面（即函数B在timeout后面触发），是因为setImmediate总是将事件注册到下一轮Event Loop，所以函数A和timeout是在同一轮Loop执行，而函数B在下一轮Loop执行</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="相关题目："><a href="#相关题目：" class="headerlink" title="相关题目："></a>相关题目：</h2><h3 id="题目一："><a href="#题目一：" class="headerlink" title="题目一："></a>题目一：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;script start&#x27;);</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&#x27;setTimeout&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">Promise.resolve().then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise1&#x27;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(&#x27;promise2&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(&#x27;script end&#x27;);</span><br><span class="line"></span><br><span class="line">1、执行代码 输出script start</span><br><span class="line">2、遇到setTimeout 这是一个宏任务，添加到宏任务队列【宏任务1】</span><br><span class="line">3、Promise.resolve().then回调为微任务，放入微任务队列【微任务1】</span><br><span class="line">4、继续执行输出script end</span><br><span class="line">5、此时当前任务队列为空，去查看微任务队列是否有待执行任务，发现有【微任务1】</span><br><span class="line">6、执行【微任务1】输出promise1，发现还有Promise.then()【微任务2】，</span><br><span class="line">则继续执行【微任务2】输出promise2</span><br><span class="line">7、此时微任务全部执行完毕，去查看宏任务列表是否有待执行任务，</span><br><span class="line">发现有【宏任务1】，则执行【宏任务1】输出setTimeout</span><br><span class="line"></span><br><span class="line">输出结果为：</span><br><span class="line">script start</span><br><span class="line">script end</span><br><span class="line">promise1</span><br><span class="line">promise2</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
-
-<h3 id="题目二"><a href="#题目二" class="headerlink" title="题目二"></a>题目二</h3><p>先理解async和await：async/await 在底层转换成了 promise 和 then 回调函数；是promise的语法糖<br>我们使用 await, 解释器都创建一个 promise 对象，然后把剩下的 async 函数中的操作放到 then 回调函数中<br>简单的理解：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">async function f() &#123;</span><br><span class="line">  await p</span><br><span class="line">  console.log(&#x27;ok&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">翻译后：</span><br><span class="line"></span><br><span class="line">function f() &#123;</span><br><span class="line">  return RESOLVE(p).then(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;ok&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;script start&#x27;)</span><br><span class="line"></span><br><span class="line">async function async1() &#123;</span><br><span class="line">  await async2()</span><br><span class="line">  console.log(&#x27;async1 end&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">async function async2() &#123;</span><br><span class="line">  console.log(&#x27;async2 end&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">async1()</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&#x27;setTimeout&#x27;)</span><br><span class="line">&#125;, 0)</span><br><span class="line"></span><br><span class="line">new Promise(resolve =&gt; &#123;</span><br><span class="line">  console.log(&#x27;Promise&#x27;)</span><br><span class="line">  resolve()</span><br><span class="line">&#125;)</span><br><span class="line">  .then(function() &#123;</span><br><span class="line">    console.log(&#x27;promise1&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(function() &#123;</span><br><span class="line">    console.log(&#x27;promise2&#x27;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">console.log(&#x27;script end&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、执行代码 输出&#x27;script start&#x27;</span><br><span class="line">2、继续执行遇到async1()，进入async1()执行await async2()，输出&#x27;async2 end&#x27;，</span><br><span class="line">将await后面的代码放入到【微任务1】中</span><br><span class="line">3、继续执行setTimeout，将回调放入【宏任务1】中</span><br><span class="line">4、执行Promise，输出&#x27;Promise&#x27;,将then之后的代码放入到【微任务2】中</span><br><span class="line">5、继续执行输出&#x27;script end&#x27;</span><br><span class="line">6、此时当前任务队列执行完毕，查看是否有待执行的微任务队列，执行【微任务1】，输出&#x27;async2 end&#x27;</span><br><span class="line">7、微任务队列还有任务，执行【微任务2】，输出&#x27;promise1&#x27;，执行【微任务2】时，又添加了【微任务3】,继续执行【微任务3】，输出&#x27;promise2&#x27;,此时微任务队列执行完毕</span><br><span class="line">8、查看是否有宏任务队列，发现【宏任务1】，执行输出&#x27;setTimeout&#x27;</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">script start</span><br><span class="line">async2 end</span><br><span class="line">Promise</span><br><span class="line">script end</span><br><span class="line">async2 end</span><br><span class="line">promise1</span><br><span class="line">promise2</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
-
-<h3 id="题目三"><a href="#题目三" class="headerlink" title="题目三"></a>题目三</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;start&#x27;);</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;children2&#x27;);</span><br><span class="line">    Promise.resolve().then(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;children3&#x27;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">new Promise(function(resolve, reject) &#123;</span><br><span class="line">    console.log(&#x27;children4&#x27;);</span><br><span class="line">    setTimeout(function() &#123;</span><br><span class="line">        console.log(&#x27;children5&#x27;);</span><br><span class="line">        resolve(&#x27;children6&#x27;)</span><br><span class="line">    &#125;, 0)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">    console.log(&#x27;children7&#x27;);</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(res);</span><br><span class="line">    &#125;, 0)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">1、执行代码 输出&#x27;start&#x27;</span><br><span class="line">2、继续执行setTimeout，宏任务将回调放入到【宏任务1】</span><br><span class="line">3、执行Promise，输出&#x27;children4&#x27;,遇到setTimeout将回调放入到【宏任务2】中，特别注意，此时没有执行resolve，所以后续then没有被放入到微任务队列中</span><br><span class="line">4、继续执行，当前任务列表执行完毕，执行【宏任务1】</span><br><span class="line">5、【宏任务1】输出&#x27;children2&#x27;,又遇到Promise，将Promise.then()放入到【微任务1】中</span><br><span class="line">6、【宏任务1】执行完毕，此时需要查看微任务队列是否还有任务，发现【微任务1】</span><br><span class="line">7、执行【微任务1】输出&#x27;children3&#x27;,微任务队列执行完毕</span><br><span class="line">8、继续执行【宏任务2】,setTimeout将回调【宏任务3】放入到队列中，此时微任务队列为空，则直接执行【宏任务3】，输出&#x27;children5&#x27;,遇到resolve将then【微任务3】放入到微任务队列中</span><br><span class="line">9、执行完【宏任务3】后，宏任务队列清空，查看微任务队列，发现【微任务3】，执行输出&#x27;children7&#x27;</span><br><span class="line">10、继续执行再次遇到setTimeout，将回调【宏任务4】中，此时当前无任务执行，则【宏任务4】得到执行 ，输出&#x27;children6&#x27;</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">start</span><br><span class="line">children4</span><br><span class="line">children2</span><br><span class="line">children3</span><br><span class="line">children5</span><br><span class="line">children7</span><br><span class="line">children6</span><br></pre></td></tr></table></figure>
-
-<h3 id="题目4"><a href="#题目4" class="headerlink" title="题目4"></a>题目4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">const p = function() &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        const p1 = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">            setTimeout(() =&gt; &#123;</span><br><span class="line">                resolve(1)</span><br><span class="line">            &#125;, 0)</span><br><span class="line">            resolve(2)</span><br><span class="line"></span><br><span class="line">            //setTimeout(() =&gt; &#123;</span><br><span class="line">            //    resolve(1)</span><br><span class="line">            //&#125;, 0)</span><br><span class="line">        &#125;)</span><br><span class="line">        p1.then((res) =&gt; &#123;</span><br><span class="line">            console.log(res);</span><br><span class="line">        &#125;)</span><br><span class="line">        console.log(3);</span><br><span class="line">        resolve(4);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p().then((res) =&gt; &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&#x27;end&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、执行代码，Promise本身是同步的立即执行函数，.then是异步执行函数。遇到setTimeout，先把其放入宏任务队列中，遇到p1.then会先放到微任务队列中，接着往下执行，输出&#x27;3&#x27;</span><br><span class="line">2、遇到 p().then 会先放到微任务队列中，接着往下执行，输出 end</span><br><span class="line">3、同步代码块执行完成后，开始执行微任务队列中的任务，首先执行 p1.then，输出 2, 接着执行p().then, 输出 4</span><br><span class="line">4、微任务执行完成后，开始执行宏任务，p1中的setTimeout, resolve(1)，但是此时 p1.then已经执行完成，此时 1不会输出</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ysaIHx_qltS7SjQxPr5_iw">浏览器和 Node.js 的 EventLoop 为什么这么设计？</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1474,7 +1425,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
