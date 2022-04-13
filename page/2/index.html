@@ -155,6 +155,150 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-26/viewport/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-26/viewport/" class="post-title-link" itemprop="url">viewport</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-26 16:46:00" itemprop="dateCreated datePublished" datetime="2022-01-26T16:46:00+08:00">2022-01-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-27 13:04:00" itemprop="dateModified" datetime="2022-01-27T13:04:00+08:00">2022-01-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="个人理解"><a href="#个人理解" class="headerlink" title="个人理解"></a>个人理解</h2><p>移动设备出现之前，界面的展示主要以PC浏览器为主，而PC浏览器大小不一，一般在800px以上。随着移动设备的出现，屏幕像素高了，特别是apple推出了Retina屏，但是设备的实际大小却依旧比不上PC的浏览器尺寸。<br>为了使原有PC浏览器上的网页能够在手机上展示，所以出现了viewport三个相关的视口：布局视口、视觉视口、理想视口。<br>我们可以这么理解，网页上展示的内容是都是绘制出来的，相当于在一个画布上绘制各种各样的信息，而布局视口就可以看做是那个画布，css设置的大小即在这个画布上生效。不同设备的布局视口有所不同，一般在768px ~ 1024px间，以iPhone为例默认值为980px。这里需要指出的是设备像素和设备独立像素（CSS像素）并不是一一对应的，因为有DPR（设备像素比）<code>设备像素比 = 设备像素 / 设备独立像素</code>的存在.比如iphone 6s中一个css像素对应2个设备像素。所以：<br>如果移动设备没有设置viewport属性，则其可视视口也为980px，也就是说css写<code>width：980px</code>，则这个页面可以完全展示在移动设备的屏幕上，只不过会以缩放的形式展示，如果超过980px则出现滚动条。当可视视口变化时，布局视口是不会发生变化的，变化只是css像素。当放大时，视觉视口反而变小？这是因为视觉视口也是通过CSS像素度量，而放大就是使CSS像素放大，假设屏幕上本来需要200个CSS像素才能占满屏幕，由于放大，现在只需要100个CSS像素就能占满，所以视觉视口的宽就变成100px。由于存在缩放的效果，页面虽然可以全部展示，但是缩放了，不够完美。<br>这时候出现了理想窗口的概念。理想视口并没有一个固定的尺寸，不同的设备拥有有不同的 大小。所有的 iphone 的理想视口宽度都是 320px，无论它的屏幕宽度是 320 还是 640，也就是说，在 iphone 中，css 中的 320px 就代表 iphone 屏幕的宽度。他们之间的关系可表述为：<code>缩放系数 = 理想视口宽度 / 视觉视口宽度</code>，理想窗口的大小就是设备的屏幕实际大小。如果以屏幕的实际大小作为画布来绘制，则展示的效果才会合适。也就是让【布局视口】跟屏幕一样大，在这个画布上作画才能得到一个合适的展示效果。</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/viewport-deep-understanding.html">viewport 深入理解</a></p>
+<h2 id="viewport概念"><a href="#viewport概念" class="headerlink" title="viewport概念"></a>viewport概念</h2><p>viewport特性，一个移动专属的Meta值，用于定义视口的各种行为，表示用户网页的可视区域。该特性最先由Apple引入，用于解决移动端的页面展示问题，后续被越来越多的厂商跟进。</p>
+<p>和viewport相关的有三个视区，布局视口（layout viewport）、可视视口（visual viewport）和理想视口（ideal viewport）<br>来自于 <a target="_blank" rel="noopener" href="https://twitter.com/ppk">PPK(Peter-Paul Koch)</a> 关于 viewport 的三个观点（<a target="_blank" rel="noopener" href="https://www.quirksmode.org/mobile/viewports.html">so~1</a>,<a target="_blank" rel="noopener" href="https://www.quirksmode.org/mobile/viewports2.html">so~2</a>,<a target="_blank" rel="noopener" href="https://www.quirksmode.org/mobile/metaviewport/">so~3</a>），有很多文章的观点都出自那里（包括本文</p>
+<h3 id="布局视口（layout-viewport）"><a href="#布局视口（layout-viewport）" class="headerlink" title="布局视口（layout viewport）"></a>布局视口（layout viewport）</h3><p>布局视口是在html元素之上的容器，我们的页面就“装”在布局视口中,如果说CSS是一支画笔，那么布局视口就是那张画布。<br>移动设备上的浏览器都会把自己默认的 viewport 设为980px或其他值，一般都比移动端浏览器可视区域大很多，所以就会出现浏览器出现横向滚动条的情况。<br>布局视区的宽度是可以用 <code>document.documentElement.clientWidth</code> 来获取<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/25.awebp"></p>
+<h3 id="可视视口（visual-viewport）"><a href="#可视视口（visual-viewport）" class="headerlink" title="可视视口（visual viewport）"></a>可视视口（visual viewport）</h3><p>浏览器的可视区域,用户通过屏幕看到的页面区域，通过缩放查看显示内容的区域，在移动端缩放不会改变布局视口的宽度.一般移动端的浏览器默认为全屏状态，所以visual viewport也可以认为是手机屏幕的大小<br>可视视口的宽度可以通过window.innerWidth 来获取<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/26.awebp"></p>
+<h3 id="理想视口（ideal-viewport）"><a href="#理想视口（ideal-viewport）" class="headerlink" title="理想视口（ideal viewport）"></a>理想视口（ideal viewport）</h3><p>有了layout viewport和visual viewport，但是浏览器觉得还不够，因为现在越来越多的网站都会为移动设备进行单独的设计，所以必须还要有一个能完美适配移动设备的viewport，所以就出现了ideal viewport，有了ideal viewport，用户不用缩放和拖动网页就能够很好的进行网页浏览。ideal viewport 并没有一个固定的尺寸，不同的设备拥有有不同的 ideal viewport<br>可以到 <a target="_blank" rel="noopener" href="http://viewportsizes.com/">http://viewportsizes.com</a> 去查看一下，里面收集了众多设备的理想宽度</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>先看一下viewport的常用的属性有哪些：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>正整数或device-width</td>
+<td>定义布局视口的宽度，单位为像素</td>
+</tr>
+<tr>
+<td>height</td>
+<td>正整数或device-height</td>
+<td>定义布局视口的高度，单位为像素</td>
+</tr>
+<tr>
+<td>initial-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义初始缩放值</td>
+</tr>
+<tr>
+<td>maximum-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义放大最大比例，它必须大于或等于minimum-scale设置</td>
+</tr>
+<tr>
+<td>minimum-scale</td>
+<td>[0.0-10.0]</td>
+<td>定义缩小最小比例，它必须小于或等于maximum-scale设置</td>
+</tr>
+<tr>
+<td>user-scalable</td>
+<td>[0.0-10.0]</td>
+<td>定义是否允许用户手动缩放页面，默认值yes</td>
+</tr>
+</tbody></table>
+<h4 id="width"><a href="#width" class="headerlink" title="width"></a>width</h4><p>控制 viewport 的大小，可以指定的一个值，如 500，或者特殊的值，如 device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）</p>
+<h4 id="initial-scale"><a href="#initial-scale" class="headerlink" title="initial-scale"></a>initial-scale</h4><p>初始缩放比例，也即是当页面第一次 load 的时候缩放比例</p>
+<h4 id="height"><a href="#height" class="headerlink" title="height"></a>height</h4><p>与width类似，但实际上却不常用</p>
+<h4 id="maximum-scale"><a href="#maximum-scale" class="headerlink" title="maximum-scale"></a>maximum-scale</h4><p>在移动端，你可能会考虑用户浏览不便，然后给予用户放大页面的权利，但同时又希望是在一定范围内的放大，这时就可以使用maximum-scale来进行约束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//假设页面的默认缩放值initial-scale是1，</span><br><span class="line">//那么用户最终能够将页面放大到这个初始页面大小的5倍</span><br><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1, maximum-scale=5&quot; /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="minimum-scale"><a href="#minimum-scale" class="headerlink" title="minimum-scale"></a>minimum-scale</h4><p>同maximum-scale的描述，不过minimum-scale是用来指定页面缩小比例的</p>
+<h4 id="user-scalable"><a href="#user-scalable" class="headerlink" title="user-scalable"></a>user-scalable</h4><p>该属性的默认值为yes，即可被缩放（如果使用默认值，该属性可以不定义）；当然，如果你的应用不打算让用户拥有缩放权限，可以将该值设置为no</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1，user-scalable=no&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="viewport是如何控制页面展示的"><a href="#viewport是如何控制页面展示的" class="headerlink" title="viewport是如何控制页面展示的"></a>viewport是如何控制页面展示的</h3><p>那说了这么多，viewport到底如何控制移动端的展示呢？<br><video id="video" controls="" preload="none" poster="封面"><br>      <source id="mp4" src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/27.mp4" type="video/mp4"><br></videos></p>
+<p>移动互联网的早期，屏幕设备的物理像素点宽度多数在 320、480、640 等。而互联网世界的绝大多数站点又是针对 PC 设计的，其文档宽度普遍在 800px 以上。<br><code>如果浏览器和针对 PC 制作的网页都不做任何处理，那么在窄屏设备上加载网页，我们看到的效果便是默认显示网页的左上角部分，然后通过水平和竖直方向的滚动来浏览网页的其他部分。</code><br><strong>为了优化“最初为 PC 设计的网页”在移动设备的浏览体验，移动浏览器厂商们想了一个方案，那就是增大页面载入时初始视口的宽度，比如 Android 和 iOS 都比较常见的 980px,浏览器默认只是把整个页面等比例缩小到移动端的 viewport 大小。<br>如此的设计，会把逻辑层画布中 980px 的图像投影显示到 320px 的屏幕上，看到的效果便是一个挤在一起看不清楚细节的缩小版页面</strong><br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/28.jpeg"></p>
+<h4 id="使用举例"><a href="#使用举例" class="headerlink" title="使用举例"></a>使用举例</h4><ul>
+<li><p>没有设置mate<br>以iphone4s为例，默认的viewport为980px。如果设置一个元素为100px*100px，看起来这个元素就是屏幕宽度的100/980。<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/29.jpeg"></p>
+</li>
+<li><p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;</code><br>  以iphone4s为例，默认的viewport为320px。如果设置一个元素为100px*100px，看起来这个元素就是屏幕宽度的100/320。<br>  <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/30.jpeg"></p>
+</li>
+<li><p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=1000&quot; /&gt;</code><br>  div 宽度 1000px 时，横向刚好铺满屏幕，超过出现横向滚动条</p>
+</li>
+<li><p><code>&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1&quot; /&gt;</code><br>  这个等同于<code>content=&quot;width=device-width&quot;</code><br>  这里需要着重说一下，缩放程度是根据理想视口来计算的,<br>  安卓设备上的initial-scale并没有默认值，而在iphone和ipad上，无论viewport设置的宽度是多少，如果没有指定默认的缩放值，则iphone和ipad会自动计算这个缩放值，以达到当前页面不会出现横向滚动条(或者说viewport的宽度就是屏幕的宽度)的目的,IE10中当initial-scale为1时，它在横屏模式下宽度保持着320px，但width=device-width时它会从320px变为480px.<br>  所以<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;</code>这样就 initial-scale=1 解决了 iphone、ipad的毛病，width=device-width则解决了IE的毛病</p>
+</li>
+</ul>
+<ul>
+<li><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=400,initial-scale=1&quot;&gt;</code><br>  把布局视口的宽度设为400px，然后再把它设为理想视口的宽度。结果浏览器选择了每个方向最大的尺寸。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-22/webpackloader/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -186,7 +330,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-09 16:13:45" itemprop="dateModified" datetime="2022-02-09T16:13:45+08:00">2022-02-09</time>
+                <time title="修改时间：2022-03-15 18:31:11" itemprop="dateModified" datetime="2022-03-15T18:31:11+08:00">2022-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,7 +353,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="webpack-loader"><a href="#webpack-loader" class="headerlink" title="webpack loader"></a>webpack loader</h1><p>对于loader而言，它实质上是一个转换器，将A文件编译成B文件，操作的是 文件 ，比如将A文件编译成B文件，单纯的是一个文件转换过程，运行在项目打包之前。<br>一般在做 loader  的功能装换的时候，保持功能单一，避免做多种功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个函数，source为webpack传递给loader的文件源内容</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    const content = doSomeThing2JsString(source);</span><br><span class="line"></span><br><span class="line">    // 如果 loader 配置了 options 对象，那么this.getOptions可以获取options</span><br><span class="line">    const options = this.getOptions();</span><br><span class="line"></span><br><span class="line">    // 可以用作解析其他模块路径的上下文</span><br><span class="line">    console.log(&#x27;this.context&#x27;);</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * this.callback 参数：</span><br><span class="line">     * error：Error | null，当 loader 出错时向外抛出一个 error</span><br><span class="line">     * content：String | Buffer，经过 loader 编译后需要导出的内容</span><br><span class="line">     * sourceMap：为方便调试生成的编译后内容的 source map</span><br><span class="line">     * ast：本次编译生成的 AST 静态语法树，之后执行的 loader 可以直接使用这个 AST，进而省去重复生成 AST 的过程</span><br><span class="line">     */</span><br><span class="line">    this.callback(null, content); // 返回其他内容</span><br><span class="line">    return content; // 同步</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>异步API：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">异步loader，使用 this.async 来获取 callback 函数。</span><br><span class="line">// 让 Loader 缓存</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    // 做异步的事</span><br><span class="line">    doSomeAsyncOperation(content, function(err, result) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, result);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv6194658/">webpack的几个常见loader源码浅析</a></p>
+
       
     </div>
 
@@ -259,7 +409,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-09 16:13:22" itemprop="dateModified" datetime="2022-02-09T16:13:22+08:00">2022-02-09</time>
+                <time title="修改时间：2022-03-15 18:31:16" itemprop="dateModified" datetime="2022-03-15T18:31:16+08:00">2022-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1266,96 +1416,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-13/JS%E5%92%8CCSS%E9%98%BB%E5%A1%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93/" class="post-title-link" itemprop="url">JS和CSS阻塞浏览器渲染</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-13 13:07:39" itemprop="dateCreated datePublished" datetime="2022-01-13T13:07:39+08:00">2022-01-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 15:48:11" itemprop="dateModified" datetime="2022-02-17T15:48:11+08:00">2022-02-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="JS和CSS阻塞浏览器渲染"><a href="#JS和CSS阻塞浏览器渲染" class="headerlink" title="JS和CSS阻塞浏览器渲染"></a>JS和CSS阻塞浏览器渲染</h2><p>浏览器的渲染流程：</p>
-<ul>
-<li>1、渲染进程解析 HTML 内容转换为能够读懂的 DOM 树结构，解析 CSS 为 CSSDOM</li>
-<li>把 DOM 和 CSSOM 结合起来生成渲染树(Render Tree)</li>
-<li>渲染树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标</li>
-<li>把渲染树展示到屏幕上。再下一步就是绘制，即遍历渲染树，绘制每个节点</li>
-</ul>
-<p>需要注意的是：<br>渲染引擎会以最快的速度展示内容，也就是说，浏览器一边解析 HTML，一边构建渲染树，构建一部分，就会把当前已有的元素渲染出来。如果这个时候外部样式并没有加载完成，渲染出来的就是浏览器默认样式了。</p>
-<p>第一点：由于DOM 解析和 CSS 解析是两个并行的进程，所以 CSS 加载不会阻塞 DOM 树的解析<br>第二点：CSS 加载会阻塞 DOM 树的渲染，因为渲染树是依赖于 DOM Tree 和 CSSOM Tree 的，所以无论 DOM Tree 是否已经完成，它都必须等待到 CSSOM Tree 构建完成，即 CSS 加载完成后，才能开始渲染<br>第三点：CSS加载会阻塞其后的 JS 执行。我们知道JS 的加载、解析与执行会阻塞 DOM 的构建，也就是说，在构建 DOM 时，HTML 解析器若遇到了 JS，那么它会暂停构建 DOM ，将控制权移交给JS引擎，等 JS 引擎运行完毕，浏览器再从中断的地方恢复 DOM 构建。但是如果在 JS 脚本前引入外部 CSS 文件，则CSS会阻塞JS的加载，也就是会阻塞DOM树的生成。因为 JS 不只是可以改 DOM ，它还可以更改样式，也就是它可以更改 CSSOM，如果这个时候CSS文件还没有加载完成（继续解析JS会造成浪费），所以JS会等到CSS文件加载完成继续解析</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
-<li>1、JS会阻塞DOM的解析和渲染</li>
-<li>2、CSS不会阻塞DOM的解析</li>
-<li>3、CSS会阻塞DOM的渲染</li>
-<li>4、CSS会阻塞后面JS语句的执行，也就是如果JS前面如果有CSS连接的话，会等待CSS下载完成之后再继续执行JS</li>
-<li>5、<code>&lt;spacript&gt;</code>defer与async的区别是：defer要等到整个页面在内存中正常渲染结束（DOM 结构完全生成，以及其他脚本执行完成），才会执行；async一旦下载完，渲染引擎就会中断渲染，执行这个脚本以后，再继续渲染。一句话，defer是“渲染完再执行”，async是“下载完就执行”。另外，如果有多个defer脚本，会按照它们在页面出现的顺序加载，而多个async脚本是不能保证加载顺序的。</li>
-<li>6、<code>&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot;&gt;&lt;/script&gt;</code>浏览器对于带有type=”module”的<code>&lt;script&gt;</code>，都是异步加载，不会造成堵塞浏览器，即等到整个页面渲染完，再执行模块脚本，等同于打开了<code>&lt;script&gt;</code>标签的defer属性  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;!-- 等同于 --&gt;</span><br><span class="line">&lt;script type=&quot;module&quot; src=&quot;./foo.js&quot; defer&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;标签的async属性也可以打开，这时只要加载完成，渲染引擎就会中断渲染立即执行。执行完成后，再恢复渲染</span><br><span class="line">一旦使用了async属性，&lt;script type=&quot;module&quot;&gt;就不会按照在页面出现的顺序执行，而是只要该模块加载完成，就执行该模块。</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1425,7 +1485,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
