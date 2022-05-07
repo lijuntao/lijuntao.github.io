@@ -155,6 +155,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/CommonsChunkPlugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-20/CommonsChunkPlugin/" class="post-title-link" itemprop="url">CommonsChunkPlugin</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-20 09:22:33 / 修改时间：12:05:52" itemprop="dateCreated datePublished" datetime="2022-01-20T09:22:33+08:00">2022-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="CommonsChunkPlugin简介"><a href="#CommonsChunkPlugin简介" class="headerlink" title="CommonsChunkPlugin简介"></a>CommonsChunkPlugin简介</h2><p>CommonsChunkPlugin主要是用来提取第三方库和公共模块，避免首屏加载的bundle文件或者按需加载的bundle文件体积过大，从而导致加载时间过长</p>
+<p>这里先说一下CommonsChunkPlugin提及的chunk有哪几种：</p>
+<ul>
+<li>webpack当中配置的入口文件（entry）是chunk，可以理解为entry chunk</li>
+<li>入口文件以及它的依赖文件通过code split（代码分割）出来的也是chunk，可以理解为children chunk</li>
+<li>通过CommonsChunkPlugin创建出来的文件也是chunk，可以理解为commons chunk</li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><p>name：以是已经存在的chunk（一般指入口文件）对应的name，那么就会把公共模块代码合并到这个chunk上；否则，会创建名字为name的commons chunk进行合并</p>
+</li>
+<li><p>filename：指定commons chunk的文件名</p>
+</li>
+<li><p>chunks：指定source chunk，即指定从哪些chunk当中去找公共模块，省略该选项的时候，默认就是entry chunks</p>
+</li>
+<li><p>minChunks：既可以是数字，也可以是函数，还可以是Infinity</p>
+<ul>
+<li>设定为数字（大于等于2），指定共用模块被多少个 chunk 使用才能被合并。</li>
+<li>也可以设为函数，接受 (module, count) 两个参数，用法如上。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">name: &#x27;vendor&#x27;,</span><br><span class="line">minChunks: (module,count) =&gt; &#123;</span><br><span class="line">      // 所有 node_modules 下的文件</span><br><span class="line">      return module.resource &amp;&amp; /node_modules/.test(module.resource)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure></li>
+<li>特别地，还可以设置为 Infinity ，即马上创建 commons chunk 但不合并任何共用模块。这时一般搭配 entry 的配置一起用</li>
+</ul>
+</li>
+<li><p>children 设为 true 时，指定 source chunks 为 children of commons chunk。这里的 children of commons chunk 比较难理解，可以认为是 entry chunks 通过 code split 创建的 children chunks。children 与 chunks不可同时设置（它们都是指定 source chunks 的）。<br>  <strong>children 可以用来把 entry chunk 创建的 children chunks 的共用模块合并到自身，但这会导致初始加载时间较长：</strong></p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  // names: [&quot;app&quot;, &quot;subPageA&quot;]</span><br><span class="line">  // (choose the chunks, or omit for all chunks)</span><br><span class="line"></span><br><span class="line">  children: true,</span><br><span class="line">  // (select all children of chosen chunks)</span><br><span class="line"></span><br><span class="line">  // minChunks: 3,</span><br><span class="line">  // (3 children must share the module before it&#x27;s moved)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>async 即解决children: true时合并到 entry chunks 自身时初始加载时间过长的问题。async 设为 true 时，commons chunk 将不会合并到自身，而是使用一个新的异步的 commons chunk。当这个 commons chunk 被下载时，自动并行下载相应的共用模块。</p>
+<p>  整体实现：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  name: &#x27;vendor&#x27;,</span><br><span class="line">  minChunks: module =&gt; &#123;</span><br><span class="line">    return module.resource &amp;&amp; /node_modules/.test(module.resource)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;),</span><br><span class="line">new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">  name: &#x27;client&#x27;,</span><br><span class="line">  async: &#x27;chunk-vendor&#x27;,</span><br><span class="line">  children: true,</span><br><span class="line">  minChunks: (module, count) =&gt; &#123;</span><br><span class="line">    // 被 3 个及以上 chunk 使用的共用模块提取出来</span><br><span class="line">    return count &gt;= 3</span><br><span class="line">  &#125;</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="不分离出第三方库和自定义公共模块"><a href="#不分离出第三方库和自定义公共模块" class="headerlink" title="不分离出第三方库和自定义公共模块"></a>不分离出第三方库和自定义公共模块</h3><p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// common.js</span><br><span class="line">export const common = &#x27;common file&#x27;;</span><br><span class="line"></span><br><span class="line">// first.js</span><br><span class="line">import &#123; common &#125; from &#x27;./common&#x27;;</span><br><span class="line">import $ from &#x27;jquery&#x27;;</span><br><span class="line">console.log($, `first  $&#123;common&#125;`);</span><br><span class="line"></span><br><span class="line">// sencond.js</span><br><span class="line">import &#123; common &#125; from &#x27;./common&#x27;;</span><br><span class="line">import $ from &#x27;jquery&#x27;;</span><br><span class="line">console.log($, `second  $&#123;common&#125;`);</span><br></pre></td></tr></table></figure>
+
+<p>webpack配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        first: &#x27;./src/first.js&#x27;,</span><br><span class="line">        second: &#x27;./src/second.js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname,&#x27;./dist&#x27;),</span><br><span class="line">        filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/14.png" alt="avatar"><br>first.js和second.js，会发现共同引用的common.js文件和jquery都被打包进去了</p>
+<h3 id="分离出第三方库、自定义公共模块、webpack运行文件"><a href="#分离出第三方库、自定义公共模块、webpack运行文件" class="headerlink" title="分离出第三方库、自定义公共模块、webpack运行文件"></a>分离出第三方库、自定义公共模块、webpack运行文件</h3><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        first: &#x27;./src/first.js&#x27;,</span><br><span class="line">        second: &#x27;./src/second.js&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname,&#x27;./dist&#x27;),</span><br><span class="line">        filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/15.png" alt="avatar"><br>查看vendor.js文件，发现first.js和second.js文件中依赖的jquery和common.js都被打包进vendor.js中，同时还有webpack的运行文件</p>
+<h3 id="单独分离出第三方库、自定义公共模块、webpack运行文件"><a href="#单独分离出第三方库、自定义公共模块、webpack运行文件" class="headerlink" title="单独分离出第三方库、自定义公共模块、webpack运行文件"></a>单独分离出第三方库、自定义公共模块、webpack运行文件</h3><h4 id="第一步-先分离webpack运行文件"><a href="#第一步-先分离webpack运行文件" class="headerlink" title="第一步 先分离webpack运行文件"></a>第一步 先分离webpack运行文件</h4><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: [&#x27;vendor&#x27;, &#x27;runtime&#x27;],</span><br><span class="line">      filename: &#x27;[name].js&#x27;</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">  /** 上面代码等价与下面</span><br><span class="line">   plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;</span><br><span class="line">        &#125;),</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;runtime&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            chunks: [&#x27;vendor&#x27;]</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">  **/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/16.png" alt="avatar"><br>发现vendor.js的体积已经减小，说明已经把webpack运行文件runtime.js提取出来了.但是<br>vendor.js中还有自定义的公共模块common.js，现在只想vendor.js拥有项目依赖的第三方库而已（这里是jquery）</p>
+<h4 id="第二步-抽离第三方库和自定义公共模块"><a href="#第二步-抽离第三方库和自定义公共模块" class="headerlink" title="第二步 抽离第三方库和自定义公共模块"></a>第二步 抽离第三方库和自定义公共模块</h4><h5 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h5><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;,</span><br><span class="line">    vendor:[&#x27;jquery&#x27;] //第三方库入口</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: [&#x27;vendor&#x27;, &#x27;runtime&#x27;],</span><br><span class="line">      filename: &#x27;[name].js&#x27;,</span><br><span class="line">      minChunks: Infinity</span><br><span class="line">    &#125;),</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">      name: &#x27;common&#x27;,</span><br><span class="line">      filename: &#x27;[name].js&#x27;,</span><br><span class="line">      chunks: [&#x27;first&#x27;, &#x27;second&#x27;]//从first.js和second.js中抽取commons chunk</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/18.png" alt="avatar"><br>发现生成了common.js公共文件，包含了common和jquery，但是却没了vendor.js文件。这里有个细节就是：<strong>如果设置了·minChunks: Infinity,则表示立即生成公共chunk，但是不包含模块</strong>，所以可以理解为：生成了一个公共文件<code>vendor</code>,随后又提取了一个公共文件<code>runtime</code>,而vendor为空了，所以没有生成。可以这么修改：<br>在entry中增加一个vendor入口来提取第三方库文件。<br>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/19.png" alt="avatar"><br>此时：vendor.js 只包含了第三方库文件，common.js只包含了自定义的公共模块</p>
+<h5 id="第二种方式"><a href="#第二种方式" class="headerlink" title="第二种方式"></a>第二种方式</h5><p>webpack：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    first: &#x27;./src/first.js&#x27;,</span><br><span class="line">    second: &#x27;./src/second.js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;./dist&#x27;),</span><br><span class="line">    filename: &#x27;[name].js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;vendor&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            minChunks: function (module,count) &#123;</span><br><span class="line">                console.log(module.resource,`引用次数$&#123;count&#125;`);</span><br><span class="line">                //&quot;有正在处理文件&quot; + &quot;这个文件是 .js 后缀&quot; + &quot;这个文件是在 node_modules 中&quot;</span><br><span class="line">                return (</span><br><span class="line">                    module.resource &amp;&amp;</span><br><span class="line">                    /\.js$/.test(module.resource) &amp;&amp;</span><br><span class="line">                    module.resource.indexOf(path.join(__dirname, &#x27;./node_modules&#x27;)) === 0</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;),</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">            name: &#x27;runtime&#x27;,</span><br><span class="line">            filename: &#x27;[name].js&#x27;,</span><br><span class="line">            chunks: [&#x27;vendor&#x27;]</span><br><span class="line">        &#125;),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/18.png" alt="avatar"><br>上面的代码其实就是生成一个叫做vendor的commons chunk，那么有哪些模块会被加入到vendor中呢？就对入口文件及其依赖的模块进行遍历，如果该模块是js文件并且在node_modules中，就会加入到vendor当中，其实这也是一种让vendor只保留第三方库的办法。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000009070061">CommonsChunkPlugin的参数详解</a><br><a target="_blank" rel="noopener" href="https://github.com/creeperyang/blog/issues/37">Webpack 日常使用与优化</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012828879?utm_source=tag-newest">详解CommonsChunkPlugin的配置和用法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-18/JS%E6%A8%A1%E5%9D%97%E5%8C%96%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1235,83 +1348,6 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021-12-31/css%E9%AB%98%E5%BA%A6%E7%99%BE%E5%88%86%E7%99%BE%E4%B8%8E100vh%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">css高度百分百与100vh的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-31 15:58:55" itemprop="dateCreated datePublished" datetime="2021-12-31T15:58:55+08:00">2021-12-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-06 14:12:18" itemprop="dateModified" datetime="2022-01-06T14:12:18+08:00">2022-01-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>vh: 相对于视窗的高度, 视窗被均分为100单位的vh<br>正常情况下</p>
-<p><code>height:100vh == height:100%;</code></p>
-<p>注意点：<br>100vh：是相对视窗的高度<br>100%：是相对父元素的高度，如果父元素高度为0，即使子元素设置了<code>height:100%</code>,其高度依旧为0</p>
-<p>height:100%<br>绝对定位元素的百分比计算和非绝对定位元素的百分比计算是有区别的，区别在于绝对定位的宽高百分比计算是相对于padding box的，也就是说会把padding大小值计算在内，但是，非绝对定位元素则是相对于content box计算的</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1381,7 +1417,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
