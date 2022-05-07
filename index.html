@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-07 14:33:40 / 修改时间：15:02:59" itemprop="dateCreated datePublished" datetime="2022-05-07T14:33:40+08:00">2022-05-07</time>
+              <time title="创建时间：2022-05-07 14:33:40 / 修改时间：15:27:51" itemprop="dateCreated datePublished" datetime="2022-05-07T14:33:40+08:00">2022-05-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -211,17 +211,49 @@
           <h1 id="lt-DOCTYPE-html-gt"><a href="#lt-DOCTYPE-html-gt" class="headerlink" title="&lt;!DOCTYPE html&gt;"></a><code>&lt;!DOCTYPE html&gt;</code></h1><p><strong>这是文档类型声明，一般位于文档中的最前面，处于标签之前。告知浏览器的解析器，用什么文档类型规范来解析这个文档。<code>&lt;!DOCTYPE html&gt;</code>表示以HTML5规范解析页面</strong></p>
 <p>延伸：严格模式，混合模式</p>
 <ul>
-<li>严格模式：又称标准模式，是指浏览器按照 W3C 标准解析代码</li>
-<li>混合模式：又称怪异模式，是指浏览器用自己的方式解析代码。</li>
+<li><p>严格模式：又称标准模式，是指浏览器按照 W3C 标准解析代码</p>
+</li>
+<li><p>混合模式：又称怪异模式，是指浏览器用自己的方式解析代码。</p>
+</li>
 </ul>
 <h1 id="常见mate属性"><a href="#常见mate属性" class="headerlink" title="常见mate属性"></a>常见mate属性</h1><p>用法：</p>
 <ul>
-<li>声明字符编码 例：<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></li>
-<li>指定名/值对 例：<code>&lt;meta name=&quot;参数&quot; content=&quot;具体描述信息&quot;&gt;</code></li>
-<li>模拟http标头 例：<code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</code></li>
+<li><p>声明字符编码 例：<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></p>
+</li>
+<li><p>指定名/值对 例：<code>&lt;meta name=&quot;参数&quot; content=&quot;具体描述信息&quot;&gt;</code></p>
+</li>
+<li><p>关联http头部 例：<code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</code></p>
+</li>
 </ul>
 <p><strong>除charset属性外，都是http-equiv属性或name属性结合content来使用</strong></p>
-<h2 id="声明字符编码"><a href="#声明字符编码" class="headerlink" title="声明字符编码"></a>声明字符编码</h2><p><code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>声明文档的字符编码</p>
+<h2 id="声明字符编码"><a href="#声明字符编码" class="headerlink" title="声明字符编码"></a>声明字符编码</h2><ul>
+<li><code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> 声明文档的字符编码</li>
+</ul>
+<h2 id="指定名-值对"><a href="#指定名-值对" class="headerlink" title="指定名/值对"></a>指定名/值对</h2><ul>
+<li><p><code>&lt;meta name=&quot;keywords&quot; contect=&quot;&quot;&gt;</code> 页面关键词</p>
+</li>
+<li><p><code>&lt;meta name=&quot;description&quot; contect=&quot;&quot;&gt;</code> 页面描述</p>
+</li>
+<li><p><code>&lt;meta name=&quot;author&quot; content=&quot;author,email address&quot;&gt;</code> 页面作者</p>
+</li>
+<li><p><code>&lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot; /&gt;</code> 搜索引擎索引方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">  all：文件将被检索，且页面上的链接可以被查询；</span><br><span class="line">  none：文件将不被检索，且页面上的链接不可以被查询；</span><br><span class="line">  index：文件将被检索；</span><br><span class="line">  follow：页面上的链接可以被查询；</span><br><span class="line">  noindex：文件将不被检索；</span><br><span class="line">  nofollow：页面上的链接不可以被查询。</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code> 移动端页面布局</p>
+</li>
+<li><p><code>&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;</code> 指定以哪种内核解析页面</p>
+</li>
+</ul>
+<h2 id="关联http头部"><a href="#关联http头部" class="headerlink" title="关联http头部"></a>关联http头部</h2><p>  http-equiv属性与content属性结合使用，向浏览器提供一些说明信息，从而可以根据这些说明做出反应</p>
+<ul>
+<li><p><code>&lt;meta http-equiv=&quot;content-Type&quot; content=&quot;text/html charset=UTF-8&quot;&gt;</code> 声明文档的字符编码</p>
+</li>
+<li><p><code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</code> 指定IE和Chrome使用最新版本渲染当前页面</p>
+</li>
+<li><p><code>&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</code> 指定请求和响应遵循的缓存机制 <strong>不是所有的浏览器都支持</strong></p>
+</li>
+<li><p><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;2；URL=http://www.baidu.com/&quot;&gt;</code> //意思是2秒后跳转向我的博客</p>
+</li>
+</ul>
 
       
     </div>
@@ -1160,8 +1192,10 @@
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
         <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
