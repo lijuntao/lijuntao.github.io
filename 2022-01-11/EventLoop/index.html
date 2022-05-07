@@ -308,6 +308,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -487,6 +488,26 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fb9f5b9a758d84e945b4',
+      clientSecret: 'ac8ad0b693a40989f59c9b3579742ae90dabd59d',
+      repo        : 'lijuntao.github.io',
+      owner       : 'lijuntao',
+      admin       : ['lijuntao'],
+      id          : '6e36b5f4ef49fb68cc23c27ebabc77f9',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
