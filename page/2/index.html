@@ -155,6 +155,108 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-02-09/%E5%9E%82%E7%9B%B4%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-02-09/%E5%9E%82%E7%9B%B4%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD/" class="post-title-link" itemprop="url">垂直水平居中</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-09 13:16:09 / 修改时间：13:16:33" itemprop="dateCreated datePublished" datetime="2022-02-09T13:16:09+08:00">2022-02-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="垂直，水平居中"><a href="#垂直，水平居中" class="headerlink" title="垂直，水平居中"></a>垂直，水平居中</h1><h2 id="垂直水平居中"><a href="#垂直水平居中" class="headerlink" title="垂直水平居中"></a>垂直水平居中</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;outer&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;inner&quot;&gt;hello world&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="display-flex"><a href="#display-flex" class="headerlink" title="display: flex"></a>display: flex</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  display: flex;</span><br><span class="line">  justify-content: center; /* 水平居中 */</span><br><span class="line">  align-items: center; /* 垂直居中 */</span><br><span class="line">&#125;</span><br><span class="line">// 或者</span><br><span class="line">.outer &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  margin: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要固定居中元素的宽高。</p>
+<h3 id="absolute-transform"><a href="#absolute-transform" class="headerlink" title="absolute + transform"></a>absolute + transform</h3><p>translate 属性是根据元素自身计算来这是偏移量，<br><code>transform: translateX(-50%);</code>，元素会向左偏移自身宽度的一半</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  left: 50%;</span><br><span class="line">  top: 50%;</span><br><span class="line">  transform: translate(-50%, -50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要固定居中元素的宽高。</p>
+<h3 id="absolute-负-margin"><a href="#absolute-负-margin" class="headerlink" title="absolute + 负 margin"></a>absolute + 负 margin</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">.outer &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 100px; // 设置元素宽度</span><br><span class="line">  height: 100px; // 设置元素高度</span><br><span class="line">  left: 50%;</span><br><span class="line">  top: 50%;</span><br><span class="line">  margin-left: -50px;</span><br><span class="line">  margin-top: -50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：需要固定居中元素的宽高</p>
+<h3 id="absolute-calc"><a href="#absolute-calc" class="headerlink" title="absolute + calc"></a>absolute + calc</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 100px; // 设置元素宽度</span><br><span class="line">  height: 100px; // 设置元素高度</span><br><span class="line">  left: calc(50% - 50px);</span><br><span class="line">  top: calc(50% - 50px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：需要固定居中元素的宽高</p>
+<h3 id="absolute-margin-auto"><a href="#absolute-margin-auto" class="headerlink" title="absolute + margin: auto"></a>absolute + margin: auto</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  width: 100px; // 设置元素宽度</span><br><span class="line">  height: 100px; // 设置元素高度</span><br><span class="line">  left: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  top: 0;</span><br><span class="line">  bottom: 0;</span><br><span class="line">  margin: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：需要固定居中元素的宽高，否则其宽高会被设为 100%（副作用）</p>
+<h3 id="writing-mode"><a href="#writing-mode" class="headerlink" title="writing-mode"></a>writing-mode</h3><p>修改dom结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;outer&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;inner&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>css:<br>原理：<br>writing-mode 不仅可以使文字显示方向改变，还能使所有作用于水平方向上的属性，变成作用于垂直方向。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  writing-mode: vertical-lr; // 改变容器内子元素的布局方向</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// inner中设置height：auto实际上会让元素垂直居中，因为父元素设置了writing-mode: vertical-lr</span><br><span class="line">// inner中重新设置 writing-mode: horizontal-tb，将显示方向改变回来</span><br><span class="line">.inner &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: auto;</span><br><span class="line">  writing-mode: horizontal-tb;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 具体显示内容</span><br><span class="line">.content &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  text-align: left; /* 重置文字位置（如果需要） */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要固定居中元素的宽高。<br>缺点：需要修改 DOM 结构（为了居中元素，需要嵌套两层父元素）。</p>
+<h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><p>除了水平垂直居中里面的方法外，还有几种方法可以用来实现水平居中</p>
+<h3 id="text-align-inline-block"><a href="#text-align-inline-block" class="headerlink" title="text-align + inline-block"></a>text-align + inline-block</h3><p><code>text-align: center;</code> 会使文本居中，但是对块级元素无效，如果将元素设置为 inline-block，该元素就会被当做文本对待，从而实现元素居中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.inner &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：不需要固定居中元素的宽。<br>缺点：为了居中元素，使文本也居中了，因此可能需要重置文本位置。</p>
+<h3 id="fit-content-margin"><a href="#fit-content-margin" class="headerlink" title="fit-content + margin"></a>fit-content + margin</h3><h4 id="直接应用于元素"><a href="#直接应用于元素" class="headerlink" title="直接应用于元素"></a>直接应用于元素</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.inner &#123;</span><br><span class="line">  width: fit-content;</span><br><span class="line">  margin: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：会使元素的宽度改变（同内容宽度）。</p>
+<h4 id="应用于元素的父元素上"><a href="#应用于元素的父元素上" class="headerlink" title="应用于元素的父元素上"></a>应用于元素的父元素上</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.outer &#123;</span><br><span class="line">  width: fit-content;</span><br><span class="line">  margin: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：即使子元素是浮动元素也适用。<br>缺点：兼容性较差，目前只支持Chrome 和 Firefox浏览器</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-28/H5%E5%8E%9F%E7%94%9F%E4%BA%A4%E4%BA%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1328,103 +1430,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/webpack%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-20/webpack%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/" class="post-title-link" itemprop="url">webpack常用优化手段</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-20 17:36:53 / 修改时间：17:37:32" itemprop="dateCreated datePublished" datetime="2022-01-20T17:36:53+08:00">2022-01-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ul>
-<li>webpack-bundle-analyzer 分析体积</li>
-<li>speed-measure-webpack-plugin 测量你的 webpack 构建期间各个阶段花费的时间</li>
-</ul>
-<h2 id="按需加载"><a href="#按需加载" class="headerlink" title="按需加载"></a>按需加载</h2><ul>
-<li>路由组件按需加载</li>
-<li>按需加载需引入第三方组件</li>
-<li><h2 id="缩小构建目标"><a href="#缩小构建目标" class="headerlink" title="缩小构建目标"></a>缩小构建目标</h2>使用loader时，可以排除不需要解析的模块</li>
-<li>优化正则匹配</li>
-<li>通过 cacheDirectory 选项开启缓存</li>
-<li>通过 include、exclude 来减少被处理的文件</li>
-</ul>
-<p>提取css代码：mini-css-extract-plugin</p>
-<h2 id="生产环境关闭-sourceMap"><a href="#生产环境关闭-sourceMap" class="headerlink" title="生产环境关闭 sourceMap"></a>生产环境关闭 sourceMap</h2><h2 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h2><p>UglifyJS<br>terser-webpack-plugin</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const TerserPlugin = require(&#x27;terser-webpack-plugin&#x27;) // 压缩js代码</span><br><span class="line">const OptimizeCSSAssetsPlugin = require(&#x27;optimize-css-assets-webpack-plugin&#x27;) // 压缩css代码</span><br><span class="line"></span><br><span class="line">optimization: &#123;</span><br><span class="line">  minimizer: [</span><br><span class="line">    new TerserPlugin(&#123;</span><br><span class="line">      parallel: 4, // 开启几个进程来处理压缩，默认是 os.cpus().length - 1</span><br><span class="line">      cache: true, // 是否缓存</span><br><span class="line">      sourceMap: false,</span><br><span class="line">    &#125;),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>optimize-css-assets-webpack-plugin</p>
-<h2 id="提取公共能代码"><a href="#提取公共能代码" class="headerlink" title="提取公共能代码"></a>提取公共能代码</h2><p>CommonsChunkPlugin webpack3中使用<br>splitChunks webpack4使用</p>
-<p>DLLPlugin 动态dll</p>
-<h2 id="多进程解析和处理文件"><a href="#多进程解析和处理文件" class="headerlink" title="多进程解析和处理文件"></a>多进程解析和处理文件</h2><p>thread-loader<br>把这个 thread loader 放置在其他 loader 之前， 放置在这个 loader 之后的 loader 就会在一个单独的 worker 池(worker pool)中运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">        include: path.resolve(&#x27;src&#x27;),</span><br><span class="line">        use: [&#x27;thread-loader&#x27;, &#x27;expensive-loader&#x27;],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>parallel-webpack</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parallel-webpack --config=webpack.config.js</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>HappyPack</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 安装</span><br><span class="line">npm install --save-dev happypack</span><br><span class="line"></span><br><span class="line">// 使用</span><br><span class="line">const HappyPack=require(&#x27;happypack&#x27;)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins:[</span><br><span class="line">        new HappyPack(&#123;</span><br><span class="line">        id: &#x27;jsx&#x27;,</span><br><span class="line">        threads: 4,</span><br><span class="line">        loaders: [ &#x27;babel-loader&#x27; ]</span><br><span class="line">      &#125;),</span><br><span class="line">      new HappyPack(&#123;</span><br><span class="line">        id: &#x27;styles&#x27;,</span><br><span class="line">        threads: 2,</span><br><span class="line">        loaders: [ &#x27;style-loader&#x27;, &#x27;css-loader&#x27;, &#x27;less-loader&#x27; ]</span><br><span class="line">      &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="减少-http-请求"><a href="#减少-http-请求" class="headerlink" title="减少 http 请求"></a>减少 http 请求</h2><p>将静态图片资源使用url-loader优化处理，使其图片资源直接打包成 DataURL</p>
-<h2 id="CND加速"><a href="#CND加速" class="headerlink" title="CND加速"></a>CND加速</h2><p>externals<br>html-webpack-externals-plugin<br>基础库不打包，直接CDN引入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// wepack.config.js</span><br><span class="line">// 基础库不打包，直接CDN引入</span><br><span class="line">const HtmlWebpackExternalsPlugin = require(&#x27;html-webpack-externals-plugin&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    new HtmlWebpackExternalsPlugin(&#123;</span><br><span class="line">        externals: [</span><br><span class="line">            &#123;</span><br><span class="line">                module: &#x27;react&#x27;,</span><br><span class="line">                entry: &#x27;https://11.url.cn/now/lib/16.2.0/react.min.js&#x27;,</span><br><span class="line">                global: &#x27;React&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                module: &#x27;react-dom&#x27;,</span><br><span class="line">                entry: &#x27;https://11.url.cn/now/lib/16.2.0/react-dom.min.js&#x27;,</span><br><span class="line">                global: &#x27;ReactDOM&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// index.html</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;https://11.url.cn/now/lib/16.2.0/react.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;https://11.url.cn/now/lib/16.2.0/react-dom.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="开启gzip压缩"><a href="#开启gzip压缩" class="headerlink" title="开启gzip压缩"></a>开启gzip压缩</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6960490563455942692#heading-5">webpack打包优化方向指南(理论篇)</a><br><a target="_blank" rel="noopener" href="https://github.com/Michael-lzg/my--article/blob/master/webpack/webpack%E4%BC%98%E5%8C%96%E6%89%93%E5%8C%85%E5%A4%A7%E5%85%A8.md">webpack优化打包大全</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904071736852487">玩转 webpack</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1494,7 +1499,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1503,6 +1508,10 @@
           
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
