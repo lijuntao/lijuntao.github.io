@@ -573,7 +573,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 15:48:11" itemprop="dateModified" datetime="2022-02-17T15:48:11+08:00">2022-02-17</time>
+                <time title="修改时间：2022-05-13 18:03:47" itemprop="dateModified" datetime="2022-05-13T18:03:47+08:00">2022-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -604,7 +604,9 @@
 <li>把渲染树展示到屏幕上。再下一步就是绘制，即遍历渲染树，绘制每个节点</li>
 </ul>
 <p>需要注意的是：<br>渲染引擎会以最快的速度展示内容，也就是说，浏览器一边解析 HTML，一边构建渲染树，构建一部分，就会把当前已有的元素渲染出来。如果这个时候外部样式并没有加载完成，渲染出来的就是浏览器默认样式了。</p>
-<p>第一点：由于DOM 解析和 CSS 解析是两个并行的进程，所以 CSS 加载不会阻塞 DOM 树的解析<br>第二点：CSS 加载会阻塞 DOM 树的渲染，因为渲染树是依赖于 DOM Tree 和 CSSOM Tree 的，所以无论 DOM Tree 是否已经完成，它都必须等待到 CSSOM Tree 构建完成，即 CSS 加载完成后，才能开始渲染<br>第三点：CSS加载会阻塞其后的 JS 执行。我们知道JS 的加载、解析与执行会阻塞 DOM 的构建，也就是说，在构建 DOM 时，HTML 解析器若遇到了 JS，那么它会暂停构建 DOM ，将控制权移交给JS引擎，等 JS 引擎运行完毕，浏览器再从中断的地方恢复 DOM 构建。但是如果在 JS 脚本前引入外部 CSS 文件，则CSS会阻塞JS的加载，也就是会阻塞DOM树的生成。因为 JS 不只是可以改 DOM ，它还可以更改样式，也就是它可以更改 CSSOM，如果这个时候CSS文件还没有加载完成（继续解析JS会造成浪费），所以JS会等到CSS文件加载完成继续解析</p>
+<p>第一点：由于DOM 解析和 CSS 解析是两个并行的进程，所以 CSS 加载不会阻塞 DOM 树的解析</p>
+<p>第二点：CSS 加载会阻塞 DOM 树的渲染，因为渲染树是依赖于 DOM Tree 和 CSSOM Tree 的，所以无论 DOM Tree 是否已经完成，它都必须等待到 CSSOM Tree 构建完成，即 CSS 加载完成后，才能开始渲染</p>
+<p>第三点：CSS加载会阻塞其后的 JS 执行。我们知道JS 的加载、解析与执行会阻塞 DOM 的构建，也就是说，在构建 DOM 时，HTML 解析器若遇到了 JS，那么它会暂停构建 DOM ，将控制权移交给JS引擎，等 JS 引擎运行完毕，浏览器再从中断的地方恢复 DOM 构建。但是如果在 JS 脚本前引入外部 CSS 文件，则CSS会阻塞JS的加载，也就是会阻塞DOM树的生成。因为 JS 不只是可以改 DOM ，它还可以更改样式，也就是它可以更改 CSSOM，如果这个时候CSS文件还没有加载完成（继续解析JS会造成浪费），所以JS会等到CSS文件加载完成继续解析</p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
 <li>1、JS会阻塞DOM的解析和渲染</li>
 <li>2、CSS不会阻塞DOM的解析</li>
@@ -963,7 +965,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-13 15:05:02" itemprop="dateModified" datetime="2022-05-13T15:05:02+08:00">2022-05-13</time>
+                <time title="修改时间：2022-05-13 16:40:34" itemprop="dateModified" datetime="2022-05-13T16:40:34+08:00">2022-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -986,7 +988,8 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="css世界笔记"><a href="#css世界笔记" class="headerlink" title="css世界笔记"></a>css世界笔记</h1><h2 id="border"><a href="#border" class="headerlink" title="border"></a>border</h2><p>border-width：<br>thin: 薄薄的，等同于1px;<br>medium: 默认值，等同于3px; （border-style:double至少3px才有效果）<br>thick:厚厚的，等同于4px；</p>
+          <h1 id="css世界笔记"><a href="#css世界笔记" class="headerlink" title="css世界笔记"></a>css世界笔记</h1><h2 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h2><p>伪类：选择处于特定状态的元素<br>伪元素：选择元素的某个部分，使这部分看起来像一个独立的元素</p>
+<h2 id="border"><a href="#border" class="headerlink" title="border"></a>border</h2><p>border-width：<br>thin: 薄薄的，等同于1px;<br>medium: 默认值，等同于3px; （border-style:double至少3px才有效果）<br>thick:厚厚的，等同于4px；</p>
 <h2 id="margin"><a href="#margin" class="headerlink" title="margin"></a>margin</h2><p>margin百分比值无论是水平方向还是垂直方向均是相对于宽度计算的！</p>
 <h3 id="margin合并"><a href="#margin合并" class="headerlink" title="margin合并"></a>margin合并</h3><p>只发生在垂直方向上</p>
 <ul>
@@ -1054,6 +1057,18 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
 </ul>
 <p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/12.png" alt="avatar"></p>
 <p>box-sizing:border-box 可以使原生普通文本框<code>&lt;input&gt;</code>和文本域<code>&lt;textarea&gt;</code>100%自适应父容器宽度</p>
+<h2 id="css中link和-import的区别"><a href="#css中link和-import的区别" class="headerlink" title="css中link和@import的区别"></a>css中link和@import的区别</h2><p>1、@import是css提供的语法规则，只能导入样式表；link是HTML提供的标签，不但可以加载css，还可以定义 RSS、rel 连接属性<br>2、页面加载时，link会同时被加载，而@import引入的css会等到页面全部下载完成再被加载<br>3、@import是css2.1定的语法，只在IE5以上才会被识别；link是html标签，不存在兼容问题<br>4、可以通过 JS 操作 DOM ，插入link标签来改变样式，@import无法使用此方式<br>5、link引入的样式权重大于@import引入的样式</p>
+<h2 id="position：absolute和float的区别"><a href="#position：absolute和float的区别" class="headerlink" title="position：absolute和float的区别"></a>position：absolute和float的区别</h2><p>共同点：都可以使元素脱离文档流<br>不同点：float仍会占据位置，absolute会覆盖文档流中的其他元素</p>
+<h2 id="display-none-和-visibility-hidden区别"><a href="#display-none-和-visibility-hidden区别" class="headerlink" title="display: none 和 visibility: hidden区别"></a>display: none 和 visibility: hidden区别</h2><p>display:none 隐藏对应元素 元素不占空间<br>visibility: hidden 隐藏对应元素 元素依旧占居空间<br>opacity: 0 透明度为0，隐藏对应元素 元素依旧占居空间</p>
+<p>display: none和opacity: 0：是非继承属性，影响后代元素<br>visibility: hidden：是继承属性，子代元素可以通过visibility: visible重新显示</p>
+<h2 id="rgba-和-opacity-透明效果有什么不同"><a href="#rgba-和-opacity-透明效果有什么不同" class="headerlink" title="rgba 和 opacity 透明效果有什么不同"></a>rgba 和 opacity 透明效果有什么不同</h2><p>都能实现透明效果</p>
+<p>opacity作用于元素，并且会影响元素内（子元素）的透明度，会被继承<br>rgba作用于元素，只影响元素的透明度，不会影响子元素，不会被继承</p>
+<h2 id="网页字体是使用奇数还是偶数呢"><a href="#网页字体是使用奇数还是偶数呢" class="headerlink" title="网页字体是使用奇数还是偶数呢"></a>网页字体是使用奇数还是偶数呢</h2><p>使用偶数</p>
+<ul>
+<li>设计师的原因 ps 提供的字号是偶数，自然到了 前端那边也是用的是偶数</li>
+<li>系统原因 Windows 自带的点阵宋体（中易宋体）从 Vista 开始只提供 12、14、16 px 这三个大小的点阵</li>
+<li>编程习惯 偶数更加容易计算 12 * 1.5</li>
+</ul>
 
       
     </div>
@@ -1440,7 +1455,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1453,7 +1468,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
