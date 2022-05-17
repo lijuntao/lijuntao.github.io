@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="窗口拖动事件处理情况1（正常情况）使用Electron创建床口的时候，默认是有标题栏，可以通点击标题栏拖动。 情况2在某些情况下，我们需要隐藏自带的边框，如指定&amp;#123;frame:false&amp;#125;或&amp;#123;titleBarStyle: &#39;hidden&#39;&amp;#125;.在这种情况下没有标题栏，就没法移动窗口位置，需要自行实现窗口拖动区域。官方文档介绍：  默认情况下, 无">
+  <meta name="description" content="webpack loader对于loader而言，它实质上是一个转换器，将A文件编译成B文件，操作的是 文件 ，比如将A文件编译成B文件，单纯的是一个文件转换过程，运行在项目打包之前。一般在做 loader  的功能装换的时候，保持功能单一，避免做多种功能 123456789101112131415161718192021&#x2F;&#x2F; 导出一个函数，source为webpack传递给loader的文件源内">
 <meta property="og:type" content="article">
-<meta property="og:title" content="electron问题">
-<meta property="og:url" content="http://example.com/2021-12-26/electron%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="webpackloader">
+<meta property="og:url" content="http://example.com/2022-01-21/webpackloader/index.html">
 <meta property="og:site_name" content="LJT的杂货铺">
-<meta property="og:description" content="窗口拖动事件处理情况1（正常情况）使用Electron创建床口的时候，默认是有标题栏，可以通点击标题栏拖动。 情况2在某些情况下，我们需要隐藏自带的边框，如指定&amp;#123;frame:false&amp;#125;或&amp;#123;titleBarStyle: &#39;hidden&#39;&amp;#125;.在这种情况下没有标题栏，就没法移动窗口位置，需要自行实现窗口拖动区域。官方文档介绍：  默认情况下, 无">
+<meta property="og:description" content="webpack loader对于loader而言，它实质上是一个转换器，将A文件编译成B文件，操作的是 文件 ，比如将A文件编译成B文件，单纯的是一个文件转换过程，运行在项目打包之前。一般在做 loader  的功能装换的时候，保持功能单一，避免做多种功能 123456789101112131415161718192021&#x2F;&#x2F; 导出一个函数，source为webpack传递给loader的文件源内">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-26T06:09:55.000Z">
-<meta property="article:modified_time" content="2022-01-20T04:10:28.557Z">
+<meta property="article:published_time" content="2022-01-21T12:36:53.000Z">
+<meta property="article:modified_time" content="2022-05-17T05:16:47.553Z">
 <meta property="article:author" content="ljt">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021-12-26/electron%E9%97%AE%E9%A2%98/">
+<link rel="canonical" href="http://example.com/2022-01-21/webpackloader/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>electron问题 | LJT的杂货铺</title>
+  <title>webpackloader | LJT的杂货铺</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021-12-26/electron%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/webpackloader/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          electron问题
+          webpackloader
         </h1>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-12-26 14:09:55" itemprop="dateCreated datePublished" datetime="2021-12-26T14:09:55+08:00">2021-12-26</time>
+              <time title="创建时间：2022-01-21 20:36:53" itemprop="dateCreated datePublished" datetime="2022-01-21T20:36:53+08:00">2022-01-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-20 12:10:28" itemprop="dateModified" datetime="2022-01-20T12:10:28+08:00">2022-01-20</time>
+                <time title="修改时间：2022-05-17 13:16:47" itemprop="dateModified" datetime="2022-05-17T13:16:47+08:00">2022-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,23 +226,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="窗口拖动事件处理"><a href="#窗口拖动事件处理" class="headerlink" title="窗口拖动事件处理"></a>窗口拖动事件处理</h3><h3 id="情况1（正常情况）"><a href="#情况1（正常情况）" class="headerlink" title="情况1（正常情况）"></a>情况1（正常情况）</h3><p>使用Electron创建床口的时候，默认是有标题栏，可以通点击标题栏拖动。</p>
-<h3 id="情况2"><a href="#情况2" class="headerlink" title="情况2"></a>情况2</h3><p>在某些情况下，我们需要隐藏自带的边框，如指定<code>&#123;frame:false&#125;</code>或<code>&#123;titleBarStyle: &#39;hidden&#39;&#125;</code>.在这种情况下没有标题栏，就没法移动窗口位置，需要自行实现窗口拖动区域。<br>官方文档介绍：</p>
-<ul>
-<li>默认情况下, 无边框窗口是不可拖拽的。 应用程序需要在 CSS 中指定 <code>-webkit-app-region: drag</code> 来告诉 Electron 哪些区域是可拖拽的（如操作系统的标准标题栏），在可拖拽区域内部使用 <code>-webkit-app-region: no-drag</code> 则可以将其中部分区域排除。 请注意, 当前只支持矩形形状</li>
-<li>要使整个窗口可拖拽, 您可以添加<code> -webkit-app-region: drag</code> 作为 body 的样式:</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;body style=&quot;-webkit-app-region: drag&quot;&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+        <h1 id="webpack-loader"><a href="#webpack-loader" class="headerlink" title="webpack loader"></a>webpack loader</h1><p>对于loader而言，它实质上是一个转换器，将A文件编译成B文件，操作的是 文件 ，比如将A文件编译成B文件，单纯的是一个文件转换过程，运行在项目打包之前。<br>一般在做 loader  的功能装换的时候，保持功能单一，避免做多种功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 导出一个函数，source为webpack传递给loader的文件源内容</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    const content = doSomeThing2JsString(source);</span><br><span class="line"></span><br><span class="line">    // 如果 loader 配置了 options 对象，那么this.getOptions可以获取options</span><br><span class="line">    const options = this.getOptions();</span><br><span class="line"></span><br><span class="line">    // 可以用作解析其他模块路径的上下文</span><br><span class="line">    console.log(&#x27;this.context&#x27;);</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * this.callback 参数：</span><br><span class="line">     * error：Error | null，当 loader 出错时向外抛出一个 error</span><br><span class="line">     * content：String | Buffer，经过 loader 编译后需要导出的内容</span><br><span class="line">     * sourceMap：为方便调试生成的编译后内容的 source map</span><br><span class="line">     * ast：本次编译生成的 AST 静态语法树，之后执行的 loader 可以直接使用这个 AST，进而省去重复生成 AST 的过程</span><br><span class="line">     */</span><br><span class="line">    this.callback(null, content); // 返回其他内容</span><br><span class="line">    return content; // 同步</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>异步API：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">异步loader，使用 this.async 来获取 callback 函数。</span><br><span class="line">// 让 Loader 缓存</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    // 做异步的事</span><br><span class="line">    doSomeAsyncOperation(content, function(err, result) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, result);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>在本项目中，将最外层的div标签设置为<code> -webkit-app-region: drag</code>,使整个窗口可拖拽。</p>
-<blockquote>
-<p>请注意，如果您使整个窗口都可拖拽，则必须将其中的按钮标记为不可拖拽，否则用户将无法点击它们：(在mac上不设置也ok，但是在windows上必须设置)</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">button &#123;</span><br><span class="line">	  -webkit-app-region: no-drag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在无框窗口中, 拖动行为可能与选择文本冲突。 例如, 当您拖动标题栏时, 您可能会意外地选择标题栏上的文本。 为防止此操作, 您需要在可区域中禁用文本选择, 如下所选:</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.titlebar &#123;</span><br><span class="line">  	-webkit-user-select: none;</span><br><span class="line">  	-webkit-app-region: drag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv6194658/">webpack的几个常见loader源码浅析</a></p>
+
     </div>
 
     
@@ -257,12 +247,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021-12-20/react%E5%85%A8%E5%AE%B6%E6%A1%B6/" rel="prev" title="react全家桶">
-      <i class="fa fa-chevron-left"></i> react全家桶
+    <a href="/2022-01-21/css-less-sass%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="css-less-sass的区别">
+      <i class="fa fa-chevron-left"></i> css-less-sass的区别
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021-12-28/Electron%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/" rel="next" title="Electron基本概念整理">
-      Electron基本概念整理 <i class="fa fa-chevron-right"></i>
+    <a href="/2022-01-21/webpack%E6%8F%92%E4%BB%B6/" rel="next" title="webpack插件">
+      webpack插件 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -323,7 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">窗口拖动事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B51%EF%BC%88%E6%AD%A3%E5%B8%B8%E6%83%85%E5%86%B5%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">情况1（正常情况）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B52"><span class="nav-number">3.</span> <span class="nav-text">情况2</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack-loader"><span class="nav-number">1.</span> <span class="nav-text">webpack loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-number">1.1.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -468,7 +458,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'lijuntao.github.io',
       owner       : 'lijuntao',
       admin       : ['lijuntao'],
-      id          : '5a98336c0decb4e18dac33e08fd5fb34',
+      id          : '25a8436a89890a2ae4cc76efcfbc2d66',
         language: 'zh-CN',
       distractionFreeMode: true
     });

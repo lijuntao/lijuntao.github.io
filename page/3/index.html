@@ -161,6 +161,358 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-21/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ljt">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LJT的杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-21/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">跨域解决方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-21 12:19:49 / 修改时间：12:20:09" itemprop="dateCreated datePublished" datetime="2022-01-21T12:19:49+08:00">2022-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="怎么才算跨域"><a href="#怎么才算跨域" class="headerlink" title="怎么才算跨域"></a>怎么才算跨域</h2><p>协议 域名 端口 只要有一个不相同则会触发跨域问题<br><code>同源策略是一个重要的安全策略，它用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。</code></p>
+<h2 id="解决手段"><a href="#解决手段" class="headerlink" title="解决手段"></a>解决手段</h2><ul>
+<li>Nginx反向代理</li>
+<li>Websocket</li>
+<li>CORS</li>
+<li>window.postMessage</li>
+<li>window.name+ iframe</li>
+<li>document.domain + iframe</li>
+<li>window.location.hash + iframe</li>
+<li>JSONP</li>
+<li>Node 正向代理</li>
+</ul>
+<h2 id="Nginx-反向代理"><a href="#Nginx-反向代理" class="headerlink" title="Nginx 反向代理"></a>Nginx 反向代理</h2><p>静态资源和接口经nginx转发</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name local.test;</span><br><span class="line">    location /api &#123;</span><br><span class="line">        proxy_pass http://localhost:8080;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://localhost:8000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Websocket"><a href="#Websocket" class="headerlink" title="Websocket"></a>Websocket</h2><p>客户端和服务器之间存在持久的连接，而且双方都可以随时开始发送数据。实质上是走socket接口，已经不是HTTP请求了</p>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>跨域资源共享(CORS) 是一种机制，它使用额外的HTTP头来告诉浏览器 让运行在一个 origin (domain) 上的 Web 应用被准许访问来自不同源服务器上的指定的资源,现代浏览器支持在 API 容器中（例如 XMLHttpRequest 或 Fetch）使用 CORS<br><strong>CORS 需要浏览器和后端同时支持</strong><br>服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</p>
+<h3 id="CORS跨域访问的请求可以分为两大类：简单请求、复杂请求"><a href="#CORS跨域访问的请求可以分为两大类：简单请求、复杂请求" class="headerlink" title="CORS跨域访问的请求可以分为两大类：简单请求、复杂请求"></a>CORS跨域访问的请求可以分为两大类：简单请求、复杂请求</h3><p>若请求满足所有下述条件，则该请求可视为“简单请求”：<br>条件一: 使用以下方法<br>    - GET<br>    - HEAD<br>    - POST<br>条件二：HTTP的头信息不超出以下几种字段<br>    - Accept<br>    - Accept-Language<br>    - Content-Language<br>    - Last-Event-ID<br>    - Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain<br>满足以上请求的为简单请求，除此之外为复杂请求</p>
+<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>不会触发CORS 预检请求，浏览器直接发出CORS请求。具体来说，就是在头信息之中，增加一个Origin字段。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
+<p>服务器会返回：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Access-Control-Expose-Headers: FooBar</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Origin</span><br><span class="line">该字段是必须的。它的值要么是请求时Origin字段的值，要么是一个*，</span><br><span class="line">表示接受任意域名的请求</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Credentials</span><br><span class="line">该字段可选。它的值是一个布尔值，表示是否允许发送Cookie。</span><br><span class="line">默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，</span><br><span class="line">Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，</span><br><span class="line">如果服务器不要浏览器发送Cookie，删除该字段即可</span><br><span class="line"></span><br><span class="line">Access-Control-Expose-Headers</span><br><span class="line">该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个</span><br><span class="line">基本字段：Cache-Control、Content-Language、Content-Type、Expires、</span><br><span class="line">Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers</span><br><span class="line">里面指定。上面的例子指定，getResponseHeader(&#x27;FooBar&#x27;)可以返回FooBar字段的值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此外还有涉及到cookies的问题：<br>上面说到，CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服务器，一方面要服务器同意，指定Access-Control-Allow-Credentials字段；另一方面，开发者必须在AJAX请求中打开withCredentials属性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.withCredentials = true;</span><br></pre></td></tr></table></figure>
+<p>否则，即使服务器同意发送Cookie，浏览器也不会发送。或者，服务器要求设置Cookie，浏览器也不会处理。<br><strong>如果要发送Cookie，Access-Control-Allow-Origin就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie</strong></p>
+<h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><h4 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h4><p>复杂请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。<br>复杂请求发送CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）<br><code>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">var url = &#x27;http://api.alice.com/cors&#x27;;</span><br><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.open(&#x27;PUT&#x27;, url, true);</span><br><span class="line">xhr.setRequestHeader(&#x27;X-Custom-Header&#x27;, &#x27;value&#x27;);</span><br><span class="line">xhr.send();</span><br><span class="line"></span><br><span class="line">HTTP请求的方法是PUT，并且发送一个自定义头信息X-Custom-Header,</span><br><span class="line">浏览器发现，这是一个非简单请求，就自动发出一个&quot;预检&quot;请求，</span><br><span class="line">要求服务器确认可以这样请求。下面是这个&quot;预检&quot;请求的HTTP头信息</span><br><span class="line"></span><br><span class="line">&quot;预检&quot;请求用的请求方法是OPTIONS，表示这个请求是用来询问的。</span><br><span class="line">头信息里面，关键字段是Origin，表示请求来自哪个源</span><br><span class="line"></span><br><span class="line">OPTIONS /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Access-Control-Request-Method: PUT</span><br><span class="line">Access-Control-Request-Headers: X-Custom-Header</span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br><span class="line"></span><br><span class="line">Access-Control-Request-Method</span><br><span class="line">该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是PUT</span><br><span class="line"></span><br><span class="line">Access-Control-Request-Headers</span><br><span class="line">该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段，</span><br><span class="line">上例是X-Custom-Header</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="预检请求的回应"><a href="#预检请求的回应" class="headerlink" title="预检请求的回应"></a>预检请求的回应</h4><p>服务器收到”预检”请求以后，检查了Origin、Access-Control-Request-Method和<br>Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Mon, 01 Dec 2008 01:15:39 GMT</span><br><span class="line">Server: Apache/2.0.61 (Unix)</span><br><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Access-Control-Allow-Methods: GET, POST, PUT</span><br><span class="line">Access-Control-Allow-Headers: X-Custom-Header</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Length: 0</span><br><span class="line">Keep-Alive: timeout=2, max=100</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面的HTTP回应中，关键的是<br>Access-Control-Allow-Origin字段<br>表示<code>http://api.bob.com</code>可以请求数据。<br>该字段也可以设为星号  Access-Control-Allow-Origin: *<br>表示同意任意跨源请求</p>
+<p>其他字段<br>Access-Control-Allow-Methods: GET, POST, PUT<br>该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。<br>注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次”预检”请求。</p>
+<p>Access-Control-Allow-Headers: X-Custom-Header<br>如果浏览器请求包括Access-Control-Request-Headers字段，<br>则Access-Control-Allow-Headers字段是必需的。<br>它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，<br>不限于浏览器在”预检”中请求的字段。</p>
+<p>Access-Control-Allow-Credentials: true<br>该字段与简单请求时的含义相同</p>
+<p>Access-Control-Max-Age: 1728000</p>
+<p>该字段可选，用来指定本次预检请求的有效期，单位为秒</p>
+<p>如果服务器否定了”预检”请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段,这时，浏览器就会认定，服务器不同意预检请求，因此触发一个错误，被XMLHttpRequest对象的onerror回调函数捕获</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http://api.alice.com.</span><br><span class="line">Origin http://api.bob.com is not allowed by Access-Control-Allow-Origin.</span><br></pre></td></tr></table></figure>
+
+<h4 id="浏览器的正常请求和回应"><a href="#浏览器的正常请求和回应" class="headerlink" title="浏览器的正常请求和回应"></a>浏览器的正常请求和回应</h4><p>一旦服务器通过了”预检”请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，会有一个Origin头信息字段。服务器的回应，也都会有一个Access-Control-Allow-Origin头信息字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">预检&quot;请求之后，浏览器的正常CORS请求</span><br><span class="line">PUT /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Host: api.alice.com</span><br><span class="line">X-Custom-Header: value</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br><span class="line"></span><br><span class="line">头信息的Origin字段是浏览器自动添加的</span><br></pre></td></tr></table></figure>
+
+<p>服务器响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line"></span><br><span class="line">Access-Control-Allow-Origin字段是每次回应都必定包含的。</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/04/cors.html">跨域资源共享 CORS 详解</a></p>
+<h2 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h2><p>用法：<br>发送：<br><code>otherWindow.postMessage(message, targetOrigin, [transfer]);</code></p>
+<ul>
+<li>otherWindow 其他窗口的一个引用，比如iframe的contentWindow属性、执行window.open返回的窗口对象、或者是命名过或数值索引的window.frames</li>
+<li>message 将要发送到其他 window的数据。它将会被结构化克隆算法序列化</li>
+<li>targetOrigin 通过窗口的origin属性来指定哪些窗口能接收到消息事件，其值可以是字符串<code>&quot;*&quot;</code>（表示无限制）或者一个URI。<strong>如果你明确的知道消息应该发送到哪个窗口，那么请始终提供一个有确切值的targetOrigin，而不是*。不提供确切的目标将导致数据泄露到任何对数据感兴趣的恶意站点</strong></li>
+<li>transfer</li>
+</ul>
+<p>接收：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;message&quot;, receiveMessage, false);</span><br><span class="line">receiveMessage = function(e)&#123;</span><br><span class="line">    e = e || window.event;</span><br><span class="line">    alert(e.data);</span><br><span class="line">&#125;;</span><br><span class="line">//或者：</span><br><span class="line">window.onmessage = function(e)&#123;</span><br><span class="line">    e = e || window.event;</span><br><span class="line">    alert(e.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>接收的数据包含以下属性：</p>
+<ul>
+<li>data 从其他 window 中传递过来的对象</li>
+<li>origin 调用 postMessage  时消息发送方窗口的 origin</li>
+<li>source 发送消息的窗口对象的引用</li>
+</ul>
+<p>示例：<br>发送</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// index.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--  一个 iframe 作为中间件  --&gt;</span><br><span class="line">    &lt;iframe id=&quot;myIframe&quot; src=&quot;http://localhost:8080/demoff/a.html&quot; style=&quot;display:none;&quot; onload=&quot;setData()&quot;&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        // 初始iframe加载后即执行</span><br><span class="line">        function setData()&#123;</span><br><span class="line">            var myIframe = document.getElementById(&#x27;myIframe&#x27;);</span><br><span class="line">            var win = myIframe.contentWindow;</span><br><span class="line">            //win.postMessage(&#x27;My name is null&#x27;,&#x27;*&#x27;);</span><br><span class="line">            win.postMessage(&#x27;My name is null&#x27;,&#x27;http://localhost:8080/&#x27;);</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>接收</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// other.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">        window.onmessage = function(e)&#123;</span><br><span class="line">            e = e || window.event;</span><br><span class="line">            alert(e.data);</span><br><span class="line">        &#125;;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="window-name-iframe"><a href="#window-name-iframe" class="headerlink" title="window.name + iframe"></a>window.name + iframe</h2><p>window.name属性的独特之处：name值在不同的页面（甚至不同域名）加载后依旧存在，并且可以支持非常长的 name 值（2MB）<br>用法：<br>需要中间页面的协助，a.html b.html(中间界面) (a、b同源), c.html</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">&lt;iframe</span><br><span class="line">  src=&quot;http://localhost:8080/name/c.html&quot;</span><br><span class="line">  frameborder=&quot;0&quot;</span><br><span class="line">  onload=&quot;load()&quot;</span><br><span class="line">  id=&quot;iframe&quot;</span><br><span class="line">&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  let first = true;</span><br><span class="line">  // onload事件会触发2次，第1次加载跨域页，并留存数据于window.name</span><br><span class="line">  function load() &#123;</span><br><span class="line">    if (first) &#123;</span><br><span class="line">      // 第1次onload(跨域页)成功后，切换到同域代理页面</span><br><span class="line">      iframe.src = &quot;http://localhost:8000/name/b.html&quot;;</span><br><span class="line">      first = false;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 第2次onload(同域b.html页)成功后，读取同域window.name中数据</span><br><span class="line">      console.log(iframe.contentWindow.name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">-----------------------------------</span><br><span class="line">b.html 为中间代理页，与 a.html 同域，内容为空。</span><br><span class="line">// b.html</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">-----------------------------------</span><br><span class="line">// c.html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  window.name = &quot;秋风的笔记&quot;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>总结：<br>通过 iframe 的 src 属性由外域转向本地域，跨域数据即由 iframe 的window.name从外域传递到本地域。</p>
+<h2 id="document-domain-iframe"><a href="#document-domain-iframe" class="headerlink" title="document.domain + iframe"></a>document.domain + iframe</h2><p><strong>该方式只能用于二级域名相同的情况下，比如 a.test.com 和 b.test.com 适用于该方式</strong><br>只需要给页面添加document.domain =’test.com’表示二级域名都相同就可以实现跨域</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// a.test.com</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  helloa</span><br><span class="line">  &lt;iframe</span><br><span class="line">    src=&quot;http://b.test.com/b.html&quot;</span><br><span class="line">    frameborder=&quot;0&quot;</span><br><span class="line">    onload=&quot;load()&quot;</span><br><span class="line">    id=&quot;frame&quot;</span><br><span class="line">  &gt;&lt;/iframe&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    document.domain = &quot;test.com&quot;;</span><br><span class="line">    function load() &#123;</span><br><span class="line">      console.log(frame.contentWindow.a);</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">------------------------------------------</span><br><span class="line">// b.test.com</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  hellob</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    document.domain = &quot;test.com&quot;;</span><br><span class="line">    var a = 100;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="window-location-hash-iframe"><a href="#window-location-hash-iframe" class="headerlink" title="window.location.hash + iframe"></a>window.location.hash + iframe</h2><p>原理就是通过 url 带 hash ，通过一个非跨域的中间页面来传递数据。<br>这个和<code>window.name + iframe</code>类似，也需要中间页面的协助。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">&lt;iframe src=&quot;http://localhost:8080/hash/c.html#name1&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  console.log(location.hash);</span><br><span class="line">  window.onhashchange = function() &#123;</span><br><span class="line">    console.log(location.hash);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">---------------------------------------------</span><br><span class="line">// b.html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  window.parent.parent.location.hash = location.hash;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">----------------------------------------------</span><br><span class="line">// c.html</span><br><span class="line">&lt;body&gt;&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  console.log(location.hash);</span><br><span class="line">  const iframe = document.createElement(&quot;iframe&quot;);</span><br><span class="line">  iframe.src = &quot;http://localhost:8000/hash/b.html#name2&quot;;</span><br><span class="line">  document.body.appendChild(iframe);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行流程：</p>
+<ul>
+<li>1、一开始 a.html 给 c.html 传一个 hash 值</li>
+<li>2、c.html 收到 hash 值后，再把 hash 值传递给 b.html</li>
+<li>3、b.html 将结果放到 a.html 的 hash 值中<br><strong>同样的，a.html 和 b.htm 是同域的</strong></li>
+</ul>
+<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>JSONP主要就是利用了script标签没有跨域限制的这个特性来完成的，但是仅支持 GET 方法</p>
+<p>基本流程：</p>
+<ul>
+<li>前端定义解析函数（例如 jsonpCallback=function(){….}）</li>
+<li>通过 params 形式包装请求参数，并且声明执行函数(例如 cb=jsonpCallback)</li>
+<li>后端获取前端声明的执行函数（jsonpCallback），并以带上参数并调用执行函数的方式传递给前端</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//前端</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  //全局函数</span><br><span class="line">  window.jsonpCallback = function(res) &#123;</span><br><span class="line">    console.log(res);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script</span><br><span class="line">  src=&quot;http://localhost:8080/api/jsonp?msg=hello&amp;cb=jsonpCallback&quot;</span><br><span class="line">  type=&quot;text/javascript&quot;</span><br><span class="line">&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//后端</span><br><span class="line">const Koa = require(&quot;koa&quot;);</span><br><span class="line">const fs = require(&quot;fs&quot;);</span><br><span class="line">const app = new Koa();</span><br><span class="line"></span><br><span class="line">app.use(async (ctx, next) =&gt; &#123;</span><br><span class="line">  if (ctx.path === &quot;/api/jsonp&quot;) &#123;</span><br><span class="line">    const &#123; cb, msg &#125; = ctx.query;</span><br><span class="line">    ctx.body = `$&#123;cb&#125;($&#123;JSON.stringify(&#123; msg &#125;)&#125;)`;</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(8080);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Node-正向代理"><a href="#Node-正向代理" class="headerlink" title="Node 正向代理"></a>Node 正向代理</h2><p>多在开发中使用：<br>以webpack为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const HtmlWebpackPlugin = require(&quot;html-webpack-plugin&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    index: &quot;./index.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &quot;bundle.js&quot;,</span><br><span class="line">    path: path.resolve(__dirname, &quot;dist&quot;)</span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    port: 8000,</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      &quot;/api&quot;: &#123;</span><br><span class="line">        target: &quot;http://192.168.21.168:8080&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new HtmlWebpackPlugin(&#123;</span><br><span class="line">      filename: &quot;index.html&quot;,</span><br><span class="line">      template: &quot;webpack.html&quot;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/webpack%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ljt">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LJT的杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022-01-20/webpack%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">webpack笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-20 20:36:53" itemprop="dateCreated datePublished" datetime="2022-01-20T20:36:53+08:00">2022-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-27 12:48:17" itemprop="dateModified" datetime="2022-01-27T12:48:17+08:00">2022-01-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口 entry"></a>入口 entry</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const config = &#123;</span><br><span class="line">  entry: &#x27;./path/to/my/entry/file.js&#x27;</span><br><span class="line">  // 是下方模式的简写</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: &#x27;./path/to/my/entry/file.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: &#x27;./src/app.js&#x27;,</span><br><span class="line">    vendors: &#x27;./src/vendors.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>entry传入数组<br><code>当你向 entry 传入一个数组时会发生什么？向 entry 属性传入「文件路径(file path)数组」将创建“多个主入口(multi-main entry)”。在你想要多个依赖文件一起注入，并且将它们的依赖导向(graph)到一个“chunk”时，传入数组的方式就很有用</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">entry: [&#x27;./app.js&#x27;, &#x27;lodash&#x27;]</span><br><span class="line"></span><br><span class="line">等价与：</span><br><span class="line"></span><br><span class="line">entry: &#123;</span><br><span class="line">    main: [&#x27;./app.js&#x27;, &#x27;lodash&#x27;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">将lodash一起合并到main.js文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出-output"><a href="#输出-output" class="headerlink" title="输出 output"></a>输出 output</h3><ul>
+<li><p>filename: filename 用于输出文件的文件名。</p>
+</li>
+<li><p>path: 目标输出目录 path 的绝对路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;bundle.js&#x27;,</span><br><span class="line">    path: &#x27;/home/proj/public/assets&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: &#x27;./src/app.js&#x27;,</span><br><span class="line">    search: &#x27;./src/search.js&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;[name].js&#x27;, // [name]占位符</span><br><span class="line">    path: __dirname + &#x27;/dist&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 写入到硬盘：./dist/app.js, ./dist/search.js</span><br></pre></td></tr></table></figure></li>
+<li><p>publicPath CDN使用，暂时还没有用过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">  path: &quot;/home/proj/cdn/assets/[hash]&quot;,</span><br><span class="line">  publicPath: &quot;http://cdn.example.com/assets/[hash]/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="模式-mode"><a href="#模式-mode" class="headerlink" title="模式 mode"></a>模式 mode</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;production&#x27;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>development</td>
+<td>会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin</td>
+</tr>
+<tr>
+<td>production</td>
+<td>会将 process.env.NODE_ENV 的值设为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 UglifyJsPlugin</td>
+</tr>
+</tbody></table>
+<h3 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h3><p>module.rules 允许你在 webpack 配置中指定多个 loader。 这是展示 loader 的一种简明方式，并且有助于使代码变得简洁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; test: /\.css$/, use: &#x27;css-loader&#x27; &#125;,</span><br><span class="line">      &#123; test: /\.ts$/, use: &#x27;ts-loader&#x27; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其他调用loader的方式：</p>
+<ul>
+<li>内联 <code>import Styles from &#39;style-loader!css-loader?modules!./styles.css&#39;; </code></li>
+<li>cli <code>webpack --module-bind jade-loader --module-bind &#39;css=style-loader!css-loader&#39;</code></li>
+</ul>
+<p>loader 特性</p>
+<ul>
+<li>loader 支持链式传递。能够对资源使用流水线(pipeline)。一组链式的 loader 将按照相反的顺序执行。loader 链中的第一个 loader 返回值给下一个 loader。在最后一个 loader，返回 webpack 所预期的 JavaScript。</li>
+<li>loader 可以是同步的，也可以是异步的</li>
+<li>loader 运行在 Node.js 中，并且能够执行任何可能的操作</li>
+<li>loader 接收查询参数。用于对 loader 传递配置</li>
+<li>loader 也能够使用 options 对象进行配置</li>
+<li>除了使用 package.json 常见的 main 属性，还可以将普通的 npm 模块导出为 loader，做法是在 package.json 里定义一个 loader 字段。</li>
+<li>插件(plugin)可以为 loader 带来更多特性</li>
+<li>loader 能够产生额外的任意文件</li>
+</ul>
+<h3 id="插件-plugins"><a href="#插件-plugins" class="headerlink" title="插件 plugins"></a>插件 plugins</h3><p>插件是 webpack 的支柱功能，插件目的在于解决 loader 无法实现的其他事。<br>由于插件可以携带参数/选项，你必须在 webpack 配置中，向 plugins 属性传入 new 实例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&#x27;html-webpack-plugin&#x27;); //通过 npm 安装</span><br><span class="line">const webpack = require(&#x27;webpack&#x27;); //访问内置的插件</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &#x27;./path/to/my/entry/file.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;my-first-webpack.bundle.js&#x27;,</span><br><span class="line">    path: path.resolve(__dirname, &#x27;dist&#x27;)</span><br><span class="line">  &#125;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.(js|jsx)$/,</span><br><span class="line">        use: &#x27;babel-loader&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.UglifyJsPlugin(), //内置插件</span><br><span class="line">    new HtmlWebpackPlugin(&#123;template: &#x27;./src/index.html&#x27;&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+
+<p>具体实现：<br>webpack 插件是一个具有 apply 属性的 JavaScript 对象。apply 属性会被 webpack compiler 调用，并且 compiler 对象可在整个编译生命周期访问。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const pluginName = &#x27;ConsoleLogOnBuildWebpackPlugin&#x27;;</span><br><span class="line"></span><br><span class="line">class ConsoleLogOnBuildWebpackPlugin &#123;</span><br><span class="line">    apply(compiler) &#123;</span><br><span class="line">        compiler.hooks.run.tap(pluginName, compilation =&gt; &#123;</span><br><span class="line">            console.log(&quot;webpack 构建过程开始！&quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Node API使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&#x27;webpack&#x27;); //访问 webpack 运行时(runtime)</span><br><span class="line">  const configuration = require(&#x27;./webpack.config.js&#x27;);</span><br><span class="line"></span><br><span class="line">  let compiler = webpack(configuration);</span><br><span class="line">  compiler.apply(new webpack.ProgressPlugin());</span><br><span class="line"></span><br><span class="line">  compiler.run(function(err, stats) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-configuration"><a href="#配置-configuration" class="headerlink" title="配置 configuration"></a>配置 configuration</h3><p>很少有 webpack 配置看起来很完全相同。这是因为 webpack 的配置文件，是导出一个对象的 JavaScript 文件.<br>以下是一个最基本的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  mode: &#x27;development&#x27;,</span><br><span class="line">  entry: &#x27;./foo.js&#x27;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &#x27;dist&#x27;),</span><br><span class="line">    filename: &#x27;foo.bundle.js&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其他方式<br>1、导出为一个函数：</p>
+<ul>
+<li>环境对象(environment)作为第一个参数</li>
+<li>一个选项 map 对象（argv）作为第二个参数,描述了传递给 webpack 的选项<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(env, argv) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    mode: env.production ? &#x27;production&#x27; : &#x27;development&#x27;,</span><br><span class="line">    devtool: env.production ? &#x27;source-maps&#x27; : &#x27;eval&#x27;,</span><br><span class="line">     plugins: [</span><br><span class="line">       new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">        compress: argv[&#x27;optimize-minimize&#x27;] // 只有传入 -p 或 --optimize-minimize</span><br><span class="line">       &#125;)</span><br><span class="line">     ]</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+2、 导出Promise<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = () =&gt; &#123;</span><br><span class="line">  return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      resolve(&#123;</span><br><span class="line">        entry: &#x27;./app.js&#x27;,</span><br><span class="line">        /* ... */</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;, 5000)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>3、导出多个配置对象<br>当运行 webpack 时，所有的配置对象都会构建.<br>以下示例表示：导出多个配置对象，对于针对多个构建目标（例如 AMD 和 CommonJS）打包成一个 library</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">module.exports = [&#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;./dist-amd.js&#x27;,</span><br><span class="line">    libraryTarget: &#x27;amd&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  entry: &#x27;./app.js&#x27;,</span><br><span class="line">  mode: &#x27;production&#x27;,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: &#x27;./dist-commonjs.js&#x27;,</span><br><span class="line">    libraryTarget: &#x27;commonjs&#x27;</span><br><span class="line">  &#125;,</span><br><span class="line">  entry: &#x27;./app.js&#x27;,</span><br><span class="line">  mode: &#x27;production&#x27;,</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="模块解析-module-resolution"><a href="#模块解析-module-resolution" class="headerlink" title="模块解析 module resolution"></a>模块解析 module resolution</h3><p>解析器resolver 是一个库(library)，用于帮助找到模块的绝对路径。一个模块可以作为另一个模块的依赖模块，然后被后者引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import foo from &#x27;path/to/module&#x27;</span><br><span class="line">// 或者</span><br><span class="line">require(&#x27;path/to/module&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="manifest"><a href="#manifest" class="headerlink" title="manifest"></a>manifest</h3><h4 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h4><p>runtime，以及伴随的 manifest 数据，主要是指：在浏览器运行时，webpack 用来连接模块化的应用程序的所有代码。runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。</p>
+<h4 id="Manifest"><a href="#Manifest" class="headerlink" title="Manifest"></a>Manifest</h4><p>当编译器(compiler)开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 “Manifest”，当完成打包并发送到浏览器时，会在运行时通过 Manifest 来解析和加载模块。无论你选择哪种模块语法，那些 import 或 require 语句现在都已经转换为 <strong>webpack_require</strong> 方法，此方法指向模块标识符(module identifier)。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索出背后对应的模块</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/concepts/">webpack官方文档</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904007362674701">webpack 中那些最易混淆的 5 个知识点</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903952140468232">辛辛苦苦学会的 webpack dll 配置，可能已经过时了</a></p>
+<h2 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h2><p>一个基于流（stream）的自动化构建工具。gulp的核心是Task，我们可以配置一系列的Task，并且定义 task 要处理的事务（例如 ES6、ts 转化，图片压缩，scss 转成 css），之后让 grunt/gulp 来依次执行这些 task，而且让整个流程自动化。所以可以看做是<strong>前端自动化管理工具</strong></p>
+<h3 id="Gulp核心API"><a href="#Gulp核心API" class="headerlink" title="Gulp核心API"></a>Gulp核心API</h3><ul>
+<li>task 创建注册任务</li>
+<li>series 顺序执行多个任务</li>
+<li>prallel 并行执行多个任务</li>
+<li>src 读取数据源转换成stream</li>
+<li>pipe 管道-可以在中间对数据流进行处理</li>
+<li>dest 输出数据流到目标路径</li>
+<li>on 事件监听</li>
+<li>watch 数据源监听</li>
+</ul>
+<p>具体的使用可以参考<a target="_blank" rel="noopener" href="https://www.gulpjs.com.cn/docs/getting-started/quick-start/">官方文档</a></p>
+<h2 id="webpack和gulp的区别"><a href="#webpack和gulp的区别" class="headerlink" title="webpack和gulp的区别"></a>webpack和gulp的区别</h2><p>谈谈我个人的理解</p>
+<table>
+<thead>
+<tr>
+<th>gulp</th>
+<th>webpack</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>构建工具、自动化、提高效率用</td>
+<td>打包工具、模块化、编译模块代码方案</td>
+</tr>
+<tr>
+<td>gulp主要侧重前端开发工作流程的自动化，就像一个流水线(万物皆可流)，定义不同的Task任务，来实现不同的功能，比如动server、sass/less预编译、文件的合并压缩等等。将这些不同的任务按照一定的步骤组合起来实现一个流程的自动化</td>
+<td>webpack侧重于模块(万物皆可模块)的打包，实现了模块化开发和文件处理。webpack将各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module，从entry配置的一个入口文件（JS文件）开始，据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源，主要通过loader（加载器）和plugins（插件）对资源进行处理的</td>
+</tr>
+<tr>
+<td>gulp通过插件的形式可以实现webpack的功能(构建、压缩)，插件比如<code>webpack-stream</code>、<code>gulp-uglify</code></td>
+<td>本身即为打包而生，更加专业</td>
+</tr>
+<tr>
+<td>gulp可以定义许多各种各样的任务，更加的灵活。比如：CSS 压缩，图片压缩、文件转换，文件发布</td>
+<td>很难实现</td>
+</tr>
+<tr>
+<td>一般来说：Webpack 和 gulp 都是同时存在的，只是各自负责擅长的那部分，比如 Webpack 将模块的、互相依赖的分散的代码打包成数个文件，然后再使用 gulp 任务去做压缩，加版本号，替换等等其他工作</td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-20/webpack%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1084,308 +1436,6 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E7%BD%91%E7%BB%9C%E6%8F%A1%E6%89%8B%E7%9B%B8%E5%85%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ljt">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LJT的杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-05/%E7%BD%91%E7%BB%9C%E6%8F%A1%E6%89%8B%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">网络握手相关</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-05 18:20:21" itemprop="dateCreated datePublished" datetime="2022-01-05T18:20:21+08:00">2022-01-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-10 16:11:19" itemprop="dateModified" datetime="2022-02-10T16:11:19+08:00">2022-02-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="网络握手相关"><a href="#网络握手相关" class="headerlink" title="网络握手相关"></a>网络握手相关</h1><h2 id="HTTPS-SSL-TLS认证过程"><a href="#HTTPS-SSL-TLS认证过程" class="headerlink" title="HTTPS SSL/TLS认证过程"></a>HTTPS SSL/TLS认证过程</h2><p>在学习HTTPS协议之前需要先了解几个概念</p>
-<h3 id="网络协议模型"><a href="#网络协议模型" class="headerlink" title="网络协议模型"></a>网络协议模型</h3><p>网络传输的实现比较复杂，OSI制定的一个用于计算机或通信系统间互联的标准体系,一般成为OSI七层模型，每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。它是一个七层的、抽象的模型体，不仅包括一系列抽象的术语或概念，也包括具体的协议。<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/36.jpeg" alt="avatar"></p>
-<p>用户接触到的，只是最上面的一层，根本没有感觉到下面的层。越下面的层，越靠近硬件；越上面的层，越靠近用户。每一层都是为了完成一种功能。为了实现这些功能，就需要大家都遵守共同的规则。大家都遵守的规则，就叫做”协议”（protocol）。互联网的每一层，都定义了很多协议。这些协议的总称，就叫做”互联网协议”（Internet Protocol Suite）。</p>
-<h4 id="五层协议"><a href="#五层协议" class="headerlink" title="五层协议"></a>五层协议</h4><p>现在一般将网络协议模型有7层简化为5层模型<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/37.png" alt="avatar"></p>
-<p>我们自下而上的理解每一层的功能。</p>
-<h4 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h4><p>这一层只是为数据端设备提供原始比特流的传输通路。就是把电脑连接起来的物理手段。它主要规定了网络的一些电气特性，作用是负责传送0和1的比特流电信号。<br>常见的实现：网线，集线器，无线电波</p>
-<h4 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h4><p>这一层提供了介质访问和链路管理。例如，将数据分帧（数据包），物理寻址（mac地址），重发等。<br>常见的实现：网卡，网桥等</p>
-<h4 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h4><p>这一层提供了IP选址及路由选择，实现不同网络之间的路径选择。<br>理论上来说只要有MAC地址，我们就可以实现两台设备之间的直接通讯，但是实现起来难度太大。在数据链路层是采用广播的机制进行寻址的，这在一个小的网络范围内问题不大，但是当网络设备量很大的时候，这样的广播机制会造成网络拥堵。而且现实中互联网是由一个个的局域网组成的，寻址广播只能在一个局域网中传播。<br>这就导致了”网络层”的诞生。它的作用是引进一套新的地址，使得我们能够区分不同的计算机是否属于同一个子网络。这套地址就叫做”网络地址”，简称”网址”，规定网络地址的协议，叫做IP协议，所以网址也成为IP地址。这样每台计算机有了两种地址，一种是MAC地址，另一种是网络地址，这两个地址随机的组合在一起。网络地址帮助我们确定计算机所在的子网络，MAC地址则将数据包送到该子网络中的目标网卡。</p>
-<p>常见的实现：路由器 ICMP IGMP IP ARP</p>
-<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>这一层提供了定义传输数据的协议端口号，以及流控和差错校验。<br>同一台主机上有许多程序都需要用到网络，比如我们一边浏览网页（一个进程），一边聊天（另一个进程），所有的这些数据都会通过下层协议发送出去，所以我们还需要区分这些数据是具体是那个进程需要的，这就需要增加一个”端口”（port）的概念，它其实是每一个使用网卡的程序的编号，应用程序能够根据端口来获取自己所需要的数据。<br>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流<br>常见的实现：TCP UDP</p>
-<h4 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h4><p>这一层提供了建立、管理、终止会话。（在五层模型里面已经合并到了应用层）</p>
-<h4 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h4><p>这一层提供了数据的表示、安全、压缩。（在五层模型里面已经合并到了应用层）</p>
-<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><p>这一层提供了访问网络程序的接口，可以让用户程序调用下层网络服务的接口。<br>例如：传输层TCP协议可以为各种各样的程序传递数据，比如Email、WWW、FTP等等。那么，必须有不同协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了”应用层”。<br>常见的实现：HTTP FTP Telnet Email DNS等</p>
-<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><p>对称加密，顾名思义就是加密和解密都是使用同一个密钥，常见的对称加密算法有 DES、3DES 和 AES 等</p>
-<p>优点：算法公开、计算量小、加密速度快、加密效率高，适合加密比较大的数据<br>缺点：双方使用同样的秘钥，无法保证秘钥不被篡改，安全性不高；还有就是不同用户对之间使用的秘钥是不一样的，所以需要管理大量的秘钥，成本较高</p>
-<h3 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h3><p>非对称加密，顾名思义，就是加密和解密需要使用两个不同的密钥：公钥（public key）和私钥（private key）。公钥与私钥是一对，如果用公钥对数据进行加密，只有用对应的私钥才能解密；如果用私钥对数据进行加密，那么只有用对应的公钥才能解密。<br>优点：算法公开，加密和解密使用不同的钥匙，私钥不需要通过网络进行传输，安全性很高<br>缺点：计算量比较大，加密和解密速度相比对称加密慢很多</p>
-<h3 id="数字证书，数字签名"><a href="#数字证书，数字签名" class="headerlink" title="数字证书，数字签名"></a>数字证书，数字签名</h3><p>我觉得这个看阮一峰<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">这篇文章</a>就能很好的解释，这里就copy一下。</p>
-<p>1.<br> <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/38.png" alt="avatar"></p>
-<p>鲍勃有两把钥匙，一把公钥 一把私钥</p>
-<p>2.<br> <img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/39.png" alt="avatar"><br>鲍勃把自己的公钥，分别分给了他的朋友帕蒂 道格 苏珊三个人</p>
-<p>3.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/40.png" alt="avatar"><br>苏珊要给鲍勃写信，就用鲍勃的公钥把信的内容进行加密，然后发送给鲍勃，达到安全保密的目的。这个时候只要鲍勃的私钥没有泄露，这封信件就是安全的，就算别人拿到也无法加密。</p>
-<p>4.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/41.png" alt="avatar"><br>鲍勃接收到加密后的信件，然后使用自己的私钥进行解密，就能看到信的内容。</p>
-<p>5.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/42.png" alt="avatar"><br>这个时候鲍勃要给苏珊回信，决定使用了“数字签名”，写完信之后先将信的内容用hash生成“摘要”</p>
-<p>6.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/43.png" alt="avatar"><br>然后鲍勃使用私钥给这个“摘要”加密，生成<strong>“数字签名”</strong></p>
-<p>7.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/44.png" alt="avatar"><br>鲍勃将这个数字签名，附在信件下面，一起发给苏珊</p>
-<p>8.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/45.png" alt="avatar"><br>苏珊收信后，获取数字签名，用鲍勃的公钥解密，得到信件的摘要。由此证明，这封信确实是鲍勃发出的。</p>
-<p>9.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/46.png" alt="avatar"><br>苏珊再对信件内容使用Hash函数，将得到的结果，及信件的摘要，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。</p>
-<p>10.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/47.png" alt="avatar"><br>网络环境总有使坏者。加入道格想欺骗苏珊，用自己的公钥偷偷替换了苏珊电脑中的鲍勃的公钥，此时苏珊实际所用的是道格的公钥，但是还是认为是鲍勃的公钥。这个时候道格截取了鲍勃发送给苏珊的信件，同时也有鲍勃的公钥，就可以修改信件的内容，并且使用自己的私钥生成数字签名，然后发送给苏珊。因为苏珊电脑上的公钥已经被道格替换过了，所以可以解密道格篡改过的信件。</p>
-<p>11.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/48.png" alt="avatar"><br>突然有一天，苏珊发现自己电脑上鲍勃的公钥异常，无法判断是否是鲍勃的公钥。就让鲍勃去权威的第三方证书中心（certificate authority，简称CA），对公钥做个认证。证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成<strong>“数字证书”（Digital Certificate）</strong></p>
-<p>12.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/49.png" alt="avatar"><br>鲍勃拿到数字证书以后，就可以放心了。以后再给苏珊写信，只要在签名的同时，再附上数字证书就行了</p>
-<p>13.<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/50.png" alt="avatar"><br>苏珊收信后，用CA的公钥解开数字证书，就可以拿到鲍勃真实的公钥了，然后就能证明”数字签名”是否真的是鲍勃签的。</p>
-<h3 id="SSL协商认证"><a href="#SSL协商认证" class="headerlink" title="SSL协商认证"></a>SSL协商认证</h3><h3 id="CA数字证书签发和验证流程"><a href="#CA数字证书签发和验证流程" class="headerlink" title="CA数字证书签发和验证流程"></a>CA数字证书签发和验证流程</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/51.jpeg" alt="avatar"></p>
-<h4 id="签发"><a href="#签发" class="headerlink" title="签发"></a>签发</h4><p>CA证书包含以下信息：申请者公钥、申请者的组织信息和个人信息、签发机构 CA 的信息、有效时间、证书序列号等信息的明文，同时包含一个签名。<br>CA证书中签名的生成：首先，使用散列函数计算公开的明文信息的信息摘要，然后，采用 CA 的私钥对信息摘要进行加密，密文即签名</p>
-<p>具体过程：</p>
-<ul>
-<li>首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值</li>
-<li>然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；</li>
-<li>最后将 Certificate Signature 添加在文件证书上，形成数字证书</li>
-</ul>
-<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><ul>
-<li>首先客户端会使用同样的 Hash 算法获取该证书的 Hash 值 H1</li>
-<li>通常浏览器和操作系统中集成了 CA 的公钥信息，浏览器收到证书后可以使用 CA 的公钥解密 Certificate Signature 内容，得到一个 Hash 值 H2</li>
-<li>最后比较 H1 和 H2，如果值相同，则为可信赖的证书，否则则认为证书不可信</li>
-</ul>
-<p>实际上，证书的验证过程中还存在一个证书信任链的问题，因为我们向 CA 申请的证书一般不是根证书签发的，而是由中间证书签发的，比如百度的证书，从下图你可以看到，证书的层级有三级<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/52.png" alt="avatar"></p>
-<ul>
-<li>客户端收到 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 的证书后，发现这个证书的签发者不是根证书，就无法根据本地已有的根证书中的公钥去验证 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书是否可信。于是，客户端根据 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书中的签发者，找到该证书的颁发机构是 “GlobalSign Organization Validation CA - SHA256 - G2”，然后向 CA 请求该中间证书</li>
-<li>请求到证书后发现 “GlobalSign Organization Validation CA - SHA256 - G2” 证书是由 “GlobalSign Root CA” 签发的，由于 “GlobalSign Root CA” 没有再上级签发机构，说明它是根证书，也就是自签证书。应用软件会检查此证书有否已预载于根证书清单上，如果有，则可以利用根证书中的公钥去验证 “GlobalSign Organization Validation CA - SHA256 - G2” 证书，如果发现验证通过，就认为该中间证书是可信的</li>
-<li>“GlobalSign Organization Validation CA - SHA256 - G2” 证书被信任后，可以使用 “GlobalSign Organization Validation CA - SHA256 - G2” 证书中的公钥去验证 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书的可信性，如果验证通过，就可以信任 <a target="_blank" rel="noopener" href="http://baidu.com/">http://baidu.com</a> 证书。</li>
-</ul>
-<h4 id="SSL-TLS-握手"><a href="#SSL-TLS-握手" class="headerlink" title="SSL/TLS 握手"></a>SSL/TLS 握手</h4><p>先来看一下SSL/TLS在网络模型的位置<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/54.png" alt="avatar"><br>TLS握手主要是为了创建一个安全的连接，在创建连接的过程中，通信双方都做了那些操作呢？<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/53.png" alt="avatar"></p>
-<ul>
-<li>1、客户端通过发送”client hello”消息向服务器发起握手请求，这个消息包含了客户端所支持的TLS版本及加密方法以供服务器选择，同时还有一个”client random”随机字符串</li>
-<li>2、server回应”sever hello”消息，这个消息包含了服务端的数字证书及服务器选择的加密方法</li>
-<li>3、客户端收到服务器回应以后，首先验证服务器证书。如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。验证细节见【CA数字证书签发和验证流程】。</li>
-<li>4、客户端向服务器发送另一个随机字符串”premaster secret (预主密钥)”，这个字符串是经过服务器的公钥加密过的，只有对应的私钥才能解密</li>
-<li>5、服务器使用私钥解密”premaster secret”。</li>
-<li>6、客户端和服务器均使用 client random，server random 和 premaster secret，并通过相同的算法生成相同的共享密钥 KEY</li>
-<li>7、客户端发送经过共享密钥 KEY加密过的”finished”信号</li>
-<li>8、服务器发送经过共享密钥 KEY加密过的”finished”信号</li>
-<li>9、握手完成，双方使用对称加密进行安全通信</li>
-</ul>
-<p>总的来说：<br>握手主要做些如下的工作：</p>
-<ul>
-<li>商定双方通信所使用的的 TLS 版本 (例如 TLS1.0, 1.2, 1.3等等)；</li>
-<li>确定双方所要使用的加密方式</li>
-<li>客户端验证服务端的身份</li>
-<li>生成会话密钥，该密钥将用于握手结束后的对称加密</li>
-</ul>
-<h2 id="TCP三次握手，四次挥手"><a href="#TCP三次握手，四次挥手" class="headerlink" title="TCP三次握手，四次挥手"></a>TCP三次握手，四次挥手</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/34.png" alt="avatar"></p>
-<ul>
-<li>1、初始状态，客户端和服务端都是处于关闭的状态，但服务器B端一直处于监听的状态，时刻监听是否有建立连接的请求；</li>
-<li>2、<strong>第一次握手</strong>,客户端发起连接，会主动发送一个SYN报文，并携带一个随机数seq = x，</li>
-<li>3、<strong>第二次握手</strong>,服务器收到客户端发送的连接报文后，会回复一个确认同步报文， SYN = 1，并且 ACK = 1，同时服务端也会随机生成一个 seq = y，并将 ack = x + 1，回传给客户端</li>
-<li>4、<strong>第三次握手</strong>，当客户端接收到服务端的 ACK 确认报文后，会回复一个 ACK 确认报文，用于确认服务器报文已经收到，此报文 ACK = 1，seq = x + 1, ack = y + 1</li>
-</ul>
-<p>为什么需要三次握手，而不是两次握手呢，参见问题1。</p>
-<h3 id="四次握手"><a href="#四次握手" class="headerlink" title="四次握手"></a>四次握手</h3><p><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/35.png" alt="avatar"></p>
-<ul>
-<li><strong>第一次挥手</strong> 客户端发起 FIN = 1断开连接的报文，携带随机生成的 seq 值 u，发送给服务端，并且自己处于 FIN-WSIT 状态</li>
-<li><strong>第二次挥手</strong> 服务器收到客户端发起的FIN 报文后，会回复一个ACK = 1报文，并随机生成一个 seq，以及 ack = u + 1</li>
-<li><strong>第三次挥手</strong> 当服务器数据发送完了过后，再发送一个 FIN 报文给客户端，通知客户端，服务端准备关闭连接了，此报文 FIN = 1，ACK = 1，ack = u + 1，seq = w</li>
-<li><strong>第四次挥手</strong> 当客户端收到服务发送的FIN 报文后，会发送确认报文，其中 ACK = 1，seq = u + 1，ack = w + 1，并进入 TIME-WAIT 状态，当等待 2MSL 后关闭连接</li>
-</ul>
-<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="1、为什么需要三次握手，而不是两次握手"><a href="#1、为什么需要三次握手，而不是两次握手" class="headerlink" title="1、为什么需要三次握手，而不是两次握手"></a>1、为什么需要三次握手，而不是两次握手</h4><p>tcp连接需要三次握手，主要解决确认报文延迟重传问题。<br>假设这样的一种情况，客户端发送了一个连接报文，由于网络拥堵等原因，没有及时的到达服务器；以致延误到连接释放以后的某个时间才到达服务器，服务器接收到这个报文以后，认为是客户端发起了连接，就会发送确认连接报文，但是这个报文对客户端来说是一个失效的报文，所以客户端不会理睬这个服务器回复的报文，由于采用二次握手，则服务器会一直处于连接状态，等待数据传输。<br>本质上：由于信道不可靠, 但是通信双发需要就某个问题达成一致. 而要解决这个问题, 无论你在消息中包含什么信息, 三次通信是理论上的最小值. 所以三次握手不是TCP本身的要求, 而是为了满足”在不可靠信道上可靠地传输信息”这一需求所导致的</p>
-<h4 id="2、为什么需要四次挥手"><a href="#2、为什么需要四次挥手" class="headerlink" title="2、为什么需要四次挥手"></a>2、为什么需要四次挥手</h4><p>因为握手的时候，没有数据传输需求，所以服务端的 SYN 和 ACK 报文可以合并在一起发送。但是挥手的时候，服务端也许还有数据没有发送完，需要FIN和ACK报文需要分开发，先发送ACK报文，等待数据传输完成之后再发送FIN报文</p>
-<h4 id="3、四次挥手后，为什么客户端还需要等到2MSL"><a href="#3、四次挥手后，为什么客户端还需要等到2MSL" class="headerlink" title="3、四次挥手后，为什么客户端还需要等到2MSL"></a>3、四次挥手后，为什么客户端还需要等到2MSL</h4><p>等待 2MSL 是因为保证服务端接收到了 ACK 报文，因为网络环境复杂，很有可能客户端最后发出 ACK 报文丢失了，如果服务端没接收到 ACK 报文的话，会重新发送 FIN 报文，只有当客户端等待了 2MSL 都没有收到重发的 FIN 报文时就表示服务端是正常收到了 ACK 报文，那么这个时候客户端就可以关闭了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022-01-05/%E5%8E%9F%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ljt">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LJT的杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022-01-05/%E5%8E%9F%E5%9E%8B/" class="post-title-link" itemprop="url">原型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-05 15:40:15" itemprop="dateCreated datePublished" datetime="2022-01-05T15:40:15+08:00">2022-01-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-08 16:52:12" itemprop="dateModified" datetime="2022-02-08T16:52:12+08:00">2022-02-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="对象原型"><a href="#对象原型" class="headerlink" title="对象原型"></a>对象原型</h1><p>可以把script对象想象成为一张散列表，其中的内容就是一组键/值对，值可以是数据或者函数。</p>
-<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>使用 Object 构造函数或对象字面量可以方便地创建对象，但这些方式也有明显不足:创建具<br>有同样接口的多个对象需要重复编写很多代码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//方式一</span><br><span class="line">let person = new Object();</span><br><span class="line">person.name = &#x27;ljt&#x27;;</span><br><span class="line">person.age = 30;</span><br><span class="line">person.sayName = function () &#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//方式二</span><br><span class="line">let person = &#123;</span><br><span class="line">    name:&#x27;ljt&#x27;,</span><br><span class="line">    age:30,</span><br><span class="line">    sayName: function() &#123;</span><br><span class="line">      console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>工厂模式虽然可以解决创建多个类似对象的问题，但没有解决对象标识问题(即新创建的对象是什么类型)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 工厂模式</span><br><span class="line">function createPerson(name, age) &#123;</span><br><span class="line">  let person = new Object();</span><br><span class="line">  person.name = name;</span><br><span class="line">  person.age = age;</span><br><span class="line">  person.sayName = function () &#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">  &#125;</span><br><span class="line">  return person</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let person1 = createPerson(&#x27;ljt&#x27;, 30)</span><br><span class="line">let person2 = createPerson(&#x27;cdw&#x27;, 28)</span><br></pre></td></tr></table></figure>
-<h3 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h3><p>和工厂模式的区别：<br>1、没有显式的创建对象<br>2、属性和方法直接赋值给了this<br>3、没有return<br>创建对象主要是使用了<strong>new 操作符</strong>，new操作符的实质操作：</p>
-<ul>
-<li>1、在内存中新建一个对象</li>
-<li>2、这个对象的[[prototype]]特性被赋值为构造函数的prototype属性 （【该如何理解】，将这个对象的[[prototype]]指向原型）</li>
-<li>3、构造函数内部的this被赋值为这个新对象（即this指向这个新对象）</li>
-<li>4、执行构造函数内部的代码（给新对象添加属性）</li>
-<li>5、如果构造函数返回非空对象，则返回该对象；否则返回刚创建的新对象</li>
-</ul>
-<p>在下面的例子中person1 和 person2 分别保存着 Person 的不同实例<br>constructor 本来是用于标识对象类型的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// console.log(person1.constructor == Person);</span><br><span class="line">// console.log(person2.constructor == Person);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 构造函数模式</span><br><span class="line">function Person(name,age) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.age = age;</span><br><span class="line">  this.sayName = function () &#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">let person1 = new Person(&#x27;ljt&#x27;, 30)</span><br><span class="line">let person2 = new Person(&#x27;cdw&#x27;, 28)</span><br><span class="line"></span><br><span class="line">person1.sayName();</span><br><span class="line">person2.sayName();</span><br></pre></td></tr></table></figure>
-
-<p>构造函数的主要问题在于，其定义的方法会在每个实例上都创建一遍。因此对前面的例子而言，person1 和 person2 都有名为 sayName()的方法，但这两个方 法不是同一个 Function 实例；<br>还可以将sayName方法定义在构造函数外部，构造函数内部，sayName 属性等于全局 sayName() 函数，包含的只是一个指向外部函数的指针，这样虽然解决了相同逻辑的函数重复定义的问题，但 全局作用域也因此被搞乱了，因为那个函数实际上只能在一个对象上调用</p>
-<h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><p>每个函数都会创建一个 prototype 属性，这个属性是一个对象，包含应该由特定引用类型的实例 共享的属性和方法,实际上，这个对象就是通过调用构造函数创建的对象的原型。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.name = &#x27;ljt&#x27;</span><br><span class="line">Person.prototype.age = 30</span><br><span class="line">Person.prototype.sayName = function () &#123;</span><br><span class="line">  console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let person1 = new Person()</span><br><span class="line">let person2 = new Person()</span><br><span class="line"></span><br><span class="line">person1.sayName();</span><br><span class="line">person2.sayName();</span><br></pre></td></tr></table></figure>
-
-<h4 id="理解原型"><a href="#理解原型" class="headerlink" title="理解原型"></a>理解原型</h4><p>无论何时，只要创建一个函数，就会按照特定的规则为这个函数创建一个 prototype 属性(指向原型对象)，默认情况下，所有原型对象自动获得一个名为 constructor 的属性，指回与之关联的构造函数，<strong>Person.prototype.constructor 指向 Person</strong></p>
-<p>特别理解：<br>在自定义构造函数时，原型对象默认只会获得 constructor 属性，其他的所有方法都继承自 Object。每次调用构造函数创建一个新实例，这个实例的内部[[Prototype]]指针就会被赋值为构造函数的原型对象。脚本中没有访问这个[[Prototype]]特性的标准方式，但 Firefox、Safari 和 Chrome 会在每个对象上暴露__proto__属性，通过这个属性可以访问对象的原型。关键在于：实例与构造函数原型之间有直接的联系，但是实例直接没有直接关系。</p>
-<p>构造函数，实例，原型对象是3个完全不同的对象。<br>实例通过__proto__链接到原型对象，实际上指向的是隐藏属性[[Prototype]]（换句话说：[[Prototype]]出现在实例内部，指向原型对象，不可直接访问，可以通过浏览器暴露出来的__proto__属性访问）<br>构造函数通过prototype属性连接到原型对象，实例与构造函数没有直接联系，与原型对象有直接联系<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/31.JPG" alt="avatar"><br>通过对象访问属性时，<br>1、先搜索实例本身，如果实例上发现了给定名称，则直接访问该属性值<br>2、如果在实例中没有找到，则沿着原型指针进入原型对象中寻找，如果寻找到则返回对应值<br>3、如果原型中也没有找到，则返回undefined</p>
-<p>例外的：<br>如果在实例上添加了一个与原型对象中同名的属性，那就会在实例上创建这个属性，这个属性会遮住原型对象上的属性<br><code>hasOwnProperty()</code>方法用于确定某个属性是在实例上还是在原型对象上</p>
-<p>原型上的所有属性是在实例间共享的，这对函数来说比较合适。另外包含原始值的属性也还好，可以通过在实例上添加同名属性来简单地遮蔽原型上的属性。但是当包含引用值的属性时就会出现意外，如果修改了原型上的引用属性，则会影响到所有的实例，如下示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123; &#125;</span><br><span class="line">Person.prototype.name = &#x27;ljt&#x27;;</span><br><span class="line">Person.prototype.age = 30;</span><br><span class="line">Person.prototype.friends = [&#x27;a&#x27;, &#x27;b&#x27;];</span><br><span class="line">Person.prototype.helloFriends = function () &#123;</span><br><span class="line">  console.log(this.friends);</span><br><span class="line">&#125;</span><br><span class="line">let person1 = new Person()</span><br><span class="line">let person2 = new Person()</span><br><span class="line">person1.helloFriends();</span><br><span class="line">//  [&#x27;a&#x27;, &#x27;b&#x27;]</span><br><span class="line">person2.helloFriends();</span><br><span class="line">//  [&#x27;a&#x27;, &#x27;b&#x27;]</span><br><span class="line"></span><br><span class="line">//修改原型的引用属性</span><br><span class="line">person1.friends.push(&#x27;c&#x27;)</span><br><span class="line"></span><br><span class="line">//所有相关的实例都会收到影响</span><br><span class="line">person1.helloFriends();</span><br><span class="line">//  [&#x27;a&#x27;, &#x27;b&#x27;，&#x27;c&#x27;]</span><br><span class="line">person2.helloFriends();</span><br><span class="line">//  [&#x27;a&#x27;, &#x27;b&#x27;，&#x27;c&#x27;]</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>每个构造函数都有一个原型对象，原型有一个属性指回构造函数，而实例有一个内部指针指向原型，如果原型是另一个类型的实例，这个原型内部有一个内部指针[[prototype]]指向另一个类型的原型，这个原型有一个指针指向另一个构造函数。这样就形成了一个继承链。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function SuperType() &#123;</span><br><span class="line">  this.property = true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype.getSuperValue = function () &#123;</span><br><span class="line">  return this.property;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function SubType() &#123;</span><br><span class="line">  this.subProperty = false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SubType.prototype = new SuperType();</span><br><span class="line"></span><br><span class="line">SubType.prototype.getSubValue = function () &#123;</span><br><span class="line">  return this.subProperty;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let instance = new SubType();</span><br><span class="line"></span><br><span class="line">instance.getSuperValue();</span><br></pre></td></tr></table></figure>
-
-<p>继承图如下：<br>调用 instance.getSuperValue()经过了 3 步搜索:instance、 SubType.prototype 和 SuperType.prototype，最后一步才找到这个方法<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/32.JPG" alt="avatar"></p>
-<p>默认的原型链：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/9.png" alt="avatar"></p>
-<p>原型链的问题：<br>第一个问题：前面也提到过，主要问题出现在原型中包含引用值的时候。前面在谈到原型的问题时也提到过，原型中包含的引用值会在所有实例间共享，这也是为什么属性通常会在构造函数中定义而不会定义在原型上的原因<br>第二个问题：子类型在实例化时不能给父类型的构造函数传参。事实上，我们无法在不影响所有对象实例的情况下把参数传进父类的构造函数。（【怎么理解】传递参数相当于直接修改了子类型的原型，会影响到所有的子类型实例）</p>
-<h3 id="盗用构造函数"><a href="#盗用构造函数" class="headerlink" title="盗用构造函数"></a>盗用构造函数</h3><p>在子类 构造函数中调用父类构造函数。因为毕竟函数就是在特定上下文中执行代码的简单对象，所以可以使用 apply()和 call()方法以新创建的对象为上下文执行构造函数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function SuperType() &#123;</span><br><span class="line">  this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function SubType() &#123;</span><br><span class="line">  // 继承SuperType，通过call还可以向父类型的构造函数传递参数</span><br><span class="line">  SuperType.call(this);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let instance1 = new SubType();</span><br><span class="line">instance1.colors.push(&quot;black&quot;);</span><br><span class="line">console.log(instance1.colors);</span><br><span class="line">// &quot;red,blue,green,black&quot;</span><br><span class="line"></span><br><span class="line">let instance2 = new SubType();</span><br><span class="line">console.log(instance2.colors);</span><br><span class="line">// &quot;red,blue,green&quot;</span><br></pre></td></tr></table></figure>
-<p>通过使用 call()(或 apply())方法，SuperType 构造函数在为 SubType 的实例创建的新对象的上下文中执行了。这相当于新的 SubType 对象上运行了 SuperType()函数中的所有初始化代码。结果就是每个实例都会有自己的 colors 属性</p>
-<p>盗用构造函数的主要缺点，也是使用构造函数模式自定义类型的问题:必须在构造函数中定义方法，因此函数不能重用。此外，子类也不能访问父类原型上定义的方法，因此所有类型只能使用构造函数模式</p>
-<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><p>组合继承(有时候也叫伪经典继承)综合了原型链和盗用构造函数，将两者的优点集中了起来。基 本的思路是使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性。这样既可以把方法定义在原型上以实现重用，又可以让每个实例都有自己的属性。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">function SuperType(name) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype.sayName = function () &#123;</span><br><span class="line">  console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function SubType(name, age) &#123;</span><br><span class="line">  SuperType.call(this, name);</span><br><span class="line">  this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SubType.property = new SuperType();</span><br><span class="line">SubType.prototype.sayAge = function () &#123;</span><br><span class="line">  console.log(this.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let instance1 = new SubType(&quot;ljt&quot;, 30);</span><br><span class="line">instance1.colors.push(&quot;black&quot;);</span><br><span class="line">console.log(instance1.colors);</span><br><span class="line">// &quot;red, blue, green, black&quot;</span><br><span class="line"></span><br><span class="line">instance1.sayName();</span><br><span class="line">// &quot;ljt&quot;;</span><br><span class="line"></span><br><span class="line">instance1.sayAge();</span><br><span class="line">// 30</span><br><span class="line"></span><br><span class="line">let instance2 = new SubType(&quot;cdw&quot;, 28);</span><br><span class="line">console.log(instance1.colors);</span><br><span class="line">// &quot;red, blue, green&quot;</span><br><span class="line"></span><br><span class="line">instance2.sayName();</span><br><span class="line">// &quot;cdw&quot;;</span><br><span class="line"></span><br><span class="line">instance2.sayAge();</span><br><span class="line">// 28</span><br></pre></td></tr></table></figure>
-<p>继承图如下：<br><img src="https://forexmastertest.oss-cn-beijing.aliyuncs.com/MY_BLOG/33.JPG" alt="avatar"></p>
-<h3 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h3><p>类似于原型继承,object()函数会创建一个临时构造函数，将传入的对象赋值给这个构造函数的原型，然后返 4 回这个临时类型的一个实例。本质上，object()是对传入的对象执行了一次浅复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function object(o) &#123;</span><br><span class="line">  function F() &#123;&#125;</span><br><span class="line">  F.prototype = o;</span><br><span class="line">  return new F()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>原型式继承适用于这种情况:你有一个对象，想在它的基础上再创建一个新对象.<br>Object.create()方法将原型式继承的概念规范化了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">let person = &#123;</span><br><span class="line">  name: &#x27;hello&#x27;,</span><br><span class="line">  friends: [&#x27;a&#x27;, &#x27;b&#x27;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let instance1 = Object.create(person);</span><br><span class="line">instance1.name = &#x27;ljt&#x27;</span><br><span class="line">instance1.friends.push(&#x27;c&#x27;);</span><br><span class="line"></span><br><span class="line">let instance2 = Object.create(person);</span><br><span class="line">instance2.name = &#x27;cdw&#x27;</span><br><span class="line">instance1.friends.push(&#x27;d&#x27;);</span><br><span class="line"></span><br><span class="line">console.log(person.friends);</span><br><span class="line">// &quot;a, b, c, d&quot;</span><br></pre></td></tr></table></figure>
-<p>原型式继承非常适合不需要单独创建构造函数，但仍然需要在对象间共享信息的场合。但要记住，属性中包含的引用值始终会在相关对象间共享，跟使用原型模式是一样的</p>
-<h3 id="寄生继承"><a href="#寄生继承" class="headerlink" title="寄生继承"></a>寄生继承</h3><p>寄生式继承背后的思路类似于寄生构造函数和工厂模式:创建一个实现继承的函数，以某种方式增强对象，然后返回这个对象。基本的寄生继承模式如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//createAnother()函数接收一个参数，就是新对象的基准对象。</span><br><span class="line">// 这个对象 original 会被传给 object()函数，</span><br><span class="line">// 然后将返回的新对象赋值给 clone。</span><br><span class="line">// 接着给 clone 对象添加一个新方法 sayHi()</span><br><span class="line">function createAnother(o) &#123;</span><br><span class="line">  // 通过调用函数创建一个新对象</span><br><span class="line">  let clone = Object.create(o)</span><br><span class="line">  // 以某种方式增强这个对象</span><br><span class="line">  clone.sayHi = function () &#123;</span><br><span class="line">    console.log(&quot;hi&quot;);</span><br><span class="line">  &#125;;</span><br><span class="line">  // 返回新对象</span><br><span class="line">  return clone;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="寄生式组合继承"><a href="#寄生式组合继承" class="headerlink" title="寄生式组合继承"></a>寄生式组合继承</h3><p>组合继承其实也存在效率问题。最主要的效率问题就是父类构造函数始终会被调用两次:一次在是 创建子类原型时调用，另一次是在子类构造函数中调用。本质上，子类原型最终是要包含超类对象的所有实例属性，子类构造函数只要在执行时重写自己的原型就行了。</p>
-<p>寄生式组合继承通过盗用构造函数继承属性，但使用混合式原型链继承方法。基本思路是不通过调 用父类构造函数给子类原型赋值，而是取得父类原型的一个副本。说到底就是使用寄生式继承来继承父 类原型，然后将返回的新对象赋值给子类原型，基本原型如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">// 在这个函数内部，第一步是创建父类原型的一个副本。</span><br><span class="line">// 然后，给返回的 prototype 对象设置 constructor 属性，</span><br><span class="line">// 解决由于重写原型导致默认 constructor 丢失的问题。</span><br><span class="line">// 最后将新创建的对象赋值给子类型的原型</span><br><span class="line">function inheritPrototype(subType, superType) &#123;</span><br><span class="line">    // 创建新对象,取父类原型的副本</span><br><span class="line">    let prototype = object(superType.prototype);</span><br><span class="line">    // 增强新对象，给对象设置 constructor 属性，</span><br><span class="line">    // 解决由于重写原型导致默认 constructor 丢失的问题</span><br><span class="line">    prototype.constructor = subType;</span><br><span class="line">    // 新创建的对象赋值给子类型的原型</span><br><span class="line">    subType.prototype = prototype; &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function SuperType(name) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype.sayName = function () &#123;</span><br><span class="line">  console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function SubType(name, age) &#123;</span><br><span class="line">  SuperType.call(this, name);</span><br><span class="line">  this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// SubType.property = new SuperType();</span><br><span class="line">// SubType.prototype.constructor = SubType;</span><br><span class="line">inheritPrototype(SubType, SuperType); // 重点</span><br><span class="line">SubType.prototype.sayAge = function () &#123;</span><br><span class="line">  console.log(this.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let instance1 = new SubType(&quot;ljt&quot;, 30);</span><br><span class="line">instance1.colors.push(&quot;black&quot;);</span><br><span class="line">console.log(instance1.colors);</span><br><span class="line">// &quot;red, blue, green, black&quot;</span><br><span class="line"></span><br><span class="line">instance1.sayName();</span><br><span class="line">// &quot;ljt&quot;;</span><br><span class="line"></span><br><span class="line">instance1.sayAge();</span><br><span class="line">// 30</span><br><span class="line"></span><br><span class="line">let instance2 = new SubType(&quot;cdw&quot;, 28);</span><br><span class="line">console.log(instance1.colors);</span><br><span class="line">// &quot;red, blue, green&quot;</span><br><span class="line"></span><br><span class="line">instance2.sayName();</span><br><span class="line">// &quot;cdw&quot;;</span><br><span class="line"></span><br><span class="line">instance2.sayAge();</span><br><span class="line">// 28</span><br></pre></td></tr></table></figure>
-
-<p>寄生式组合继承调用了一次 SuperType 构造函数，避免了 SubType.prototype 上不必要也用不到的属性，因此可以说这个例子的效率更高</p>
-<h2 id="new操作符执行的操作"><a href="#new操作符执行的操作" class="headerlink" title="new操作符执行的操作"></a>new操作符执行的操作</h2><p>1、内存中创建一个新的对象<br>2、将新对象的[[prototype]]属性赋值为构造函数的prototype属性，即指向原型<br>3、构造函数中的this绑定到这个新对象（通过this为新对象增加属性）<br>4、执行构造函数内部的代码，为这个新对象增加属性<br>5、如果构造函数返回非对象，则返回这个对象；否则返回刚刚创建的新对象</p>
-<h2 id="this指向问题"><a href="#this指向问题" class="headerlink" title="this指向问题"></a>this指向问题</h2><p>1、this永远指向一个对象<br>2、this的指向完全取决于函数调用的上下文</p>
-<h3 id="示例一"><a href="#示例一" class="headerlink" title="示例一"></a>示例一</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function fun()&#123;</span><br><span class="line">    console.log(this.s);</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line">var obj = &#123;</span><br><span class="line">    s:&#x27;1&#x27;,</span><br><span class="line">    f:fun</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line">var s = &#x27;2&#x27;;</span><br><span class="line">​</span><br><span class="line">obj.f(); //1</span><br><span class="line">fun(); //2</span><br></pre></td></tr></table></figure>
-
-<p>obj.f()的调用中，因为运行环境在obj对象内，因此函数中的this指向对象obj<br>全局作用域下调用 fun() ，函数中的 this 就会指向全局作用域对象window</p>
-<h3 id="示例二"><a href="#示例二" class="headerlink" title="示例二"></a>示例二</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var A = &#123;</span><br><span class="line">    name: &#x27;张三&#x27;,</span><br><span class="line">    f: function () &#123;</span><br><span class="line">        console.log(&#x27;姓名：&#x27; + this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">​</span><br><span class="line">var B = &#123;</span><br><span class="line">    name: &#x27;李四&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">​</span><br><span class="line">B.f = A.f;</span><br><span class="line">B.f()   // 姓名：李四</span><br><span class="line">A.f()   // 姓名：张三</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例三"><a href="#示例三" class="headerlink" title="示例三"></a>示例三</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 非严格模式</span><br><span class="line">var name = &#x27;window&#x27;;</span><br><span class="line">var doSth = function()&#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line">doSth(); // &#x27;window&#x27;</span><br></pre></td></tr></table></figure>
-
-<h3 id="示例四"><a href="#示例四" class="headerlink" title="示例四"></a>示例四</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var name = &#x27;window&#x27;;</span><br><span class="line">var doSth = function()&#123;</span><br><span class="line">    console.log(this.name);</span><br><span class="line">&#125;</span><br><span class="line">var student = &#123;</span><br><span class="line">    name: &#x27;轩辕Rowboat&#x27;,</span><br><span class="line">    doSth: doSth,</span><br><span class="line">    other: &#123;</span><br><span class="line">        name: &#x27;other&#x27;,</span><br><span class="line">        doSth: doSth,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">student.doSth(); // &#x27;轩辕Rowboat&#x27;</span><br><span class="line">student.other.doSth(); // &#x27;other&#x27;</span><br><span class="line">// 用call类比则为：</span><br><span class="line">student.doSth.call(student);</span><br><span class="line">// 用call类比则为：</span><br><span class="line">student.other.doSth.call(student.other);</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1455,7 +1505,7 @@ process.nextTick和setImmediate的一个重要区别：多个process.nextTick语
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
