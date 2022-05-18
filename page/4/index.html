@@ -1193,7 +1193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-17 14:48:27" itemprop="dateModified" datetime="2022-05-17T14:48:27+08:00">2022-05-17</time>
+                <time title="修改时间：2022-05-18 16:08:53" itemprop="dateModified" datetime="2022-05-18T16:08:53+08:00">2022-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1348,7 +1348,26 @@
 <p>for…of语句在可迭代对象（包括Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.objCustom = function() &#123;&#125;;</span><br><span class="line">Array.prototype.arrCustom = function() &#123;&#125;;</span><br><span class="line"></span><br><span class="line">let iterable = [3, 5, 7];</span><br><span class="line">iterable.foo = &#x27;hello&#x27;;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  console.log(i); // 0, 1, 2, &quot;foo&quot;, &quot;arrCustom&quot;, &quot;objCustom&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  if (iterable.hasOwnProperty(i)) &#123;</span><br><span class="line">    console.log(i); // 0, 1, 2, &quot;foo&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i of iterable) &#123;</span><br><span class="line">  console.log(i); // 3, 5, 7</span><br><span class="line">&#125;</span><br><span class="line">总结：for in是遍历（object）键名，for of是遍历（array）键值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="Unicode-UTF-8-UTF-16-UTF-32的区别"><a href="#Unicode-UTF-8-UTF-16-UTF-32的区别" class="headerlink" title="Unicode,UTF-8,UTF-16,UTF-32的区别"></a>Unicode,UTF-8,UTF-16,UTF-32的区别</h2><p>Unicode：字符编码集，为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台的处理要求<br>UTF-8、UTF-16、UTF-32：都是Unicode的编码实现方式</p>
+<h2 id="Unicode-UTF-8-UTF-16-UTF-32的区别"><a href="#Unicode-UTF-8-UTF-16-UTF-32的区别" class="headerlink" title="Unicode,UTF-8,UTF-16,UTF-32的区别"></a>Unicode,UTF-8,UTF-16,UTF-32的区别</h2><p>Unicode：字符编码集，为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台的处理要求</p>
+<p>UTF-8、UTF-16、UTF-32：都是Unicode的编码实现方式</p>
+<h2 id="escape、encodeURI、encodeURIComponent的区别"><a href="#escape、encodeURI、encodeURIComponent的区别" class="headerlink" title="escape、encodeURI、encodeURIComponent的区别"></a>escape、encodeURI、encodeURIComponent的区别</h2><h3 id="escape"><a href="#escape" class="headerlink" title="escape"></a>escape</h3><p>escape和其他两个是不同类型的，escape主要作用于字符串，其他两个主要是对url进行处理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">escape(&#x27;https://www.baidu.com/s?wd=escape&#x27;)</span><br><span class="line"></span><br><span class="line">// &#x27;https%3A//www.baidu.com/s%3Fwd%3Descape&#x27;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>ASCII字母 数字 @*/+ </code>这几个字符不会被编码，其余的都会</p>
+<p>编码之后的效果是%XX或者%uXXXX这种形式</p>
+<h3 id="encodeURI-和-encodeURIComponent"><a href="#encodeURI-和-encodeURIComponent" class="headerlink" title="encodeURI 和 encodeURIComponent"></a>encodeURI 和 encodeURIComponent</h3><p><code>encodeURI</code>方法不会对下列字符编码<code>ASCII字母 数字 ~!@#$&amp;*()=:/,;?+&#39;</code></p>
+<p><code>encodeURIComponent</code>方法不会对下列字符编码<code>ASCII字母 数字 ~!*()&#39;</code></p>
+<p>所以<code>encodeURIComponent</code>比<code>encodeURI</code>编码的范围更大</p>
+<ul>
+<li>如果是要对整个url编码就使用<code>encodeURI</code>;</li>
+<li>如果是对url中的某一部分编码就使用<code>encodeURIComponent</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">encodeURI(&#x27;https://www.baidu.com/s?wd=encodeURI&#x27;)</span><br><span class="line">// &#x27;https://www.baidu.com/s?wd=encodeURI&#x27;</span><br><span class="line"></span><br><span class="line">encodeURIComponent(&#x27;https://www.baidu.com/s?wd=encodeURIComponent&#x27;)</span><br><span class="line">// &#x27;https%3A%2F%2Fwww.baidu.com%2Fs%3Fwd%3DencodeURIComponent&#x27;</span><br></pre></td></tr></table></figure>
+<p>可以发现<code>encodeURIComponent</code>连<a target="_blank" rel="noopener" href="https://www.baidu.com/%E9%83%BD%E7%BC%96%E7%A0%81%E4%BA%86%EF%BC%8C%E5%85%B6%E5%B8%B8%E7%94%A8%E5%9C%A8%E7%BC%96%E7%A0%81url%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A">https://www.baidu.com/都编码了，其常用在编码url的一部分：</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var param = &quot;https://lijuntao.github.io/&quot;; //param为参数</span><br><span class="line">param = encodeURIComponent(param);</span><br><span class="line">console.log(param) // &#x27;https%3A%2F%2Flijuntao.github.io%2F&#x27;</span><br><span class="line">var url = &quot;https://www.baidu.com?/s?wd=&quot; + param;</span><br><span class="line">console.log(url) // &#x27;https://www.baidu.com?/s?wd=https%3A%2F%2Flijuntao.github.io%2F&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+
 <h2 id="CSRF-XSS-SQL注入-DDoS"><a href="#CSRF-XSS-SQL注入-DDoS" class="headerlink" title="CSRF XSS SQL注入 DDoS"></a>CSRF XSS SQL注入 DDoS</h2><p>CSRF（Cross-site request forgery）跨站请求伪造，是指攻击者诱导受害者进入第三方网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的，流程如下：</p>
 <ul>
 <li>受害者登录 <a target="_blank" rel="noopener" href="http://a.com/">http://a.com</a> ，并保留了登录凭证（Cookie）</li>
