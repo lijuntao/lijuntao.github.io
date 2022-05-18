@@ -28,7 +28,7 @@
 <meta property="og:description" content="JavaScript内存管理机制 常用的GC算法 引用计数 没有引用指向该对象（零引用），对象将被垃圾回收机制回收弊端：无法处理循环引用的事例 标记-清除 垃圾回收器将定期从根开始，找所有从根开始引用的对象，然后找这些对象引用的对象……从根开始，垃圾回收器将找到所有可以获得的对象和收集所有不能获得的对象。 标记-整理 标记清除有空间碎片化的缺点，标记整理是标记清除的增强。标记整理在标记阶段的操作和">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-19T06:35:43.000Z">
-<meta property="article:modified_time" content="2022-04-19T06:36:01.188Z">
+<meta property="article:modified_time" content="2022-05-18T09:00:56.617Z">
 <meta property="article:author" content="ljt">
 <meta name="twitter:card" content="summary">
 
@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-19 14:35:43 / 修改时间：14:36:01" itemprop="dateCreated datePublished" datetime="2022-04-19T14:35:43+08:00">2022-04-19</time>
+              <time title="创建时间：2022-04-19 14:35:43" itemprop="dateCreated datePublished" datetime="2022-04-19T14:35:43+08:00">2022-04-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-18 17:00:56" itemprop="dateModified" datetime="2022-05-18T17:00:56+08:00">2022-05-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -235,6 +241,35 @@
 <p>将新生代内存分为两个等大的空间，一个空间为From，一个空间为To<br>当我们分配对象时，先在From空间进行分配，当前活动的对象也存储在From空间中<br>当触发进行垃圾回收时，会检查From空间中的存活对象，将存活对象复制到To空间，非存活对象被自动回收<br>当复制完成之后From空间和To空间进行一次角色互换，即To空间会变为新的From空间，原来的From空间则变为To空间<br>对象晋升：<br>当一个对象在经历多次复制之后依旧存活，则会被认为是一个生命周期较长的对象，在下次进行垃圾回收时，该对象会被直接转移到老生代内存中，这种行为称为晋升。<br>对象是否经历过了一次Scavenge算法<br>To空间的内存占比是否已经超过25%<br>老生代内存</p>
 <p>在老生代内存中，管理着大量的存活对象，主要采用标记清除算法和标记清理算法<br>标记清除算法主要进行垃圾对象回收<br>标记清理算法主要解决内存碎片问题<br>为了减少垃圾回收带来的停顿时间，V8引擎又引入了【增量标记】的概念，即将原本需要一次性遍历堆内存的操作改为增量标记的方式，先标记堆内存中的一部分对象，然后暂停，将执行权重新交给JS主线程，待主线程任务执行完毕后再从原来暂停标记的地方继续标记，直到标记完整个堆内存。</p>
 <p>增量标记法为什么能优化效率？<br>因为增量标记算法是将一整个的垃圾回收分为多个小的垃圾回收，这样就会使垃圾回收与程序的执行进行交替的工作，这样可以使时间上的消耗及程序停顿的时间更加的合理一些。</p>
+<h2 id="JS什么情况下会出现内存泄漏"><a href="#JS什么情况下会出现内存泄漏" class="headerlink" title="JS什么情况下会出现内存泄漏"></a>JS什么情况下会出现内存泄漏</h2><p>现代浏览器都使用了标记-清除垃圾回收算法。所有对JavaScript垃圾回收算法的改进都是基于标记-清除算法的改进。<br>此算法的大致步骤：</p>
+<ul>
+<li>1、设置一个叫做根（root）的对象（在Javascript里，根是全局对象）。垃圾回收器将定期从根开始，找所有从根开始引用的对象，然后找这些对象引用的对象</li>
+<li>2、垃圾回收器将所有可以获得的对象（活动对象）和所有不能获得的对象（垃圾对象）做出标记</li>
+<li>3、垃圾回收器释放垃圾对象所占用的内存并将其返回给操作系统</li>
+</ul>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>这是一个经典的闭包造成内存泄漏的例子，具体的理解：【暂时不理解、稍后补上】</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var theThing = null;</span><br><span class="line">var replaceThing = function () &#123;</span><br><span class="line">  var originalThing = theThing;</span><br><span class="line">  var unused = function () &#123;</span><br><span class="line">    if (originalThing)</span><br><span class="line">      console.log(&quot;hi&quot;);</span><br><span class="line">  &#125;;</span><br><span class="line">  theThing = &#123;</span><br><span class="line">    longStr: new Array(1000000).join(&#x27;*&#x27;),</span><br><span class="line">    someMethod: function () &#123;</span><br><span class="line">      console.log(someMessage);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">setInterval(replaceThing, 1000);</span><br></pre></td></tr></table></figure>
+
+<h3 id="没有-DOM-引用"><a href="#没有-DOM-引用" class="headerlink" title="没有 DOM 引用"></a>没有 DOM 引用</h3><p>如下代码所示：有一个变量elements持有了对button节点的引用，为了在函数daStuff中使用。但是在将来的某一时刻将button节点从DOM树中移除了，<code>document.body.removeChild(document.getElementById(&#39;button&#39;));</code>。这个时候直觉上会认为垃圾回收器会把button节点回收，但实际上不会发生，因为elements还持有对button节点的引用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var elements = &#123;</span><br><span class="line">    button: document.getElementById(&#x27;button&#x27;),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function doStuff() &#123;</span><br><span class="line">    button.click();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function removeButton() &#123;</span><br><span class="line">    // The button is a direct child of body.</span><br><span class="line">    document.body.removeChild(document.getElementById(&#x27;button&#x27;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="意外的使用全局变量"><a href="#意外的使用全局变量" class="headerlink" title="意外的使用全局变量"></a>意外的使用全局变量</h3><p>方式一：<br>假设你想在一个函数foo中创建一个变量，但是忘记使用var或者let声明，这样就会创建一个全局变量挂在在全局对象window上，而这些变量垃圾回收器是不会对这些变量回收的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo(arg) &#123;</span><br><span class="line">    bar = &quot;this is a hidden global variable&quot;;</span><br><span class="line">&#125;</span><br><span class="line">或者：</span><br><span class="line">function foo(arg) &#123;</span><br><span class="line">    window.bar = &quot;this is an explicit global variable&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种情况是 错误的使用了this：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    this.variable = &quot;potential accidental global&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 直接调用函数foo，实际上是在window上调用了foo，this指向的是window。</span><br><span class="line">// 同样的创建了全局变量</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+
+<p>备注：当启用JS的严格模式时，<code>&#39;use strict&#39;;</code>,这种情况是不允许的</p>
+<h3 id="遗忘的定时器或者回调"><a href="#遗忘的定时器或者回调" class="headerlink" title="遗忘的定时器或者回调"></a>遗忘的定时器或者回调</h3><p>定时器<br>使用<code>setInterval</code>在JS代码中是很常用的一个操作，用来循环的执行一些功能，如下面一段代码，<code>setInterval</code>对Node节点持有一个引用。如果在某一时刻将DOM中的Node节点删除。这个时候这段代码就是一段无效代码。但是因为<code>setInterval</code>依旧处于活动状态，内部还是会持有对Node和someResource的引用，垃圾回收器无法回收定时器所引用的对象。<br>解决方案：当定时器无效时，清除定时器 <code>clearInterval(timerId);</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var someResource = getData();</span><br><span class="line">setInterval(function() &#123;</span><br><span class="line">    var node = document.getElementById(&#x27;Node&#x27;);</span><br><span class="line">    if(node) &#123;</span><br><span class="line">        // Do stuff with node and someResource.</span><br><span class="line">        node.innerHTML = JSON.stringify(someResource));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, 1000);</span><br></pre></td></tr></table></figure>
+
+<p>观察者模式：<br>旧版本IE浏览器无法检测DOM节点和JS代码之间的循环引用。每次将观察者添加到IE中的节点时，都会导致泄漏，所以用户再删除节点之前需要先移除事件监听。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var element = document.getElementById(&#x27;button&#x27;);</span><br><span class="line"></span><br><span class="line">function onClick(event) &#123;</span><br><span class="line">    element.innerHtml = &#x27;text&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">element.addEventListener(&#x27;click&#x27;, onClick);</span><br><span class="line"></span><br><span class="line">// 移除事件监听器</span><br><span class="line">element.removeEventListener(&#x27;click&#x27;, onClick);</span><br><span class="line">element.parentNode.removeChild(element);</span><br></pre></td></tr></table></figure>
+<p>现代浏览器使用现代垃圾收集算法，一般情况下可以检测这些循环并正确处理它们</p>
+<h2 id="减少垃圾回收的tips"><a href="#减少垃圾回收的tips" class="headerlink" title="减少垃圾回收的tips"></a>减少垃圾回收的tips</h2><ul>
+<li>清空一个数组时可以直接将数组长度设置为0<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var list = [1, 2, 3, 4];</span><br><span class="line">//empty your array</span><br><span class="line">list.length = 0;</span><br></pre></td></tr></table></figure></li>
+<li>对于不再使用的对象可以将对象设置为null</li>
+<li>函数如果能复用尽量复用，特别是循环中使用的函数</li>
+</ul>
 
     </div>
 
@@ -316,6 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%87%BA%E7%8E%B0%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">JS什么情况下会出现内存泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89-DOM-%E5%BC%95%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">没有 DOM 引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E5%A4%96%E7%9A%84%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">意外的使用全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%97%E5%BF%98%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8%E6%88%96%E8%80%85%E5%9B%9E%E8%B0%83"><span class="nav-number">1.4.</span> <span class="nav-text">遗忘的定时器或者回调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84tips"><span class="nav-number">2.</span> <span class="nav-text">减少垃圾回收的tips</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
